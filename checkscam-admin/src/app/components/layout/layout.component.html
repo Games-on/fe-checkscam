@@ -1,0 +1,31 @@
+<div class="container">
+    <aside class="sidebar">
+      <div class="logo">Check scam</div>
+      <ul class="menu">
+        <li class="menu-item">
+          <a routerLink="/users" routerLinkActive="active">
+            <i class="fas fa-users"></i>
+            <span>Quản lý Tài khoản</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a routerLink="/news" routerLinkActive="active">
+            <i class="fas fa-file-alt"></i>
+            <span>Quản lý Bài đăng</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a routerLink="/reports" routerLinkActive="active">
+            <i class="fas fa-flag"></i>
+            <span>Quản lý Báo cáo</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <main class="main-content">
+      <header class="navbar">
+        </header>
+      <div class="content">
+        <router-outlet></router-outlet> </div>
+    </main>
+  </div>

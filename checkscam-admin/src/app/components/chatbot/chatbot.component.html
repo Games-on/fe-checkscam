@@ -1,0 +1,33 @@
+<div class="chatbot-wrapper">
+  <div class="chatbot-container">
+    <div class="chat-display">
+      <div *ngFor="let message of messages" 
+           [ngClass]="{'message-wrapper': true, 'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+        <div class="message-content">
+          <div class="message-text">{{ message.text }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <div class="input-wrapper">
+        <select [(ngModel)]="selectedType" class="input-type-select">
+          <option [ngValue]="1">Số điện thoại</option>
+          <option [ngValue]="2">Số tài khoản</option>
+          <option [ngValue]="3">URL</option>
+        </select>
+        <textarea 
+          [(ngModel)]="info" 
+          (keydown.enter)="sendMessage()" 
+          placeholder="Nhập thông tin cần kiểm tra...">
+        </textarea>
+        <button 
+          (click)="sendMessage()" 
+          [disabled]="!info.trim()"
+          class="send-button">
+          Gửi
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

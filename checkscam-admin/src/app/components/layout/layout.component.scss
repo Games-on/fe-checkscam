@@ -1,0 +1,83 @@
+/* src/app/layout/layout.component.scss */
+
+.container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    background-color: #28a745;
+    color: white;
+    width: 220px;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    text-align: left;
+    color: white; /* Màu trắng cho logo */
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-item a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: white;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .menu-item a:hover,
+  .menu-item a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white; /* Màu trắng khi hover/active */
+  }
+  
+  .menu-item a i {
+    margin-right: 10px;
+    font-size: 1em;
+    color: white; /* Màu trắng cho icon */
+  }
+  
+  .menu-item a span {
+    flex-grow: 1;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    background-color: #f4f6f8; /* Hoặc màu nền bạn muốn */
+    /* Các style khác của bạn */
+  }
+  
+  .navbar {
+    background-color: #fff;
+    color: #333;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .admin-title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .content {
+    padding: 20px;
+  }
+
+  

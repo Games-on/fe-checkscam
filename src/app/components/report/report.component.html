@@ -1,0 +1,19 @@
+<h2>Danh sách báo cáo</h2>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Thông tin</th>
+      <th>Mô tả</th>
+      <th>Trạng thái</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let report of reports">
+      <td>{{ report.id }}</td>
+      <td>{{ report.url }}</td>
+      <td>{{ report.created_at }}</td> 
+      <td>{{report.status}}</td>
+    </tr>
+  </tbody>
+</table>

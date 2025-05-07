@@ -12,6 +12,7 @@ import { UserDTO } from '../dtos/user.dto';
 export class UserService {
   private apiLogin = `${environment.apiBaseUrl}/auth/login`;
   private apiCreateUser = `${environment.apiBaseUrl}/users`
+  private apiLogout = `${environment.apiBaseUrl}/auth/logout`;
   constructor(
     private http: HttpClient,
     private httpUtilService: HttpUtilService
@@ -25,7 +26,11 @@ export class UserService {
 
   login(loginDTO: LoginDTO): Observable<any> {    
     return this.http.post(this.apiLogin, loginDTO, this.getApiConfig());
-  }  
+  } 
+  
+  logout(): Observable<void> {
+    return this.http.post<void>(this.apiLogout, this.getApiConfig());
+  }
 
   getListUsers(): Observable<any> {
     return this.http.get(`${environment.apiBaseUrl}/users`);

@@ -3,26 +3,31 @@
   
     <div class="form-group">
       <label for="info">Thông tin liên quan:</label>
-      <input type="text" id="info" name="info" placeholder="Nhập số thông tin nghi ngờ">
+      <input type="text" [(ngModel)]="info" name="info" placeholder="Nhập số thông tin nghi ngờ">
     </div>
     <div class="form-group">
         <label for="type">Loại thông tin:</label>
-        <select id="type" name="type">
+        <select id="type" [(ngModel)]="type" name="type">
           <option value="1">Số điện thoại</option>
           <option value="2">Số tài khoản</option>
           <option value="3">URL</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="text">Email</label>
+        <input type="text" [(ngModel)]="emailAuthorReport" name="emailAuthorReport" placeholder="Nhập email">
+      </div>
+
+      <div class="form-group">
+        <label for="text">Hình thức lừa đảo</label>
+        <input type="text" [(ngModel)]="reason" name="reason">
+      </div>
+
     <div class="form-group">
       <label for="description">Mô tả chi tiết:</label>
-      <textarea id="description" name="description" rows="5" placeholder="Mô tả chi tiết về vụ việc bạn nghi ngờ"></textarea>
+      <textarea id="description" [(ngModel)]="infoDescription" name="infoDescription" rows="5" placeholder="Mô tả chi tiết về vụ việc bạn nghi ngờ"></textarea>
     </div>
-  
-    <div class="form-group">
-      <label for="file">Tải lên bằng chứng (ảnh, video...):</label>
-      <input type="file" id="file" name="file">
-    </div>
-  
-    <button type="submit" class="submit-button">Gửi Báo Cáo</button>
+
+    <button type="submit" class="submit-button" (click)="createReport()">Gửi Báo Cáo</button>
     <button class="btn" routerLink="/chatbot">Trở lại</button>
   </form>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-layout',
@@ -10,5 +11,21 @@ import { RouterModule } from '@angular/router';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {
-
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ){}
+  logout() {
+    this.userService.logout().subscribe({
+      next: () => {
+        debugger
+        localStorage.removeItem('accessToken');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        debugger
+        alert(error?.error);
+      }
+    });
+  }
 }

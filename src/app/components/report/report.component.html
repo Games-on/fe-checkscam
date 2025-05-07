@@ -11,9 +11,9 @@
   <tbody>
     <tr *ngFor="let report of reports">
       <td>{{ report.id }}</td>
-      <td>{{ report.url }}</td>
-      <td>{{ report.created_at }}</td> 
-      <td>{{report.status}}</td>
+      <td><a routerLink="/detail-report/{{report.id}}">{{ report.info }}</a></td>
+      <td>{{ report.description }}</td> 
+      <td>{{ report.status | reportStatusToString }}</td>
     </tr>
   </tbody>
 </table>

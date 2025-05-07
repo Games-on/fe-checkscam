@@ -22,6 +22,14 @@ export class ReportService {
   }
 
   createReport(reportDTO: ReportDTO): Observable<any> {
-      return this.http.post(this.apiCreateReport, reportDTO, this.getApiConfig());
-    }
+    return this.http.post(this.apiCreateReport, reportDTO, this.getApiConfig());
+  }
+
+  getListReports(): Observable<any> {
+    return this.http.get(`${environment.apiBaseUrl}/report/all`);
+  }
+
+  getReportById(id: number): Observable<any> {
+    return this.http.get(`${environment.apiBaseUrl}/report/${id}`);
+  }
 }

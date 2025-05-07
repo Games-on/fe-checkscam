@@ -10,6 +10,7 @@ import { CreateReportComponent } from './components/report/create-report/create-
 import { ViewNewsComponent } from './components/news/view-news/view-news.component';
 import { CreateUserComponent } from './components/user/create-user/create-user.component';
 import { DetailNewsComponent } from './components/news/detail-news/detail-news.component';
+import { DetailReportComponent } from './components/report/detail-report/detail-report.component';
 
 export const routes: Routes = [
     {
@@ -29,6 +30,7 @@ export const routes: Routes = [
       { path: 'create-report', component: CreateReportComponent }, 
       { path: 'view-news', component: ViewNewsComponent }, 
       { path: 'detail-news/:id', component: DetailNewsComponent }, 
+      { path: 'detail-report/:id', component: DetailReportComponent }, 
       { path: '**', redirectTo: '/chatbot' },
 ];
 

@@ -23,11 +23,11 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private userService: UserService,
-    // private tokenService: TokenService,
+    private tokenService: TokenService,
   ) { }
 
   login(){
-    // this.tokenService.clearToken();
+    this.tokenService.clearToken();
     const loginDTO: LoginDTO = {
       username: this.username,
       password: this.password
@@ -36,8 +36,8 @@ export class LoginComponent {
     this.userService.login(loginDTO).subscribe({
       next: (response) => {
         debugger
-        // const token = response.accessToken;
-        // this.tokenService.saveToken(token);
+        const token = response.access_token;
+        this.tokenService.saveToken(token);
         this.router.navigate(['/users']);
       },
       error: (error) => {

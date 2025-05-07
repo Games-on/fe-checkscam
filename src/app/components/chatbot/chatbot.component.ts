@@ -48,8 +48,7 @@ export class ChatbotComponent {
         } else {
           this.messages.push({ 
             sender: 'bot', 
-            text: 'Không tìm thấy thông tin liên quan hoặc có lỗi xảy ra.' + 
-                  (response?.message ? ' Chi tiết: ' + response.message : '') 
+            text: (response?.message ? ' Chi tiết: ' + response.message : '') 
           });
         }
       },

@@ -1,0 +1,17 @@
+<div class="container mt-4 d-flex flex-column gap-2 centered-container">
+    <div class="card p-4 w-100">
+        <label for="text">Thông tin</label>
+        <h4 class="fw-bold">{{ report.info }}</h4>
+        <label for="text">loại thông tin</label>
+        <p>{{ report.type | informationTypeToString }}</p>
+        <label for="text">Người gửi</label>
+        <p>{{ report.emailAuthorReport }}</p>
+        <label for="text">Hình thức lừa đảo</label>
+        <p>{{ report.reason }}</p>
+        <label for="text">Mô tả</label>
+        <p>{{ report.infoDescription }}</p>
+        <label for="text">Tệp đính kèm</label>
+        <p>{{ report.attachmentDto }}</p>
+    </div>
+    <button class="btn btn-primary align-self-end" routerLink="/reports">Trở lại</button>
+</div>

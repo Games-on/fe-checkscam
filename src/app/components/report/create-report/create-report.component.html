@@ -1,33 +1,65 @@
-<form class="report-form">
-    <h2>Báo Cáo Lừa Đảo</h2>
-  
+<form class="report-form" (ngSubmit)="createReport()" novalidate>
+  <h2>Báo Cáo Lừa Đảo</h2>
+
+  <div class="form-group">
+    <label for="info">Thông tin liên quan:</label>
+    <input id="info" type="text" [(ngModel)]="info" name="info" placeholder="Nhập số thông tin nghi ngờ" required>
+  </div>
+
+  <div class="form-group">
+    <label for="type">Loại thông tin:</label>
+    <select id="type" [(ngModel)]="type" name="type" required>
+      <option value="1">Số điện thoại</option>
+      <option value="2">Số tài khoản</option>
+      <option value="3">URL</option>
+    </select>
+  </div>
+
+  <div *ngIf="type == 2">
     <div class="form-group">
-      <label for="info">Thông tin liên quan:</label>
-      <input type="text" [(ngModel)]="info" name="info" placeholder="Nhập số thông tin nghi ngờ">
+      <label for="accountHolderName">Tên chủ tài khoản:</label>
+      <input id="accountHolderName" type="text" [(ngModel)]="accountHolderName" name="accountHolderName">
     </div>
     <div class="form-group">
-        <label for="type">Loại thông tin:</label>
-        <select id="type" [(ngModel)]="type" name="type">
-          <option value="1">Số điện thoại</option>
-          <option value="2">Số tài khoản</option>
-          <option value="3">URL</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="text">Email</label>
-        <input type="text" [(ngModel)]="emailAuthorReport" name="emailAuthorReport" placeholder="Nhập email">
-      </div>
-
-      <div class="form-group">
-        <label for="text">Hình thức lừa đảo</label>
-        <input type="text" [(ngModel)]="reason" name="reason">
-      </div>
-
-    <div class="form-group">
-      <label for="description">Mô tả chi tiết:</label>
-      <textarea id="description" [(ngModel)]="infoDescription" name="infoDescription" rows="5" placeholder="Mô tả chi tiết về vụ việc bạn nghi ngờ"></textarea>
+      <label for="bankName">Ngân hàng:</label>
+      <input id="bankName" type="text" [(ngModel)]="bankName" name="bankName">
     </div>
+  </div>
 
-    <button type="submit" class="submit-button" (click)="createReport()">Gửi Báo Cáo</button>
-    <button class="btn" routerLink="/chatbot">Trở lại</button>
-  </form>
+  <div class="form-group">
+    <label for="email">Email người báo cáo</label>
+    <input id="email" type="email" [(ngModel)]="emailAuthorReport" name="emailAuthorReport" placeholder="Nhập email"
+      required>
+  </div>
+
+  <div class="form-group">
+    <label for="reason">Hình thức lừa đảo</label>
+    <input id="reason" type="text" [(ngModel)]="reason" name="reason" required>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Mô tả chi tiết:</label>
+    <textarea id="description" [(ngModel)]="infoDescription" name="infoDescription" rows="5"
+      placeholder="Mô tả chi tiết về vụ việc" required></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="files">Hình ảnh minh chứng (có thể chọn nhiều):</label>
+    <input id="files" type="file" multiple (change)="onFileSelect($event)" accept="image/*">
+  </div>
+
+  <div *ngIf="selectedFiles.length" class="form-group">
+    <label>Các tệp đã chọn:</label>
+    <ul>
+      <li *ngFor="let file of selectedFiles">{{ file.name }} ({{ file.size | number }} bytes)</li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <re-captcha siteKey="6LfI6TArAAAAAMq0uE79yUK95HeKsB9IBZJFUZZI"
+      (resolved)="handleCaptchaResponse($event)"></re-captcha>
+  </div>
+
+  <button type="submit" class="submit-button">Gửi Báo Cáo</button>
+  <button type="button" class="btn" routerLink="/chatbot">Trở lại</button>
+</form>

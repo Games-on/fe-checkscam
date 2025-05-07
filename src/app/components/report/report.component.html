@@ -6,14 +6,26 @@
       <th>Thông tin</th>
       <th>Mô tả</th>
       <th>Trạng thái</th>
+      <th>Loại</th>
+      <th>Thao tác</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let report of reports">
       <td>{{ report.id }}</td>
       <td><a routerLink="/detail-report/{{report.id}}">{{ report.info }}</a></td>
-      <td>{{ report.description }}</td> 
+      <td>{{ report.description }}</td>
       <td>{{ report.status | reportStatusToString }}</td>
-    </tr>
+      <td>{{ report.type | informationTypeToString }}</td>
+      <td>
+        <button class="icon-button" title="Xác nhận" (click)="confirmReport(report.id)">
+          ✔️
+        </button>
+
+        <button class="icon-button" title="Từ chối" (click)="rejectReport(report.id)">
+          ✖️
+        </button>
+      </td>
+
   </tbody>
 </table>

@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CreateReportComponent } from './components/report/create-report/create-report.component';
 import { ViewNewsComponent } from './components/news/view-news/view-news.component';
 import { CreateUserComponent } from './components/user/create-user/create-user.component';
+import { DetailNewsComponent } from './components/news/detail-news/detail-news.component';
 
 export const routes: Routes = [
     {
@@ -27,6 +28,7 @@ export const routes: Routes = [
       { path: 'login', component: LoginComponent }, 
       { path: 'create-report', component: CreateReportComponent }, 
       { path: 'view-news', component: ViewNewsComponent }, 
+      { path: 'detail-news/:id', component: DetailNewsComponent }, 
       { path: '**', redirectTo: '/chatbot' },
 ];
 

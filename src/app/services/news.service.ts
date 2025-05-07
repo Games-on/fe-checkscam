@@ -22,10 +22,18 @@ export class NewsService {
   }
 
   getListNews(): Observable<any> {
-      return this.http.get(`${environment.apiBaseUrl}/news`);
+    return this.http.get(`${environment.apiBaseUrl}/news`);
+  }
+
+  getNewsById(id: number): Observable<any> {
+    return this.http.get(`${environment.apiBaseUrl}/news/${id}`);
   }
 
   createNews(newsDTO: NewsDTO): Observable<any> {
-      return this.http.post(this.apiNews, newsDTO, this.getApiConfig());
-    }
+    return this.http.post(this.apiNews, newsDTO, this.getApiConfig());
+  }
+
+  deleteNewsById(id: number): Observable<any> {
+    return this.http.delete(`${environment.apiBaseUrl}/news/${id}`);
+  }
 }

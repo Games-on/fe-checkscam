@@ -36,8 +36,19 @@ export class NewsComponent implements OnInit {
     })
   }
 
-  deleteNews(arg0: any) {
-    throw new Error('Method not implemented.');
+  deleteNews(id: number) {
+    if (confirm("Bạn có chắc muốn xóa bài đăng này?")) {
+      this.newsService.deleteNewsById(id).subscribe({
+        next: () => {
+          debugger
+          this.loadAllNews();
+        },
+        error: (error) => {
+          debugger
+          alert(error.error);
+        }
+      });
+    }
   }
 
 

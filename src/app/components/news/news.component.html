@@ -14,7 +14,7 @@
   <tbody>
     <tr *ngFor="let post of posts">
       <td>{{ post.id }}</td>
-      <td><a>{{ post.name }}</a></td>
+      <td><a routerLink="/detail-news/{{post.id}}">{{ post.name }}</a></td>
       <td>{{ post.shortDescription }}</td>
       <td>
         <button class="btn btn-danger" (click)="deleteNews(post.id)">Xóa</button>

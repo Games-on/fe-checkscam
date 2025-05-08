@@ -1,4 +1,5 @@
 <h2>Danh sách báo cáo</h2>
+
 <table class="data-table">
   <thead>
     <tr>
@@ -6,14 +7,64 @@
       <th>Thông tin</th>
       <th>Mô tả</th>
       <th>Trạng thái</th>
+      <th>Loại</th>
+      <th>Thao tác</th>
     </tr>
   </thead>
+
   <tbody>
     <tr *ngFor="let report of reports">
+
       <td>{{ report.id }}</td>
-      <td><a routerLink="/detail-report/{{report.id}}">{{ report.info }}</a></td>
-      <td>{{ report.description }}</td> 
+
+      <td>
+        <a routerLink="/detail-report/{{ report.id }}">{{ report.info }}</a>
+      </td>
+
+      <td>{{ report.description }}</td>
+
       <td>{{ report.status | reportStatusToString }}</td>
+
+      <td>{{ report.type | informationTypeToString }}</td>
+
+      <td class="action-cell">
+        <!-- NÚT XÁC NHẬN -->
+        <button class="icon-button" title="Xác nhận" (click)="openDropdown(report.id)">
+          ✔️
+        </button>
+
+        <!-- NÚT TỪ CHỐI -->
+        <button class="icon-button" title="Từ chối" (click)="rejectReport(report.id)">
+          ✖️
+        </button>
+
+        <!-- DROPDOWN -->
+        <div *ngIf="dropdownOpenForId === report.id" class="dropdown-card" (click)="$event.stopPropagation()">
+
+          <!-- chọn scam‑type -->
+          <select [(ngModel)]="selectedScamTypeId">
+            <option [ngValue]="null" disabled selected>-- Chọn hình thức --</option>
+            <option *ngFor="let s of scamTypes" [ngValue]="s.id">
+              {{ s.name }} ({{ s.code }})
+            </option>
+            <option [ngValue]="0">➕ Thêm mới…</option>
+          </select>
+
+          <!-- FORM THÊM MỚI -->
+          <div *ngIf="selectedScamTypeId === 0" class="new-box">
+            <input type="text" placeholder="Tên" [(ngModel)]="newScamType.name">
+            <input type="text" placeholder="Mã" [(ngModel)]="newScamType.code">
+            <button (click)="createScamTypeAndConfirm(report.id)">Lưu & xác nhận</button>
+          </div>
+
+          <!-- NÚT OK khi chọn có sẵn -->
+          <div *ngIf="selectedScamTypeId && selectedScamTypeId !== 0">
+            <button (click)="confirmReport(report.id)">Xác nhận</button>
+          </div>
+
+          <button class="close-btn" (click)="closeDropdown()">✕</button>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>

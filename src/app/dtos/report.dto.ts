@@ -1,15 +1,10 @@
-export class ReportDTO {
+export interface ReportDTO {
     info: string;
     emailAuthorReport: string;
     type: number;
     reason: string;
     infoDescription: string;
-
-    constructor(data: any) {
-        this.info = data.info;
-        this.emailAuthorReport = data.emailAuthorReport;
-        this.type = data.type;
-        this.reason = data.reason;
-        this.infoDescription = data.infoDescription;
-    }
+    captchaToken: string;
+    info2?: string; // Tên chủ tài khoản nếu có
+    info3?: string; // Ngân hàng nếu có
 }

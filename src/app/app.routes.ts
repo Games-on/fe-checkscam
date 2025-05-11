@@ -11,6 +11,7 @@ import { ViewNewsComponent } from './components/news/view-news/view-news.compone
 import { CreateUserComponent } from './components/user/create-user/create-user.component';
 import { DetailNewsComponent } from './components/news/detail-news/detail-news.component';
 import { DetailReportComponent } from './components/report/detail-report/detail-report.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {
@@ -22,6 +23,7 @@ export const routes: Routes = [
           { path: 'create-news', component: CreateNewsComponent },
           { path: 'news', component: NewsComponent },
           { path: 'reports', component: ReportComponent },
+          { path: 'dashboard', component: DashboardComponent },
           { path: '', redirectTo: '/chatbot', pathMatch: 'full' },
         ],
       },

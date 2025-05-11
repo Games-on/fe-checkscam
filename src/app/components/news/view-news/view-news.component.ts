@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NewsService } from '../../../services/news.service';
+import { NewsDTO } from '../../../dtos/news.dto';
 
 @Component({
   selector: 'app-view-news',
@@ -14,9 +15,11 @@ import { NewsService } from '../../../services/news.service';
 })
 export class ViewNewsComponent {
   posts: any[] = [];
+  
 
   constructor(
-    private newsService: NewsService
+    private newsService: NewsService,
+   
   ) {}
 
   ngOnInit() {
@@ -35,4 +38,6 @@ export class ViewNewsComponent {
       }
     })
   }
+
+  
 }

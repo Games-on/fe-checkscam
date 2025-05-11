@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CheckScamService } from '../../services/check-scam.service';
 import { CheckScamRequestDTO } from '../../dtos/check-scam-request.dto';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
+
 
 interface Message {
   sender: 'user' | 'bot';
@@ -13,9 +15,11 @@ interface Message {
 @Component({
   selector: 'app-chatbot',
   standalone: true,
-  imports: [CommonModule, FormsModule,
-    RouterModule
-  ],
+  imports: [CommonModule,
+    FormsModule,
+    RouterModule,
+    HeaderComponent, 
+],
   templateUrl: './chatbot.component.html',
   styleUrl: './chatbot.component.scss'
 })
@@ -24,7 +28,7 @@ export class ChatbotComponent {
   info: string = '';
   selectedType: number = 1;
 
-  constructor(private checkScamService: CheckScamService) {}
+  constructor(private checkScamService: CheckScamService) { }
 
   sendMessage() {
     if (this.info.trim() !== '') {
@@ -46,9 +50,9 @@ export class ChatbotComponent {
         if (response?.code === 200 && response?.data) {
           this.messages.push({ sender: 'bot', text: response.data });
         } else {
-          this.messages.push({ 
-            sender: 'bot', 
-            text: (response?.message ? ' Chi tiết: ' + response.message : '') 
+          this.messages.push({
+            sender: 'bot',
+            text: (response?.message ? ' Chi tiết: ' + response.message : '')
           });
         }
       },

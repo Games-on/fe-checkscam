@@ -1,94 +1,44 @@
-.container {
-  display: flex;
-  min-height: 100vh;
-}
-
-.sidebar {
-  background-color: #28a745;
-  color: white;
-  width: 220px;
-  padding: 20px 10px;
-  box-sizing: border-box;
-  box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
+.navbar-nav {
   display: flex;
   flex-direction: column;
-}
-
-.logo {
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-bottom: 20px;
-  padding: 10px 0;
-  text-align: left;
-  color: white;
-}
-
-.menu {
+  padding-left: 0;
+  margin-bottom: 0;
   list-style: none;
-  padding: 0;
-  margin: 0;
-  flex-grow: 1;
 }
 
-.menu-item a {
-  display: flex;
+.bg-gradient-primary {
+  background-color: #4e73df;
+  background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  background-size: cover;
+}
+
+.accordion {
+  overflow-anchor: none;
+}
+
+.topbar .nav-item .nav-link {
+  height: 4.375rem;
+  display: flex
+;
   align-items: center;
-  padding: 10px 15px;
-  text-decoration: none;
-  color: white;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  padding: 0 .75rem;
 }
 
-.menu-item a:hover,
-.menu-item a.active {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
+.sidebar .nav-item.dropdown .dropdown-toggle::after, .topbar .nav-item.dropdown .dropdown-toggle::after {
+  width: 1rem;
+  text-align: center;
+  float: right;
+  vertical-align: 0;
+  border: 0;
+  font-weight: 900;
+  content: '\f105';
+  font-family: 'Font Awesome 5 Free';
 }
 
-.menu-item a i {
-  margin-right: 10px;
-  font-size: 1em;
-  color: white;
+.sidebar .nav-item .nav-link.collapsed span {
+  font-weight: bold;
 }
 
-.menu-item a span {
-  flex-grow: 1;
-}
-
-.main-content {
-  flex-grow: 1;
-  background-color: #f4f6f8;
-}
-
-.navbar {
-  background-color: #fff;
-  color: #333;
-  padding: 15px 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.logout-button {
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #dc3545;
-  color: white;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background-color 0.3s ease;
-}
-
-.logout-button:hover {
-  background-color: #c82333;
-}
-
-.content {
-  padding: 20px;
+.sidebar-divider{
+  color: #fff;
 }

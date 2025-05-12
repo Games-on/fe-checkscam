@@ -96,3 +96,148 @@
      // Điều chỉnh style Bootstrap hoặc viết lại
   }
 }
+
+// .info-banner-section {
+//   background-color: #eaf4f4; // Màu nền nhẹ dựa trên hình ảnh
+//   padding: 80px 0; // Khoảng trống trên dưới cho section
+//   position: relative; // Để định vị các phần tử trang trí nếu có
+//   overflow: hidden; // Đảm bảo nội dung không tràn ra ngoài
+
+//   .container {
+//     max-width: 1100px; // Giới hạn chiều rộng nội dung
+//     margin: 0 auto;
+//     padding: 0 15px;
+//     display: flex; // Sử dụng Flexbox để chia cột nội dung text và mô tả
+//     gap: 30px; // Khoảng cách giữa hai cột nội dung
+//     flex-wrap: wrap; // Cho phép xuống dòng trên màn hình nhỏ
+//     align-items: center; // Căn giữa theo chiều dọc
+//   }
+
+//   .banner-content {
+//       display: flex; // Sử dụng flexbox để sắp xếp nội dung chính và ảnh trang trí (nếu có)
+//       width: 100%;
+//       flex-wrap: wrap;
+//       justify-content: space-between; // Đẩy nội dung và ảnh sang hai bên
+//   }
+
+//   .text-content {
+//       flex-basis: 50%; // Cột text chiếm 50% không gian cơ sở
+//       min-width: 300px; // Chiều rộng tối thiểu
+//        @media (max-width: 768px) {
+//             flex-basis: 100%; // Chiếm 100% trên mobile
+//             text-align: center; // Căn giữa text
+//             margin-bottom: 30px; // Khoảng cách dưới trên mobile
+//         }
+//   }
+
+//    .description-content {
+//       flex-basis: 40%; // Cột mô tả chiếm 40% không gian cơ sở
+//       min-width: 250px; // Chiều rộng tối thiểu
+//        @media (max-width: 768px) {
+//             flex-basis: 100%; // Chiếm 100% trên mobile
+//             text-align: center; // Căn giữa text
+//         }
+//    }
+//   }
+
+  /* Style cho Section Về Chúng Tôi */
+.about-us-section {
+  background-color: #ffffff; // Nền trắng (dựa trên hình ảnh)
+  padding: 60px 0; // Khoảng trống trên dưới cho section
+  position: relative;
+  overflow: hidden;
+
+  .container {
+    max-width: 1100px; // Giới hạn chiều rộng nội dung
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .about-us-content {
+      display: flex; // Sử dụng Flexbox để tạo hai cột
+      align-items: center; // Căn giữa theo chiều dọc
+      gap: 30px; // Khoảng cách giữa hai cột
+      flex-wrap: wrap; // Cho phép xuống dòng trên mobile
+  }
+
+  .graphic-column {
+      flex-basis: 45%; // Cột đồ họa chiếm 45% (có thể điều chỉnh)
+      min-width: 250px; // Chiều rộng tối thiểu
+      text-align: center; // Căn giữa nội dung (ảnh)
+       @media (max-width: 768px) {
+            flex-basis: 100%; // Chiếm 100% trên mobile
+            margin-bottom: 30px; // Khoảng cách dưới trên mobile
+        }
+
+        img {
+            max-width: 100%; // Đảm bảo ảnh không tràn ra ngoài
+            height: auto;
+        }
+  }
+
+  .text-column {
+      flex-basis: 50%; // Cột text chiếm 50% (có thể điều chỉnh)
+      min-width: 300px; // Chiều rộng tối thiểu
+       @media (max-width: 768px) {
+            flex-basis: 100%; // Chiếm 100% trên mobile
+            text-align: center; // Căn giữa text
+        }
+  }
+
+  .section-label {
+    font-size: 0.9em;
+    color: #555; // Màu xám
+    margin-bottom: 5px;
+    font-weight: bold;
+     text-transform: uppercase; // Viết hoa
+     letter-spacing: 1px; // Khoảng cách chữ
+  }
+
+  .section-main-title {
+    font-size: 2em; // Kích thước font tiêu đề chính
+    font-weight: bold;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px; // Khoảng cách dưới tiêu đề chính
+    line-height: 1.2;
+     @media (max-width: 768px) {
+        font-size: 1.8em;
+     }
+      br { // Khoảng cách giữa các dòng
+          display: block;
+          content: "";
+          margin-bottom: 5px;
+      }
+  }
+
+  .section-description {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #555; // Màu xám
+    margin-top: 0;
+    margin-bottom: 20px; // Khoảng cách dưới mô tả
+  }
+
+  .btn-about-us {
+    display: inline-block;
+    background-color: #4CAF50; // Màu nền nút (xanh lá cây)
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    &:hover {
+      background-color: darken(#4CAF50, 10%);
+    }
+
+     .arrow-icon {
+        // Style cho icon mũi tên
+     }
+  }
+}

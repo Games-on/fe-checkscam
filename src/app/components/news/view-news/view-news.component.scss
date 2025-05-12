@@ -1,146 +1,164 @@
-h2 {
-    margin-top: 20px;
-    margin-bottom: 20px;
+.news-page-container {
+  min-height: 100vh;
+  background-color: #f4f7f6; // Màu nền nhẹ cho trang
+  padding-top: 75px;
+
+
+  .page-content-area {
+    padding: 20px 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .page-title {
+    text-align: center;
     color: #333;
-    font-size: 1.5em;
-  }
-  
-  .controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .search-bar {
-    display: flex;
-    input[type='text'] {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px 0 0 4px;
-      outline: none;
-      background-color: #f8f8f8;
-    }
-    button {
-      background-color: transparent;
-      color: #555;
-      border: 1px solid #ccc;
-      padding: 8px 12px;
-      border-radius: 0 4px 4px 0;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #eee;
-    }
-    i {
-      margin-right: 5px;
-    }
-  }
-  
-  .add-btn {
-    background-color: #28a745; /* Green */
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .add-btn:hover {
-    background-color: #218838;
-  }
-  
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    overflow: hidden;
-    background-color: #fff;
-  }
-  
-  .data-table th,
-  .data-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  .data-table th {
-    background-color: #f0f0f0;
+    margin-bottom: 30px;
+    font-size: 2em;
     font-weight: bold;
-    color: #555;
   }
-  
-  .data-table tbody tr:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .action-icons {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-  }
-  
-  .icon-button {
-    background: none;
-    border: none;
-    color: #555;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .icon-button i {
-    font-size: 1em;
-  }
-  
-  .icon-button:hover {
-    background-color: #eee;
-    color: #007bff;
-  }
-  
-  .pagination {
+
+  .search-and-pagination {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
-    padding: 10px 0;
-    border-top: 1px solid #eee;
-    color: #555;
-    font-size: 0.9em;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+
+    .search-bar {
+      display: flex;
+      gap: 5px;
+
+      input[type="text"] {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1em;
+      }
+
+      button {
+        padding: 8px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      button {
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+      }
+
+      span {
+        font-weight: bold;
+      }
+    }
   }
-  
-  .records-per-page label {
-    margin-right: 10px;
+
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); // Tạo lưới với các cột có chiều rộng tối thiểu 280px
+    gap: 20px; // Khoảng cách giữa các card
+
+    .news-card {
+      // Đây là style tạo khung bọc cho mỗi tin tức
+      border: 1px solid #eee; // Viền nhẹ
+      border-radius: 8px; // Góc bo tròn
+      overflow: hidden; // Đảm bảo nội dung và ảnh không tràn ra ngoài viền bo tròn
+      background-color: #fff; // Nền trắng cho card
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Đổ bóng nhẹ
+      display: flex;
+      flex-direction: column; // Sắp xếp nội dung bên trong card theo cột (ảnh trên, text dưới)
+      transition: transform 0.3s ease, box-shadow 0.3s ease; // Hiệu ứng khi di chuột vào
+      cursor: pointer; // Biểu thị rằng card có thể click được
+
+      &:hover {
+        transform: translateY(-5px); // Nâng card lên một chút khi hover
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); // Đổ bóng rõ hơn khi hover
+      }
+
+      .card-image {
+        width: 100%;
+        height: 180px; // Chiều cao cố định cho vùng ảnh
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; // Cắt ảnh để vừa khung mà không bị méo
+        }
+      }
+
+      .card-content {
+        padding: 15px; // Khoảng trống bên trong phần nội dung text
+        flex-grow: 1; // Cho phép phần nội dung text co giãn để các card có chiều cao bằng nhau
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-title {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+        font-weight: bold;
+        line-height: 1.4;
+
+        a {
+          text-decoration: none;
+          color: #333;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: #007bff;
+          }
+        }
+      }
+
+      .card-description {
+        color: #555;
+        font-size: 0.9em;
+        line-height: 1.5;
+        margin-bottom: 10px;
+        flex-grow: 1; // Cho phép mô tả co giãn
+      }
+
+      .card-footer {
+        display: flex;
+        justify-content: flex-end;
+        color: #777;
+        font-size: 0.8em;
+      }
+    }
   }
-  
-  .records-per-page select {
-    padding: 6px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    color: #555;
+
+  // Style cho nút trở lại nếu bạn quyết định giữ lại
+  .back-button-container {
+    text-align: center;
+    margin-top: 30px;
   }
-  
-  .page-navigation button {
-    background-color: #eee; /* Grey buttons */
-    border: 1px solid #ccc;
-    padding: 6px 10px;
-    margin: 0 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: #555;
-  }
-  
-  .page-navigation button:hover {
-    background-color: #ddd;
-  }
-  
-  .page-navigation span {
-    margin: 0 10px;
-  }
+}

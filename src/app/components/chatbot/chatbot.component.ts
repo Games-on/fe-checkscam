@@ -4,21 +4,25 @@ import { FormsModule } from '@angular/forms';
 import { CheckScamService } from '../../services/check-scam.service';
 import { CheckScamRequestDTO } from '../../dtos/check-scam-request.dto';
 import { RouterModule } from '@angular/router';
-import { HeaderComponent } from '../header/header.component';
+import { HeaderComponent } from '../../header/header.component'; 
+import { FooterComponent } from '../../footer/footer.component'; 
 
-
+// Cập nhật interface Message để có thuộc tính isUser
 interface Message {
-  sender: 'user' | 'bot';
+  sender: 'user' | 'bot'; // Có thể giữ lại sender nếu cần, nhưng isUser là đủ cho căn chỉnh
   text: string;
+  isUser: boolean; // Thêm thuộc tính này
 }
 
 @Component({
   selector: 'app-chatbot',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     FormsModule,
     RouterModule,
-    HeaderComponent, 
+    HeaderComponent,
+    FooterComponent
 ],
   templateUrl: './chatbot.component.html',
   styleUrl: './chatbot.component.scss'
@@ -32,9 +36,10 @@ export class ChatbotComponent {
 
   sendMessage() {
     if (this.info.trim() !== '') {
+      // Thêm tin nhắn người dùng vào mảng với isUser = true
+      this.messages.push({ sender: 'user', text: this.info, isUser: true });
       this.checkScam(this.info, this.selectedType);
-      this.messages.push({ sender: 'user', text: this.info });
-      this.info = '';
+      this.info = ''; // Xóa nội dung input sau khi gửi
     }
   }
 
@@ -46,19 +51,22 @@ export class ChatbotComponent {
 
     this.checkScamService.checkScam(requestBody).subscribe({
       next: (response) => {
-        debugger
+        // debugger // Có thể bỏ debugger khi code chạy ổn định
+        let botResponseText = '';
         if (response?.code === 200 && response?.data) {
-          this.messages.push({ sender: 'bot', text: response.data });
+           botResponseText = response.data;
         } else {
-          this.messages.push({
-            sender: 'bot',
-            text: (response?.message ? ' Chi tiết: ' + response.message : '')
-          });
+           botResponseText = (response?.message ? ' Chi tiết: ' + response.message : 'Không nhận được phản hồi từ bot.');
         }
+         // Thêm tin nhắn bot vào mảng với isUser = false
+        this.messages.push({ sender: 'bot', text: botResponseText, isUser: false });
       },
       error: (error) => {
-        debugger
-        alert(error?.error);
+        // debugger // Có thể bỏ debugger
+        const errorMessage = error?.error || 'Đã xảy ra lỗi khi tra cứu.';
+        alert(errorMessage);
+         // Thêm tin nhắn lỗi như tin nhắn bot
+        this.messages.push({ sender: 'bot', text: 'Lỗi: ' + errorMessage, isUser: false });
       }
     });
   }

@@ -1,0 +1,99 @@
+.header-nav {
+  background-color: #1a313a; // Màu nền giống footer
+  padding: 1rem 0;
+  color: #ffffff;
+  position: fixed; // Giữ header cố định ở trên cùng
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100; // Đảm bảo header nằm trên nội dung khác
+  transition: transform 0.3s ease-in-out; // Hiệu ứng trượt mượt mà
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); // Thêm bóng đổ
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; // Giới hạn chiều rộng nội dung
+    margin: 0 auto;
+    padding: 0 15px; // Padding hai bên
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.5em; // Kích thước font brand (có thể điều chỉnh)
+    font-weight: bold;
+
+    img {
+      height: 40px; // Chiều cao logo
+      margin-right: 10px;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px; // Khoảng cách giữa các link điều hướng
+
+    a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #4caf50; // Màu highlight khi hover
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px; // Khoảng cách giữa các nút hành động
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+
+      &.btn-ai {
+        background-color: #e57373; // Màu nút AI (ví dụ)
+        color: #ffffff;
+
+        &:hover {
+          background-color: darken(#e57373, 10%);
+        }
+      }
+
+      &.btn-bao-ve {
+        background-color: #4CAF50; // Màu nút Bảo vệ ngay (ví dụ)
+        color: #ffffff;
+
+        &:hover {
+          background-color: darken(#4CAF50, 10%);
+        }
+      }
+
+       &.btn-bao-cao {
+        background-color: #4CAF50; // Màu nút Báo cáo (ví dụ)
+        color: #ffffff;
+
+        &:hover {
+          background-color: darken(#4CAF50, 10%);
+        }
+      }
+    }
+  }
+
+  // Style khi header bị ẩn (class 'hidden' được thêm bởi Angular)
+  &.hidden {
+    transform: translateY(-100%); // Dịch chuyển lên trên để ẩn
+    // Hoặc dùng opacity: 0; visibility: hidden;
+  }
+}

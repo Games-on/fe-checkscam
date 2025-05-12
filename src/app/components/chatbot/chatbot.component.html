@@ -1,8 +1,11 @@
 <app-header></app-header>
+
 <div class="chat-wrapper">
   <div class="chat-container">
     <div class="chat-display">
-      <div *ngFor="let message of messages" class="message-wrapper">
+      <div *ngFor="let message of messages"
+           class="message-wrapper"
+           [class.align-right]="message.isUser">
         <div class="message-content">
           <div class="message-text">{{ message.text }}</div>
         </div>
@@ -16,7 +19,7 @@
           <option [ngValue]="2">Số tài khoản</option>
           <option [ngValue]="3">URL</option>
         </select>
-        <input class="form-control form-control-lg" type="text" placeholder="Nhập thông tin cần kiểm tra"
+        <input class="form-control form-control-lg" type="text" placeholder="Nhập thông tin cần tra cứu"
           [(ngModel)]="info" (keydown.enter)="sendMessage()">
         <button class="btn btn-primary btn-lg" id="submitButton" type="submit" (click)="sendMessage()"
           [disabled]="!info.trim()">Gửi</button>
@@ -24,3 +27,5 @@
     </div>
   </div>
 </div>
+
+<app-footer></app-footer>

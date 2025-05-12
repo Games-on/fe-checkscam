@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { CheckScamService } from '../../services/check-scam.service';
 import { CheckScamRequestDTO } from '../../dtos/check-scam-request.dto';
 import { RouterModule } from '@angular/router';
-import { HeaderComponent } from '../../header/header.component'; 
-import { FooterComponent } from '../../footer/footer.component'; 
+import { HeaderComponent } from '../header/header.component'; 
+import { FooterComponent } from '../footer/footer.component'; 
+import { ChatBoxComponent } from './chat-box/chat-box.component';
 
 // Cập nhật interface Message để có thuộc tính isUser
 interface Message {
@@ -22,7 +23,8 @@ interface Message {
     FormsModule,
     RouterModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ChatBoxComponent
 ],
   templateUrl: './chatbot.component.html',
   styleUrl: './chatbot.component.scss'
@@ -31,6 +33,7 @@ export class ChatbotComponent {
   messages: Message[] = [];
   info: string = '';
   selectedType: number = 1;
+  showChatbox: boolean = false;
 
   constructor(private checkScamService: CheckScamService) { }
 
@@ -69,5 +72,13 @@ export class ChatbotComponent {
         this.messages.push({ sender: 'bot', text: 'Lỗi: ' + errorMessage, isUser: false });
       }
     });
+  }
+
+  onAiTuVanClicked() {
+    this.showChatbox = true;
+  }
+
+  closeChatbox() {
+    this.showChatbox = false;
   }
 }

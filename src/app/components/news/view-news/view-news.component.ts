@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NewsService } from '../../../services/news.service';
 import { NewsDTO } from '../../../dtos/news.dto';
-import { HeaderComponent } from '../../../header/header.component';
-import { FooterComponent } from '../../../footer/footer.component'; 
+import { HeaderComponent } from '../../header/header.component';
+import { FooterComponent } from '../../footer/footer.component'; 
 
 @Component({
   selector: 'app-view-news',

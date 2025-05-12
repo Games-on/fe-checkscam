@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../../../services/news.service';
-import id from '@angular/common/locales/id';
 import { ActivatedRoute } from '@angular/router';
-import { HeaderComponent } from "../../../header/header.component";
-import { FooterComponent } from "../../../footer/footer.component";
+import { HeaderComponent } from "../../header/header.component";
+
 
 @Component({
   selector: 'app-detail-news',
-  imports: [HeaderComponent, FooterComponent],
+  imports: [HeaderComponent],
   templateUrl: './detail-news.component.html',
   styleUrl: './detail-news.component.scss'
 })

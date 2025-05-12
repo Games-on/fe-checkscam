@@ -1,5 +1,4 @@
-<app-header></app-header>
-
+<app-header (aiTuVanClicked)="onAiTuVanClicked()"></app-header>
 <div class="chat-wrapper">
   <div class="chat-container">
     <div class="chat-display">
@@ -11,7 +10,6 @@
         </div>
       </div>
     </div>
-
     <div class="chat-input-wrapper">
       <div class="chat-input">
         <select [(ngModel)]="selectedType" class="input-type-select">
@@ -28,4 +26,5 @@
   </div>
 </div>
 
+<app-chat-box *ngIf="showChatbox" (close)="closeChatbox()"></app-chat-box>
 <app-footer></app-footer>

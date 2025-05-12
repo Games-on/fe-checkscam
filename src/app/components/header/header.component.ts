@@ -1,14 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core'; // Import HostListener và OnInit
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common'; // Thường cần cho standalone components
 
 @Component({
   selector: 'app-header',
+  standalone: true, // Đảm bảo là standalone nếu bạn đang dùng
   imports: [
-    RouterLink
+    RouterLink,
+    CommonModule // Cần thiết để sử dụng *ngIf nếu cần ẩn/hiện
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+// Implement OnInit
 
+  isHeaderHidden = false; // Biến trạng thái để kiểm soát việc ẩn header
+  private lastScrollTop = 0; // Lưu vị trí cuộn trước đó
+
+  constructor() { }
+
+  ngOnInit(): void {
+    // Có thể thêm logic khởi tạo nếu cần
+  }
+
+  @Output() aiTuVanClicked = new EventEmitter<void>();
+
+  onAiTuVanClick() {
+    this.aiTuVanClicked.emit();
+  }
+
+  // Lắng nghe sự kiện 'scroll' trên đối tượng 'window'
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+    // Xác định hướng cuộn
+    if (scrollTop > this.lastScrollTop && scrollTop > 50) { // Cuộn xuống và đã cuộn qua một đoạn nhất định (ví dụ: 50px)
+      this.isHeaderHidden = true; // Ẩn header
+    } else if (scrollTop < this.lastScrollTop || scrollTop < 50) { // Cuộn lên hoặc cuộn về đầu trang
+      this.isHeaderHidden = false; // Hiện header
+    }
+
+    this.lastScrollTop = scrollTop; // Cập nhật vị trí cuộn cuối cùng
+  }
 }

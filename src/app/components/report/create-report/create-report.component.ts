@@ -7,8 +7,8 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReportService } from '../../../services/report.service';
 import { ReportDTO } from '../../../dtos/report.dto';
-import { HeaderComponent } from '../../../header/header.component'; 
-import { FooterComponent } from "../../../footer/footer.component";
+import { HeaderComponent } from '../../header/header.component'; 
+import { FooterComponent } from "../../footer/footer.component";
 
 @Component({
   selector: 'app-create-report',

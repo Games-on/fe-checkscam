@@ -9,7 +9,6 @@ import { RouterLink } from '@angular/router'; // Nếu có link trong footer
   standalone: true, // Ví dụ đây là standalone component
   imports: [
     CommonModule, // Cần thiết cho standalone components
-    RouterLink // Nếu có RouterLink trong template
   ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss' // Hoặc styleUrls: ['./footer.component.scss'] nếu dùng mảng

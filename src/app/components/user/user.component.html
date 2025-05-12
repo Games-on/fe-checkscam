@@ -1,51 +1,51 @@
-<h2>Danh sách tài khoản</h2>
-<div class="controls">
-  <!-- <div class="search-bar">
-    <input type="text" placeholder="Tìm kiếm theo tên người dùng hoặc email">
-    <button><i class="fas fa-search"></i></button>
-  </div> -->
-  <button class="add-btn" routerLink="/create-user"><i class="fas fa-plus"></i>THÊM TÀI KHOẢN</button>
-</div>
-<table class="data-table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Tên người dùng</th>
-      <th>Email</th>
-      <!-- <th>Trạng thái</th> -->
-      <th>Hành động</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let account of accounts">
-      <td>{{ account.id }}</td>
-      <td>{{ account.name }}</td>
-      <td>{{ account.email }}</td>
-      <!-- <td>{{ account.isActive }}</td> -->
-      <!-- <td class="action-icons">
-        <button *ngIf="account.isActive === 'Active'" (click)="unlockAccount(account.id)" class="icon-button lock-btn"><i class="fas fa-lock"></i></button>
-        <button *ngIf="account.isActive === 'Inactive'" (click)="unlockAccount(account.id)" class="icon-button unlock-btn"><i class="fas fa-unlock"></i></button>
-      </td> -->
-      <td>
-        <!-- <button class="btn">Cập nhật</button> -->
-        <button class="btn btn-danger" (click)="deleteUser(account.id)">Xóa</button>
-    </td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- <div class="pagination">
-  <div class="records-per-page">
-    <label for="recordsPerPage">Số bản ghi mỗi trang:</label>
-    <select id="recordsPerPage">
-      <option value="10">10</option>
-      <option value="20">20</option>
-      <option value="50">50</option>
-    </select>
+<div class="container-fluid">
+  <div class="header-actions">
+    <h1 class="h3 mb-2 text-gray-800">Quản lý tài khoản</h1>
+    <div class="dataTables_length" id="dataTable_length">
+      <button class="btn btn-primary bg-gradient-primary" (click)="openDialog()"><i class="fas fa-plus"></i>
+        Thêm</button>
+    </div>
   </div>
-  <div class="page-navigation">
-    <button><i class="fas fa-chevron-left"></i></button>
-    <span>1</span>
-    <button><i class="fas fa-chevron-right"></i></button>
-  </div>
-</div> -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Danh sách tài khoản</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div id="dataTable_filter" class="dataTables_filter"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
+                aria-describedby="dataTable_info" style="width: 100%;">
+                <thead>
+                  <tr role="row">
+                    <th aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" style="width: 20px;">ID
+                    </th>
+                    <th class="sorting" tabindex="0" rowspan="1" colspan="1" style="width: 247.7px;">Tên người dùng</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                      style="width: 247.7px;">Email</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                      style="width: 78.2px;">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="odd" *ngFor="let account of accounts">
+                    <td class="sorting_1">{{ account.id }}</td>
+                    <td>{{ account.name }}</td>
+                    <td>{{ account.email }}</td>
+                    <td>
+                      <button class="btn edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                      <button class="btn delete-btn" (click)="deleteUser(account.id)"><i
+                          class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>

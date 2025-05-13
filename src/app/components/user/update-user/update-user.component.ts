@@ -69,9 +69,11 @@ export class UpdateUserComponent implements OnInit {
 
     this.userService.updateUser(this.userId, userDTO).subscribe({
       next: () => {
+        debugger
         this.dialogRef.close(true);
       },
       error: (error) => {
+        debugger
         alert(error.error);
       }
     });

@@ -44,6 +44,7 @@ export class DetailNewsComponent implements OnInit {
   private loadNewsById(id: number): void {
     this.newsService.getNewsById(id).subscribe({
       next: (res) => {
+         console.log('attachments from API', res.attachments);
         this.post = res;
         this.attachmentDto = res.attachments ?? [];   // đổi tên trường nếu cần
       },

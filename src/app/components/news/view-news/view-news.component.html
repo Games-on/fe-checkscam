@@ -4,10 +4,23 @@
       <div class="container">
         <h2 class="page-title">Trang tin tức</h2>
 
-        <div class="search-and-pagination">
-          <div class="search-bar">
-            <input type="text" placeholder="Tìm kiếm tin tức..." [(ngModel)]="searchTerm" (input)="searchPosts()">
-            <button>Tìm kiếm</button>
+      <div class="search-and-pagination">
+        <div class="search-bar">
+          <input type="text" placeholder="Tìm kiếm tin tức..." [(ngModel)]="searchTerm" (input)="searchPosts()">
+          <button>Tìm kiếm</button>
+        </div>
+
+        <div class="pagination-controls">
+          <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">&lt;</button>
+          <span *ngFor="let page of pages" [class.active]="currentPage === page" (click)="changePage(page)">{{ page }}</span>
+          <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">&gt;</button>
+        </div>
+      </div>
+
+      <div class="news-grid">
+        <div class="news-card" *ngFor="let post of pagedPosts">
+          <div class="card-image">
+            <img src="path/to/default/news-image.jpg" alt="Ảnh tin tức">
           </div>
 
           <div class="pagination-controls">

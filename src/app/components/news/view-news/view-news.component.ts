@@ -1,95 +1,117 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+
 import { NewsService } from '../../../services/news.service';
-import { NewsDTO } from '../../../dtos/news.dto';
 import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from '../../footer/footer.component';
-import { FormsModule } from '@angular/forms';
-import { ChatBoxComponent } from "../../chat-box/chat-box.component"; // Import FormsModule
+import { ChatBoxComponent } from '../../chat-box/chat-box.component';
+
 interface AttachmentDto {
   id: number;
   url?: string | null;
 }
+
 @Component({
   selector: 'app-view-news',
-  standalone: true, // Đánh dấu là component độc lập
+  standalone: true,
   imports: [
     CommonModule,
     RouterModule,
-    FooterComponent,
+    FormsModule,
     HeaderComponent,
-    FormsModule // Thêm FormsModule vào imports
-    ,
-    ChatBoxComponent
-],
+    FooterComponent,
+    ChatBoxComponent,
+  ],
   templateUrl: './view-news.component.html',
-  styleUrl: './view-news.component.scss'
+  styleUrls: ['./view-news.component.scss'],
 })
 export class ViewNewsComponent implements OnInit {
+  /* Tin tức */
   posts: any[] = [];
   pagedPosts: any[] = [];
-  pageSize = 6; // Số lượng tin tức trên mỗi trang
+
+  /* Phân trang */
+  pageSize = 6;
   currentPage = 1;
-  searchTerm = '';
   totalPosts = 0;
   totalPages = 0;
   pages: number[] = [];
   startIndex = 0;
   endIndex = 0;
-  showChatbox: boolean = false;
+
+  /* Tìm kiếm */
+  searchTerm = '';
+
+  /* Chat */
+  showChatbox = false;
+
+  /* URL ảnh */
   readonly imageBaseUrl = 'http://localhost:8080/api/v1/report/image/';
+
   constructor(
     private newsService: NewsService,
-    private router: Router
+    private router: Router,
   ) {}
 
-  ngOnInit() {
+  /* ===== Lifecycle ===== */
+  ngOnInit(): void {
     this.loadAllNews();
   }
 
-
-  getImageUrl({ url }: AttachmentDto): string {
-    if (!url) return 'assets/img/placeholder.png';
-    if (url.startsWith('http')) return url;
-
-    const fileName = url.split('/').pop();
-    return fileName ? `${this.imageBaseUrl}${encodeURIComponent(fileName)}` 
-                    : 'assets/img/placeholder.png';
-  }
-
-
-  loadAllNews(){
+  /* ===== API ===== */
+  loadAllNews(): void {
     this.newsService.getListNews().subscribe({
-      next: (response) => {
-        this.posts = response;
+      next: (res) => {
+        this.posts = res;
         this.totalPosts = this.posts.length;
         this.calculateTotalPages();
         this.paginatePosts();
       },
-      error: (error) => {
-        alert(error.error);
-      }
-    })
+      error: (err) => alert(err?.error || 'Lỗi khi tải danh sách tin tức'),
+    });
   }
 
+  /* ===== Ảnh ===== */
+  getImageUrl({ url }: AttachmentDto): string {
+    if (!url) return 'assets/img/placeholder.png';
+
+    return url.startsWith('http')
+      ? url
+      : `${this.imageBaseUrl}${encodeURIComponent(url)}`;
+  }
+
+  onImageError(ev: Event): void {
+    const img = ev.target as HTMLImageElement;
+    if (!img.src.includes('placeholder.png')) {
+      img.src = 'assets/img/placeholder.png';
+    }
+  }
+
+  /* ===== Tìm kiếm & phân trang ===== */
   searchPosts(): void {
     this.currentPage = 1;
     this.paginatePosts();
   }
 
   paginatePosts(): void {
-    const filteredPosts = this.searchTerm
-      ? this.posts.filter(post =>
-          post.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    const list = this.searchTerm
+      ? this.posts.filter((p) =>
+          p.name.toLowerCase().includes(this.searchTerm.toLowerCase()),
         )
       : this.posts;
 
-    this.totalPosts = filteredPosts.length;
+    this.totalPosts = list.length;
     this.calculateTotalPages();
+
     this.startIndex = (this.currentPage - 1) * this.pageSize;
-    this.endIndex = Math.min(this.startIndex + this.pageSize - 1, this.totalPosts - 1);
-    this.pagedPosts = filteredPosts.slice(this.startIndex, this.endIndex + 1);
+    this.endIndex = Math.min(
+      this.startIndex + this.pageSize - 1,
+      this.totalPosts - 1,
+    );
+
+    this.pagedPosts = list.slice(this.startIndex, this.endIndex + 1);
   }
 
   changePage(page: number): void {
@@ -104,11 +126,17 @@ export class ViewNewsComponent implements OnInit {
     this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
-  onAiTuVanClicked() {
+  /* ===== Chat ===== */
+  onAiTuVanClicked(): void {
     this.showChatbox = true;
   }
 
-  closeChatbox() {
+  closeChatbox(): void {
     this.showChatbox = false;
+  }
+
+  /* ===== trackBy ===== */
+  trackById(_: number, item: any): number {
+    return item.id;
   }
 }

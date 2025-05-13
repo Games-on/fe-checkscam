@@ -25,6 +25,7 @@ export class NewsComponent implements OnInit {
   content = '';
   selectedFile: File | null = null;
 
+
   @ViewChild('fileInput', { static: false })
   fileInput!: ElementRef<HTMLInputElement>;
 

@@ -3,7 +3,8 @@ import { inject } from '@angular/core';
 import { TokenService } from '../services/token.service';
 
 const excludedUrls = [
- '/api/v1/report'
+ '/api/v1/report',
+//  '/api/v1/news'
 ];
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {

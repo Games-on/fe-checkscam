@@ -5,22 +5,27 @@
   import { NewsDTO } from '../../dtos/news.dto';
   import { FormsModule } from '@angular/forms';
 
-  @Component({
-    selector: 'app-news',
-    imports: [
-      CommonModule,
-      RouterModule,
-      FormsModule
-    ],
-    templateUrl: './news.component.html',
-    styleUrl: './news.component.scss'
-  })
-  export class NewsComponent implements OnInit {
-    posts: any[] = [];
-    isPopupVisible: any;
-    shortDescription: string = '';
-    name: string = '';
-    content: string = '';
+@Component({
+  selector: 'app-news',
+  standalone: true,
+  imports: [CommonModule, RouterModule, FormsModule],
+  templateUrl: './news.component.html',
+  styleUrls: ['./news.component.scss']
+})
+export class NewsComponent implements OnInit {
+  /* danh sách */
+  posts: any[] = [];
+
+  /* popup state + form */
+  isPopupVisible = false;
+  name = '';
+  shortDescription = '';
+  content = '';
+  selectedFile: File | null = null;
+
+
+  @ViewChild('fileInput', { static: false })
+  fileInput!: ElementRef<HTMLInputElement>;
 
     constructor(
       private newsService: NewsService,

@@ -13,7 +13,7 @@ import { DetailNewsComponent } from './components/news/detail-news/detail-news.c
 import { DetailReportComponent } from './components/report/detail-report/detail-report.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 // import { ChatBoxComponent } from './components/chatbot/chat-box/chat-box.component';
-import { AboutUsComponent } from './components/about-us/about-us.component'; // Import AboutUsComponent
+import { AboutUsComponent } from './components/about-us/about-us.component'; 
 import { ChatBoxComponent } from './components/chat-box/chat-box.component';
 
 
@@ -38,7 +38,7 @@ export const routes: Routes = [
       { path: 'view-news', component: ViewNewsComponent }, 
       { path: 'detail-news/:id', component: DetailNewsComponent }, 
       { path: 'detail-report/:id', component: DetailReportComponent }, 
-      { path: 'about-us', component: AboutUsComponent }, // Thêm route cho AboutUsComponent
+      { path: 'about-us', component: AboutUsComponent },
       { path: '**', redirectTo: '/chatbot' },
 ];
 

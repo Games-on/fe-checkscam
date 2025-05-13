@@ -71,7 +71,6 @@
           debugger
           // const token = response.accessToken;
           // this.tokenService.saveToken(token);
-          this.togglePopup();
           this.loadAllNews();
         },
         error: (error) => {
@@ -79,21 +78,5 @@
           alert(error?.error);
         }
       });
-    }
-
-    togglePopup() {
-      this.isPopupVisible = !this.isPopupVisible;
-      if (this.isPopupVisible) {
-      }
-    }
-
-    openAssignPopup() {
-      this.togglePopup();
-    }
-
-    closePopup(event: any) {
-      if (event.target.classList.contains('popup-overlay')) {
-        this.isPopupVisible = false;
-      }
     }
   }

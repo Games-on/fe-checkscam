@@ -36,4 +36,10 @@ export class NewsService {
   deleteNewsById(id: number): Observable<any> {
     return this.http.delete(`${environment.apiBaseUrl}/news/${id}`);
   }
+
+  uploadFiles(newsId: number | string, formData: FormData): Observable<any> {
+    return this.http.post<any>(`${environment.apiBaseUrl}/news/uploads/${newsId}`, formData);
+  }
+
+  
 }

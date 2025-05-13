@@ -136,7 +136,6 @@
 
       return basicInvalid || extraInvalidForType2 || captchaInvalid || termsNotAgreed;
     }
-
     // >> Bổ sung: Phương thức reset form sau khi gửi thành công/thất bại (tùy logic)
     resetForm(): void {
       this.info = '';
@@ -156,6 +155,7 @@
     onAiTuVanClicked() {
       this.showChatbox = true;
     }
+
 
     closeChatbox() {
       this.showChatbox = false;

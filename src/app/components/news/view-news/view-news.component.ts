@@ -11,6 +11,10 @@ interface AttachmentDto {
   id: number;
   url?: string | null;
 }
+interface AttachmentDto {
+  id: number;
+  url?: string | null;
+}
 @Component({
   selector: 'app-view-news',
   standalone: true, // Đánh dấu là component độc lập
@@ -39,6 +43,7 @@ export class ViewNewsComponent implements OnInit {
   endIndex = 0;
   showChatbox: boolean = false;
   readonly imageBaseUrl = 'http://localhost:8080/api/v1/report/image/';
+  readonly imageBaseUrl = 'http://localhost:8080/api/v1/report/image/';
   constructor(
     private newsService: NewsService,
     private router: Router
@@ -47,6 +52,17 @@ export class ViewNewsComponent implements OnInit {
   ngOnInit() {
     this.loadAllNews();
   }
+
+
+  getImageUrl({ url }: AttachmentDto): string {
+    if (!url) return 'assets/img/placeholder.png';
+    if (url.startsWith('http')) return url;
+
+    const fileName = url.split('/').pop();
+    return fileName ? `${this.imageBaseUrl}${encodeURIComponent(fileName)}` 
+                    : 'assets/img/placeholder.png';
+  }
+
 
 
   getImageUrl({ url }: AttachmentDto): string {

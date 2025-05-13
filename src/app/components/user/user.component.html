@@ -1,9 +1,31 @@
 <div class="container-fluid">
   <div class="header-actions">
     <h1 class="h3 mb-2 text-gray-800">Quản lý tài khoản</h1>
-    <div class="dataTables_length" id="dataTable_length">
-      <button class="btn btn-primary bg-gradient-primary" (click)="openDialog()"><i class="fas fa-plus"></i>
-        Thêm</button>
+    <div class="header-actions-controls">
+      <!-- <div class="pagination-info">
+        Hiển thị {{ startIndex + 1 }} đến {{ endIndex }} của {{ totalAccounts }} mục
+      </div> -->
+      <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+        <ul class="pagination">
+          <li class="paginate_button page-item" [class.disabled]="currentPage === 1">
+            <a href="#" aria-controls="dataTable" tabindex="0" class="page-link"
+              (click)="changePage(currentPage - 1)">Trước</a>
+          </li>
+          <li class="paginate_button page-item" *ngFor="let page of pages" [class.active]="currentPage === page">
+            <a href="#" aria-controls="dataTable" tabindex="0" class="page-link"
+              (click)="changePage(page)">{{ page }}</a>
+          </li>
+          <li class="paginate_button page-item" [class.disabled]="currentPage === totalPages">
+            <a href="#" aria-controls="dataTable" tabindex="0" class="page-link"
+              (click)="changePage(currentPage + 1)">Sau</a>
+          </li>
+        </ul>
+      </div>
+      <div class="dataTables_length" id="dataTable_length">
+        <button class="btn btn-primary bg-gradient-primary" (click)="openDialog()">
+          <i class="fas fa-plus"></i> Thêm
+        </button>
+      </div>
     </div>
   </div>
   <div class="card shadow mb-4">
@@ -13,11 +35,6 @@
     <div class="card-body">
       <div class="table-responsive">
         <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-          <div class="row">
-            <div class="col-sm-12 col-md-6">
-              <div id="dataTable_filter" class="dataTables_filter"></div>
-            </div>
-          </div>
           <div class="row">
             <div class="col-sm-12">
               <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
@@ -34,7 +51,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="odd" *ngFor="let account of accounts">
+                  <tr class="odd" *ngFor="let account of pagedAccounts">
                     <td class="sorting_1">{{ account.id }}</td>
                     <td>{{ account.name }}</td>
                     <td>{{ account.email }}</td>
@@ -43,9 +60,13 @@
                       <button class="btn delete-btn" (click)="deleteUser(account.id)"><i
                           class="fa-solid fa-trash"></i></button>
                     </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>

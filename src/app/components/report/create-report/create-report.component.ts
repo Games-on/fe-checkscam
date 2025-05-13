@@ -127,12 +127,13 @@ export class CreateReportComponent implements OnInit {
 
   private isFormInvalid(): boolean {
     // >> Cập nhật: Thêm kiểm tra cho pageToReport và agreeTerms
-    const basicInvalid = !this.info || !this.reason || !this.pageToReport || !this.emailAuthorReport || !this.infoDescription;
-    const extraInvalidForType2 = this.type === 2 && (!this.accountHolderName || !this.bankName);
-    const captchaInvalid = !this.captchaToken;
-    const termsNotAgreed = !this.agreeTerms; // Kiểm tra checkbox đồng ý
+    // const basicInvalid = !this.info || !this.reason || !this.pageToReport || !this.emailAuthorReport || !this.infoDescription;
+    // const extraInvalidForType2 = this.type === 2 && (!this.accountHolderName || !this.bankName);
+    // const captchaInvalid = !this.captchaToken;
+    // const termsNotAgreed = !this.agreeTerms; // Kiểm tra checkbox đồng ý
 
-    return basicInvalid || extraInvalidForType2 || captchaInvalid || termsNotAgreed;
+    // return basicInvalid || extraInvalidForType2 || captchaInvalid || termsNotAgreed;
+    return false;
   }
 
   // >> Bổ sung: Phương thức reset form sau khi gửi thành công/thất bại (tùy logic)

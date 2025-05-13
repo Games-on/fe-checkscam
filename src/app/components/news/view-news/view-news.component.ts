@@ -5,7 +5,8 @@ import { NewsService } from '../../../services/news.service';
 import { NewsDTO } from '../../../dtos/news.dto';
 import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from '../../footer/footer.component';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { FormsModule } from '@angular/forms';
+import { ChatBoxComponent } from "../../chat-box/chat-box.component"; // Import FormsModule
 
 @Component({
   selector: 'app-view-news',
@@ -16,6 +17,8 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
     FooterComponent,
     HeaderComponent,
     FormsModule // Thêm FormsModule vào imports
+    ,
+    ChatBoxComponent
 ],
   templateUrl: './view-news.component.html',
   styleUrl: './view-news.component.scss'
@@ -31,6 +34,7 @@ export class ViewNewsComponent implements OnInit {
   pages: number[] = [];
   startIndex = 0;
   endIndex = 0;
+  showChatbox: boolean = false;
 
   constructor(
     private newsService: NewsService,
@@ -84,5 +88,13 @@ export class ViewNewsComponent implements OnInit {
   calculateTotalPages(): void {
     this.totalPages = Math.ceil(this.totalPosts / this.pageSize);
     this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  onAiTuVanClicked() {
+    this.showChatbox = true;
+  }
+
+  closeChatbox() {
+    this.showChatbox = false;
   }
 }

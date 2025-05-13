@@ -17,10 +17,14 @@ export class LayoutComponent implements OnInit {
   isAdmin: boolean = false;
   isCollaborator: boolean = false;
   isDropdownOpen: boolean = false;
+  currentUser: any = {
+    name: '',
+    email: ''
+  };
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -30,6 +34,15 @@ export class LayoutComponent implements OnInit {
       this.userRole = user.role || [];
       this.isAdmin = this.userRole.includes('ROLE_ADMIN');
       this.isCollaborator = this.userRole.includes('ROLE_COLLAB');
+      
+      const token = localStorage.getItem('jwt_token');
+      if (token) {
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        this.currentUser = {
+          name: tokenData.checkscam?.principal?.username || '',
+          email: tokenData.sub || ''
+        };
+      }
     }
   }
 

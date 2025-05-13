@@ -178,3 +178,35 @@ body {
 //     border: none;
 //     color: white;
 // }
+
+.table-responsive {
+  overflow-x: hidden !important;
+}
+
+.table {
+  margin-bottom: 0;
+  width: 100%;
+  
+  thead {
+    th {
+      white-space: nowrap;
+      background-color: #f8f9fc;
+    }
+  }
+  
+  tbody {
+    td {
+      white-space: nowrap;
+    }
+  }
+}
+
+// Style cho các nút action
+.edit-btn, .delete-btn {
+  padding: 0.25rem 0.5rem;
+  margin: 0 0.25rem;
+  
+  i {
+    font-size: 0.875rem;
+  }
+}

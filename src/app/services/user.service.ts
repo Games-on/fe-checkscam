@@ -11,7 +11,8 @@ import { UserDTO } from '../dtos/user.dto';
 })
 export class UserService {
   private apiLogin = `${environment.apiBaseUrl}/auth/login`;
-  private apiCreateUser = `${environment.apiBaseUrl}/users`
+  private apiCreateUser = `${environment.apiBaseUrl}/users`;
+  private apiUpdateUser = `${environment.apiBaseUrl}/users`;
   private apiLogout = `${environment.apiBaseUrl}/auth/logout`;
   constructor(
     private http: HttpClient,
@@ -44,6 +45,10 @@ export class UserService {
     return this.http.delete(`${environment.apiBaseUrl}/users/${id}`);
   }
 
+  updateUser(id: number, userDTO: UserDTO): Observable<any> {
+    return this.http.put(`${this.apiUpdateUser}/${id}`, userDTO, this.getApiConfig());
+  }
+
   saveUserData(token: any): void {
   try {
     // Nếu truyền vào là object chứa access_token thì lấy chuỗi token
@@ -54,7 +59,6 @@ export class UserService {
       return;
     }
 
-    // Giải mã payload từ JWT
     const payload = JSON.parse(atob(rawToken.split('.')[1]));
 
     const userData = {

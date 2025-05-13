@@ -6,6 +6,7 @@ import { UserDTO } from '../../dtos/user.dto';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 @Component({
   selector: 'app-user',
@@ -18,13 +19,15 @@ import { CreateUserComponent } from './create-user/create-user.component';
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
-  name = '';
-  email = '';
-  password = '';
+  name : string = '';
+  email: string  = '';
+  password: string = '';
   isPopupVisible: any;
 
-
   accounts: any[] = [];
+  selectedUser: any = null;
+  isEditMode = false;
+
   constructor(
     private userService: UserService,
     private router: Router,
@@ -40,57 +43,63 @@ export class UserComponent {
   loadListUsers() {
     this.userService.getListUsers().subscribe({
       next: (response) => {
-        debugger
-        this.accounts = response;
+        this.accounts = response.map((user: any) => ({
+          ...user,
+          password: user.password || '' // Đảm bảo có trường password
+        }));
       },
       error: (error) => {
-        debugger
         alert(error.error);
       }
     })
   }
 
   deleteUser(id: number) {
-    if (confirm("Bạn có chắc muốn người dùng thi này?")) {
+    if (confirm("Bạn có chắc muốn xóa người dùng này?")) {
       this.userService.deleteUser(id).subscribe({
         next: () => {
-          debugger
           this.loadListUsers();
         },
         error: (error) => {
-          debugger
           alert(error.error);
         }
       });
     }
   }
 
-  createUser() {
-    const userDTO: UserDTO = {
-      name: this.name,
-      email: this.email,
-      password: this.password,
-    };
-    this.userService.createUser(userDTO).subscribe({
-      next: () => {
-        debugger
-        this.router.navigate(['/users']);
-      },
-      error: (error) => {
-        debugger
-        alert(error.error);
+  openDialogCreateUser(): void {
+    const dialogRef = this.dialog.open(CreateUserComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.loadListUsers();
       }
-    })
+    });
   }
 
-  openDialog(): void {
-    this.dialog.open(CreateUserComponent, {
+  openDialogUpdateUser(user: any): void {
+    const dialogRef = this.dialog.open(UpdateUserComponent, {
       width: '400px',
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password || '' // Truyền password vào dialog
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.loadListUsers();
+      }
     });
   }
 
 
-  unlockAccount(arg0: any) {
-    throw new Error('Method not implemented.');
+  unlockAccount(userId: number) {
+    // Implement unlock account functionality
+    console.log('Unlock account:', userId);
   }
 }

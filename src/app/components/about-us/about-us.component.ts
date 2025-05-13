@@ -9,7 +9,7 @@ import { HeaderComponent } from "../header/header.component";
 @Component({
   selector: 'app-about-us',
   standalone: true,
-  imports: [RouterLink, RouterModule], 
+  imports: [RouterModule], 
   templateUrl: './about-us.component.html',
   styleUrls: ['./about-us.component.scss']
 })

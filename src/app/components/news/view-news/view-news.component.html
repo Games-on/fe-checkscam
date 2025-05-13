@@ -19,7 +19,7 @@
 
       <div class="news-grid">
         <div class="news-card" *ngFor="let post of posts">
-          <div class="card-image">
+          <div class="card-image" routerLink="/detail-news/{{post.id}}">
             <img src="path/to/default/news-image.jpg" alt="Ảnh tin tức">
           </div>
           <div class="card-content">

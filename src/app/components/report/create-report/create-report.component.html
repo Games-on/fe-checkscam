@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header (aiTuVanClicked)="onAiTuVanClicked()"></app-header>
 
 <div class="report-page-container">
   <div class="two-column-layout">
@@ -100,5 +100,5 @@
 
   </div>
 </div>
-
+<app-chat-box *ngIf="showChatbox" (close)="closeChatbox()"></app-chat-box>
 <app-footer></app-footer>

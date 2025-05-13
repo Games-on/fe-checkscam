@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header (aiTuVanClicked)="onAiTuVanClicked()"></app-header>
 <div class="news-page-container">
   <div class="page-content-area">
     <div class="container">
@@ -40,4 +40,5 @@
     </div>
   </div>
 </div>
+<app-chat-box *ngIf="showChatbox" (close)="closeChatbox()"></app-chat-box>
 <app-footer></app-footer>

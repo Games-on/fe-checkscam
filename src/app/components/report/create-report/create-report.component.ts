@@ -11,11 +11,12 @@ import { ReportDTO } from '../../../dtos/report.dto';
 
 import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from "../../footer/footer.component";
+import { ChatBoxComponent } from "../../chat-box/chat-box.component";
 
 @Component({
   selector: 'app-create-report',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, RecaptchaModule, FooterComponent, HeaderComponent],
+  imports: [CommonModule, RouterModule, FormsModule, RecaptchaModule, FooterComponent, HeaderComponent, ChatBoxComponent],
   templateUrl: './create-report.component.html',
   styleUrls: ['./create-report.component.scss']
 })
@@ -27,6 +28,7 @@ export class CreateReportComponent implements OnInit {
   infoDescription = '';
   accountHolderName = '';
   bankName = '';
+  showChatbox: boolean = false;
 
   // >> Bổ sung: Thêm thuộc tính pageToReport
   pageToReport: string = '';
@@ -150,5 +152,13 @@ export class CreateReportComponent implements OnInit {
      this.selectedFiles = [];
      this.captchaToken = ''; // Reset captcha token
      // Nếu dùng re-captcha, cần reset lại widget captcha nếu có API hỗ trợ
+  }
+
+  onAiTuVanClicked() {
+    this.showChatbox = true;
+  }
+
+  closeChatbox() {
+    this.showChatbox = false;
   }
 }

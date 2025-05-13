@@ -1,79 +1,54 @@
-<div class="container-fluid">
-  <div class="header-actions">
-    <h1 class="h3 mb-2 text-gray-800">Quản lý tin tức</h1>
-    <div class="dataTables_length" id="dataTable_length">
-      <button class="btn btn-primary bg-gradient-primary" routerLink="/create-news"><i
-          class="fas fa-plus"></i> Thêm</button>
-    </div>
-  </div>
-  <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Danh sách tin tức</h6>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-          <div class="row">
-            <div class="col-sm-12 col-md-6">
-              <div id="dataTable_filter" class="dataTables_filter"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
-                aria-describedby="dataTable_info" style="width: 100%;">
-                <thead>
-                  <tr role="row">
-                    <th aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" style="width: 20px;">ID
-                    </th>
-                    <th class="sorting" tabindex="0" rowspan="1" colspan="1" style="width: 247.7px;">Tên</th>
-                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                      style="width: 247.7px;">Mô tả</th>
-                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                      aria-label="Age: activate to sort column ascending" style="width: 78.2px;">Hành động</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let post of posts">
-                    <td>{{ post.id }}</td>
-                    <td><a routerLink="/detail-news/{{post.id}}">{{ post.name }}</a></td>
-                    <td>{{ post.shortDescription }}</td>
-                    <td>
-                      <button class="btn edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                      <button class="btn delete-btn" (click)="deleteNews(post.id)"><i
-                          class="fa-solid fa-trash"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- </div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div> -->
-            </div>
-          </div>
-        </div>
+  <div class="container-fluid">
+    <div class="header-actions">
+      <h1 class="h3 mb-2 text-gray-800">Quản lý tin tức</h1>
+      <div class="dataTables_length" id="dataTable_length">
+        <button class="btn btn-primary bg-gradient-primary" routerLink="/create-news"><i
+            class="fas fa-plus"></i> Thêm</button>
       </div>
-      <!-- <div class="popup-overlay" *ngIf="isPopupVisible" (click)="closePopup($event)">
-        <div class="popup-content">
-          <div class="popup-header">
-            <h5>Thêm tin tức</h5>
-            <button class="close-button" (click)="togglePopup()">×</button>
-          </div>
-          <div class="popup-body">
-            <div class="form-group mb-3">
-              <label>Tên</label>
-              <input type="text" class="form-control" [(ngModel)]="name">
+    </div>
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách tin tức</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div id="dataTable_filter" class="dataTables_filter"></div>
+              </div>
             </div>
-            <div class="form-group mb-3">
-              <label>Mô tả</label>
-              <input type="text" class="form-control" [(ngModel)]="shortDescription">
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
+                  aria-describedby="dataTable_info" style="width: 100%;">
+                  <thead>
+                    <tr role="row">
+                      <th aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" style="width: 20px;">ID
+                      </th>
+                      <th class="sorting" tabindex="0" rowspan="1" colspan="1" style="width: 247.7px;">Tên</th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        style="width: 247.7px;">Mô tả</th>
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        aria-label="Age: activate to sort column ascending" style="width: 78.2px;">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let post of posts">
+                      <td>{{ post.id }}</td>
+                      <td><a routerLink="/detail-news/{{post.id}}">{{ post.name }}</a></td>
+                      <td>{{ post.shortDescription }}</td>
+                      <td>
+                        <button class="btn edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button class="btn delete-btn" (click)="deleteNews(post.id)"><i
+                            class="fa-solid fa-trash"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- </div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div> -->
+              </div>
             </div>
-            <div class="form-group mb-3">
-              <label>Nội dung</label>
-              <input type="text" class="form-control" [(ngModel)]="content">
-            </div>
-          </div>
-          <div class="popup-footer">
-            <button class="btn btn-secondary" (click)="togglePopup()">Hủy</button>
-            <button class="btn btn-primary" (click)="createNews()">Tạo</button>
           </div>
         </div>
-      </div> -->
+        

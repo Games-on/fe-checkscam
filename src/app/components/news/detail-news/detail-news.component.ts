@@ -2,18 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-/* detail-news.component.ts */
-import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NewsService } from '../../../services/news.service';
-import { HeaderComponent } from '../../header/header.component';
-import { FooterComponent } from '../../footer/footer.component';   // nếu muốn dùng
-
-interface AttachmentDto {
-  id: number;
-  url?: string | null;
-}
 import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from '../../footer/footer.component';   // nếu muốn dùng
 
@@ -31,24 +20,12 @@ interface AttachmentDto {
     HeaderComponent,
     // FooterComponent                         
   ],
-  standalone: true,                           
-  imports: [
-    CommonModule,                              
-    HeaderComponent,
-    // FooterComponent                         
-  ],
   templateUrl: './detail-news.component.html',
-  styleUrls: ['./detail-news.component.scss']  
   styleUrls: ['./detail-news.component.scss']  
 })
 export class DetailNewsComponent implements OnInit {
 
-
   post: any = {};
-  attachmentDto: AttachmentDto[] = [];
-  selectedImageUrl: string | null = null;
-
-  readonly imageBaseUrl = 'http://localhost:8080/api/v1/report/image/';
   attachmentDto: AttachmentDto[] = [];
   selectedImageUrl: string | null = null;
 
@@ -58,16 +35,12 @@ export class DetailNewsComponent implements OnInit {
     private newsService: NewsService,
     private route: ActivatedRoute
   ) {}
-    private route: ActivatedRoute
-  ) {}
 
-  ngOnInit(): void {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadNewsById(id);
   }
 
-  private loadNewsById(id: number): void {
   private loadNewsById(id: number): void {
     this.newsService.getNewsById(id).subscribe({
       next: (res) => {
@@ -75,8 +48,6 @@ export class DetailNewsComponent implements OnInit {
         this.post = res;
         this.attachmentDto = res.attachments ?? [];   // đổi tên trường nếu cần
       },
-      error: (err) => {
-        alert(err?.error || 'Lỗi khi tải bài viết');
       error: (err) => {
         alert(err?.error || 'Lỗi khi tải bài viết');
       }

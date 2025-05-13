@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../../../services/news.service';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from "../../header/header.component";
+import { FooterComponent } from '../../footer/footer.component';
 
 
 @Component({

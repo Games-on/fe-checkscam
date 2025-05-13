@@ -2,7 +2,7 @@
   <div class="header-actions">
     <h1 class="h3 mb-2 text-gray-800">Quản lý tin tức</h1>
     <div class="dataTables_length" id="dataTable_length">
-      <button class="btn btn-primary bg-gradient-primary" routerLink="/create-news"><i
+      <button class="btn btn-primary bg-gradient-primary" (click)="openAssignPopup()"><i
           class="fas fa-plus"></i> Thêm</button>
     </div>
   </div>
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="popup-overlay" *ngIf="isPopupVisible" (click)="closePopup($event)">
+      <div class="popup-overlay" *ngIf="isPopupVisible" (click)="closePopup($event)">
         <div class="popup-content">
           <div class="popup-header">
             <h5>Thêm tin tức</h5>
@@ -76,4 +76,4 @@
             <button class="btn btn-primary" (click)="createNews()">Tạo</button>
           </div>
         </div>
-      </div> -->
+      </div>

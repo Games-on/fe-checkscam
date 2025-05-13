@@ -11,13 +11,8 @@
 </div>
 <div class="mb-3">
     <label for="text" class="form-label">Nội dung</label>
-    <!-- <input > -->
-    <textarea type="text" class="form-control" placeholder="Nhập nội dung" name="content"
-    [(ngModel)]="content"></textarea>
-</div>
-<div class="mb-3">
-    <label for="text" class="form-label">Tệp đính kèm</label>
-    <input id="files" type="file" multiple accept="image/*">
+    <input type="text" class="form-control" placeholder="Nhập nội dung" name="content"
+    [(ngModel)]="content">
 </div>
 
 <button type="submit" class="btn btn-primary w-100" (click)="createNews()">Tạo</button>

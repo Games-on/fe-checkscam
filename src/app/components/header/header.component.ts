@@ -4,18 +4,18 @@ import { CommonModule } from '@angular/common'; // Thường cần cho standalon
 
 @Component({
   selector: 'app-header',
-  standalone: true, 
+  standalone: true,
   imports: [
     RouterLink,
-    CommonModule // Cần thiết để sử dụng *ngIf nếu cần ẩn/hiện
+    CommonModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
 
-  isHeaderHidden = false; 
-  private lastScrollTop = 0; 
+  isHeaderHidden = false; // Biến trạng thái để kiểm soát việc ẩn header
+  private lastScrollTop = 0; // Lưu vị trí cuộn trước đó
 
   constructor() { }
 

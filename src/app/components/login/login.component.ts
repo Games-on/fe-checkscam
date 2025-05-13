@@ -31,11 +31,14 @@ export class LoginComponent {
         };
         this.userService.login(loginDTO).subscribe({
             next: (response) => {
+                debugger
                 const token = response.access_token;
                 this.tokenService.saveToken(token);
-                this.router.navigate(['/users']);
+                this.userService.saveUserData(response);
+                this.router.navigate(['/dashboard']);
             },
             error: (error) => {
+                debugger
                 alert(error?.error);
             }
         });

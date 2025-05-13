@@ -12,8 +12,9 @@ import { CreateUserComponent } from './components/user/create-user/create-user.c
 import { DetailNewsComponent } from './components/news/detail-news/detail-news.component';
 import { DetailReportComponent } from './components/report/detail-report/detail-report.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ChatBoxComponent } from './components/chatbot/chat-box/chat-box.component';
+// import { ChatBoxComponent } from './components/chatbot/chat-box/chat-box.component';
 import { AboutUsComponent } from './components/about-us/about-us.component'; // Import AboutUsComponent
+import { ChatBoxComponent } from './components/chat-box/chat-box.component';
 
 
 export const routes: Routes = [
@@ -30,9 +31,8 @@ export const routes: Routes = [
           { path: '', redirectTo: '/chatbot', pathMatch: 'full' },
         ],
       },
-      { path: 'chatbot', component: ChatbotComponent, children:[
-        { path: 'chatbox', component: ChatBoxComponent },
-      ] }, 
+      { path: 'chatbot', component: ChatbotComponent}, 
+      { path: 'chatbox', component: ChatBoxComponent },
       { path: 'login', component: LoginComponent }, 
       { path: 'create-report', component: CreateReportComponent }, 
       { path: 'view-news', component: ViewNewsComponent }, 

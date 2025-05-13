@@ -6,7 +6,7 @@ import { CheckScamRequestDTO } from '../../dtos/check-scam-request.dto';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../header/header.component'; 
 import { FooterComponent } from '../footer/footer.component'; 
-import { ChatBoxComponent } from './chat-box/chat-box.component';
+import { ChatBoxComponent } from '../chat-box/chat-box.component';
 
 // Cập nhật interface Message để có thuộc tính isUser
 interface Message {

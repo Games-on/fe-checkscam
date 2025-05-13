@@ -43,4 +43,29 @@ export class UserService {
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${environment.apiBaseUrl}/users/${id}`);
   }
+
+  saveUserData(token: any): void {
+  try {
+    // Nếu truyền vào là object chứa access_token thì lấy chuỗi token
+    const rawToken = typeof token === 'string' ? token : token?.access_token;
+
+    if (!rawToken || typeof rawToken !== 'string') {
+      console.error("Token không hợp lệ:", token);
+      return;
+    }
+
+    // Giải mã payload từ JWT
+    const payload = JSON.parse(atob(rawToken.split('.')[1]));
+
+    const userData = {
+      role: payload?.roles || [],
+      token: rawToken
+    };
+
+    localStorage.setItem('user', JSON.stringify(userData));
+  } catch (error) {
+    console.error("Lỗi khi phân tích token:", error);
+  }
+}
+
 }

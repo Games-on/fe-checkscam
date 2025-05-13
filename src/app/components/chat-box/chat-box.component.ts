@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CheckScamService } from '../../../services/check-scam.service';
+import { CheckScamService } from '../../services/check-scam.service';
 
 interface Message {
   text: string;

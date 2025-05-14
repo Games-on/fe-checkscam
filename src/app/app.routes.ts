@@ -15,6 +15,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 // import { ChatBoxComponent } from './components/chatbot/chat-box/chat-box.component';
 import { AboutUsComponent } from './components/about-us/about-us.component'; 
 import { ChatBoxComponent } from './components/chat-box/chat-box.component';
+import { ListNewsComponent } from './components/news/list-news/list-news.component';
 
 
 export const routes: Routes = [
@@ -28,6 +29,7 @@ export const routes: Routes = [
           { path: 'news', component: NewsComponent },
           { path: 'reports', component: ReportComponent },
           { path: 'dashboard', component: DashboardComponent },
+          { path: 'detail-news/:id', component: DetailNewsComponent }, 
           { path: '', redirectTo: '/chatbot', pathMatch: 'full' },
         ],
       },
@@ -35,10 +37,10 @@ export const routes: Routes = [
       { path: 'chatbox', component: ChatBoxComponent },
       { path: 'login', component: LoginComponent }, 
       { path: 'create-report', component: CreateReportComponent }, 
-      { path: 'view-news', component: ViewNewsComponent }, 
-      { path: 'detail-news/:id', component: DetailNewsComponent }, 
+      { path: 'list-news', component: ListNewsComponent }, 
       { path: 'detail-report/:id', component: DetailReportComponent }, 
       { path: 'about-us', component: AboutUsComponent },
+      { path: 'view-news/:id', component: ViewNewsComponent },
       { path: '**', redirectTo: '/chatbot' },
 ];
 

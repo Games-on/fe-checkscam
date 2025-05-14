@@ -1,22 +1,28 @@
 .chat-wrapper {
+  background-color: #f0f4f8; // nền riêng cho khung chat
+  background-image: url('/assets/img/back-ground.jpg');
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 80px); // Điều chỉnh lại nếu chiều cao header khác
   padding: 20px;
   background-color: #f4f7f6; // Màu nền nhẹ cho trang chứa box chat
-  padding-top: 75px;
+  padding-top: 100px; // Tạo khoảng cách phía trên với header
 }
 
 .chat-container {
+  color: #e2e8f0;
+  background-color: #0d1b2a;
   width: 100%;
   max-width: 700px; // Chiều rộng của box
   height: calc(100vh - 150px); // Chiều cao của box
   display: flex;
   flex-direction: column;
-  border: 1px solid #e0e0e0;
+  border: none;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
   background-color: #ffffff; // Nền trắng bên trong box
   overflow: hidden;
 }
@@ -48,16 +54,13 @@
   border-radius: 15px;
   word-wrap: break-word;
 
-  // Style cho bong bóng chat của bot (mặc định)
-  background-color: #e5e5ea; // Màu nền xám nhạt
-  color: #333; // Màu chữ
-  // Có thể thêm các style khác như box-shadow nhỏ
+  background-color: #334155; // màu bot
+  color: #e2e8f0;
 
   // Style cho bong bóng chat của người dùng (khi message-wrapper có class align-right)
   .message-wrapper.align-right & { // Áp dụng style cho message-content khi nằm trong message-wrapper.align-right
-    background-color: #0b80f7; // Màu nền xanh dương
-    color: white; // Chữ trắng
-    // Có thể thêm các style khác
+    background-color: #0ea5e9; // người dùng
+    color: #fff;
   }
 
 }
@@ -65,7 +68,7 @@
 .chat-input-wrapper {
   padding: 15px;
   border-top: 1px solid #e0e0e0;
-  background-color: #f8f8f8; // Nền nhẹ cho vùng input
+  background-color: #1e293b;
 }
 
 .chat-input {
@@ -97,50 +100,6 @@
   }
 }
 
-// .info-banner-section {
-//   background-color: #eaf4f4; // Màu nền nhẹ dựa trên hình ảnh
-//   padding: 80px 0; // Khoảng trống trên dưới cho section
-//   position: relative; // Để định vị các phần tử trang trí nếu có
-//   overflow: hidden; // Đảm bảo nội dung không tràn ra ngoài
-
-//   .container {
-//     max-width: 1100px; // Giới hạn chiều rộng nội dung
-//     margin: 0 auto;
-//     padding: 0 15px;
-//     display: flex; // Sử dụng Flexbox để chia cột nội dung text và mô tả
-//     gap: 30px; // Khoảng cách giữa hai cột nội dung
-//     flex-wrap: wrap; // Cho phép xuống dòng trên màn hình nhỏ
-//     align-items: center; // Căn giữa theo chiều dọc
-//   }
-
-//   .banner-content {
-//       display: flex; // Sử dụng flexbox để sắp xếp nội dung chính và ảnh trang trí (nếu có)
-//       width: 100%;
-//       flex-wrap: wrap;
-//       justify-content: space-between; // Đẩy nội dung và ảnh sang hai bên
-//   }
-
-//   .text-content {
-//       flex-basis: 50%; // Cột text chiếm 50% không gian cơ sở
-//       min-width: 300px; // Chiều rộng tối thiểu
-//        @media (max-width: 768px) {
-//             flex-basis: 100%; // Chiếm 100% trên mobile
-//             text-align: center; // Căn giữa text
-//             margin-bottom: 30px; // Khoảng cách dưới trên mobile
-//         }
-//   }
-
-//    .description-content {
-//       flex-basis: 40%; // Cột mô tả chiếm 40% không gian cơ sở
-//       min-width: 250px; // Chiều rộng tối thiểu
-//        @media (max-width: 768px) {
-//             flex-basis: 100%; // Chiếm 100% trên mobile
-//             text-align: center; // Căn giữa text
-//         }
-//    }
-//   }
-
-  /* Style cho Section Về Chúng Tôi */
 .about-us-section {
   background-color: #ffffff; // Nền trắng (dựa trên hình ảnh)
   padding: 60px 0; // Khoảng trống trên dưới cho section
@@ -235,9 +194,25 @@
     &:hover {
       background-color: darken(#4CAF50, 10%);
     }
+  }
+}
 
-     .arrow-icon {
-        // Style cho icon mũi tên
-     }
+.chat-input .form-control.form-control-lg {
+  background-color: #334155;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+}
+
+.chat-input .btn.btn-primary.btn-lg {
+  background-color: #38bdf8;
+  color: #fff;
+  border: none;
+
+  &:hover {
+    background-color: #0ea5e9;
   }
 }

@@ -14,7 +14,7 @@
   })
   export class HeaderComponent implements OnInit {
 
-    isHeaderHidden = false; // Biến trạng thái để kiểm soát việc ẩn header
+    isHeaderHidden = false;
     private lastScrollTop = 0; // Lưu vị trí cuộn trước đó
 
     constructor() { }

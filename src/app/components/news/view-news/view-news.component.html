@@ -1,79 +1,20 @@
 <app-header (aiTuVanClicked)="onAiTuVanClicked()"></app-header>
-<div class="news-page-container">
-  <div class="page-content-area">
-    <div class="container">
-      <h2 class="page-title">Trang tin tức</h2>
-
-      <!-- Search + Pagination Top -->
-      <div class="search-and-pagination">
-        <div class="search-bar">
-          <input
-            type="text"
-            placeholder="Tìm kiếm tin tức..."
-            [(ngModel)]="searchTerm"
-            (input)="searchPosts()"
-          />
-          <button (click)="searchPosts()">Tìm kiếm</button>
-        </div>
-
-        <div class="pagination-controls">
-          <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">&lt;</button>
-
-          <span
-            *ngFor="let page of pages"
-            [class.active]="currentPage === page"
-            (click)="changePage(page)"
-            >{{ page }}</span
-          >
-
-          <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">&gt;</button>
-        </div>
-      </div>
-
-      <!-- Grid -->
-      <div class="news-grid">
-        <div
-          class="news-card"
-          *ngFor="let post of pagedPosts; trackBy: trackById"
-        >
-          <div class="card-image">
-            <img
-              [src]="post.attachments?.length ? getImageUrl(post.attachments[0]) : 'assets/img/placeholder.png'"
-              (error)="onImageError($event)"
-              alt="Ảnh tin tức"
-            />
-          </div>
-
-          <div class="card-content">
-            <h3 class="card-title">
-              <a [routerLink]="'/detail-news/' + post.id">{{ post.name }}</a>
-            </h3>
-            <p class="card-description">{{ post.shortDescription }}</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pagination Bottom -->
-      <!-- <div class="pagination-controls bottom">
-        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">&lt;</button>
-
-        <span
-          *ngFor="let page of pages"
-          [class.active]="currentPage === page"
-          (click)="changePage(page)"
-          >{{ page }}</span
-        >
-
-        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">&gt;</button>
-      </div> -->
-
-      <!-- Pagination Info -->
-      <div class="pagination-info">
-        Hiển thị {{ startIndex + 1 }} - {{ endIndex + 1 }} của {{ totalPosts }} tin tức
-      </div>
+<div class="news-detail-full">
+  <div class="news-detail-card">
+    <div class="news-detail-row">
+      <span class="news-detail-label">Tên</span>
+      <h2 class="news-detail-title">{{ post.name }}</h2>
+    </div>
+    <hr />
+    <div class="news-detail-row">
+      <span class="news-detail-label">Mô tả</span>
+      <p class="news-detail-desc">{{ post.shortDescription }}</p>
+    </div>
+    <div class="news-detail-row">
+      <span class="news-detail-label">Nội dung</span>
+      <p class="news-detail-content">{{ post.content }}</p>
     </div>
   </div>
 </div>
-
 <app-chat-box *ngIf="showChatbox" (close)="closeChatbox()"></app-chat-box>
 <app-footer></app-footer>

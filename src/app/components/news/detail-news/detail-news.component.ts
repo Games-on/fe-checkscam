@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* detail-news.component.ts */
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
@@ -10,10 +11,18 @@ interface AttachmentDto {
   id: number;
   url?: string | null;
 }
+=======
+import { Component, OnInit } from '@angular/core';
+import { NewsService } from '../../../services/news.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HeaderComponent } from "../../header/header.component";
+import { FooterComponent } from '../../footer/footer.component';
+>>>>>>> c246f87 (update news UI and user UI)
 
 
 @Component({
   selector: 'app-detail-news',
+<<<<<<< HEAD
   standalone: true,                           
   imports: [
     CommonModule,                              
@@ -37,10 +46,27 @@ export class DetailNewsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+=======
+  imports: [],
+  templateUrl: './detail-news.component.html',
+  styleUrl: './detail-news.component.scss'
+})
+export class DetailNewsComponent implements OnInit {
+  post: any = {};
+
+  constructor(
+    private newsService: NewsService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
+
+  ngOnInit() {
+>>>>>>> c246f87 (update news UI and user UI)
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadNewsById(id);
   }
 
+<<<<<<< HEAD
   private loadNewsById(id: number): void {
     this.newsService.getNewsById(id).subscribe({
       next: (res) => {
@@ -50,10 +76,22 @@ export class DetailNewsComponent implements OnInit {
       },
       error: (err) => {
         alert(err?.error || 'Lỗi khi tải bài viết');
+=======
+  loadNewsById(id: number){
+    this.newsService.getNewsById(id).subscribe({
+      next: (response) => {
+        debugger
+        this.post = response;
+      },
+      error: (error) => {
+        debugger
+        alert(error.error);
+>>>>>>> c246f87 (update news UI and user UI)
       }
     });
   }
 
+<<<<<<< HEAD
   /* ---------- Helpers ---------- */
 
   getImageUrl({ url }: AttachmentDto): string {
@@ -91,3 +129,9 @@ export class DetailNewsComponent implements OnInit {
     (ev.target as HTMLImageElement).src = 'assets/img/placeholder.png';
   }
 }
+=======
+  goBack() {
+    this.router.navigate(['/news']);
+  }
+}
+>>>>>>> c246f87 (update news UI and user UI)

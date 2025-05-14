@@ -1,0 +1,144 @@
+    .news-form-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #7f8c8d;
+      font-size: 1rem;
+    }
+  }
+
+  .news-form {
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 500;
+
+        i {
+          margin-right: 0.5rem;
+          color: #3498db;
+        }
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        transition: border-color 0.2s ease;
+
+        &:focus {
+          border-color: #3498db;
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+      }
+
+      .content-textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+    }
+
+    .file-upload-container {
+      .file-hint {
+        display: block;
+        margin-top: 0.5rem;
+        color: #7f8c8d;
+        font-size: 0.875rem;
+      }
+    }
+
+    .selected-files {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 4px;
+
+      .file-list {
+        margin-top: 0.5rem;
+
+        .file-item {
+          display: flex;
+          align-items: center;
+          padding: 0.5rem;
+          background: #ffffff;
+          border-radius: 4px;
+          margin-bottom: 0.5rem;
+
+          i {
+            color: #3498db;
+            margin-right: 0.5rem;
+          }
+
+          .file-name {
+            flex: 1;
+            margin-right: 0.5rem;
+          }
+
+          .file-size {
+            color: #7f8c8d;
+            font-size: 0.875rem;
+          }
+        }
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+
+      button {
+        flex: 1;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        i {
+          margin-right: 0.5rem;
+        }
+
+        &.btn-secondary {
+          background: #e0e0e0;
+          color: #2c3e50;
+
+          &:hover {
+            background: #d0d0d0;
+          }
+        }
+
+        &.btn-primary {
+          background: #3498db;
+          color: white;
+          
+
+          &:hover {
+            background: #2980b9;
+          }
+        }
+      }
+    }
+  }
+}

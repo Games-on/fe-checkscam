@@ -4,12 +4,11 @@
     <h1 class="h3 mb-2 text-gray-800">Quản lý tin tức</h1>
 
     <button class="btn btn-primary bg-gradient-primary"
-            (click)="openAssignPopup()">
+           routerLink="/create-news" >
       <i class="fas fa-plus"></i> Thêm
     </button>
   </div>
 
-  <!-- BẢNG DANH SÁCH -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Danh sách tin tức</h6>
@@ -33,9 +32,9 @@
             </td>
             <td>{{ post.shortDescription }}</td>
             <td class="text-center">
-              <button class="btn btn-sm edit-btn">
+              <!-- <button class="btn btn-sm edit-btn">
                 <i class="fa-solid fa-pen-to-square"></i>
-              </button>
+              </button> -->
               <button class="btn btn-sm delete-btn"
                       (click)="deleteNews(post.id)">
                 <i class="fa-solid fa-trash"></i>

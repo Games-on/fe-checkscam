@@ -1,10 +1,10 @@
-    .news-form-container {
+.news-form-container {
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
   background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 
   .form-header {
     text-align: center;
@@ -12,7 +12,7 @@
 
     h2 {
       color: #2c3e50;
-      font-size: 1.8rem;
+      font-size: 2rem;
       margin-bottom: 0.5rem;
     }
 
@@ -30,7 +30,7 @@
         display: block;
         margin-bottom: 0.5rem;
         color: #2c3e50;
-        font-weight: 500;
+        font-weight: 600;
 
         i {
           margin-right: 0.5rem;
@@ -42,13 +42,13 @@
         width: 100%;
         padding: 0.75rem;
         border: 1px solid #e0e0e0;
-        border-radius: 4px;
-        transition: border-color 0.2s ease;
+        border-radius: 6px;
+        transition: 0.2s ease;
 
         &:focus {
           border-color: #3498db;
           outline: none;
-          box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+          box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
         }
       }
 
@@ -60,28 +60,27 @@
 
     .file-upload-container {
       .file-hint {
-        display: block;
-        margin-top: 0.5rem;
-        color: #7f8c8d;
-        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        color: #95a5a6;
+        font-size: 0.85rem;
       }
     }
 
     .selected-files {
-      margin-top: 1rem;
+      background: #f4f6f8;
       padding: 1rem;
-      background: #f8f9fa;
-      border-radius: 4px;
+      border-radius: 6px;
 
       .file-list {
         margin-top: 0.5rem;
 
         .file-item {
+          background: #fff;
+          border: 1px solid #e0e0e0;
+          border-radius: 6px;
+          padding: 0.5rem;
           display: flex;
           align-items: center;
-          padding: 0.5rem;
-          background: #ffffff;
-          border-radius: 4px;
           margin-bottom: 0.5rem;
 
           i {
@@ -91,12 +90,11 @@
 
           .file-name {
             flex: 1;
-            margin-right: 0.5rem;
           }
 
           .file-size {
             color: #7f8c8d;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
           }
         }
       }
@@ -111,31 +109,36 @@
         flex: 1;
         padding: 0.75rem;
         border: none;
-        border-radius: 4px;
-        font-weight: 500;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: 0.2s ease;
         cursor: pointer;
-        transition: all 0.2s ease;
 
         i {
           margin-right: 0.5rem;
         }
 
         &.btn-secondary {
-          background: #e0e0e0;
+          background: #ecf0f1;
           color: #2c3e50;
 
           &:hover {
-            background: #d0d0d0;
+            background: #dcdde1;
           }
         }
 
         &.btn-primary {
           background: #3498db;
           color: white;
-          
 
           &:hover {
             background: #2980b9;
+          }
+
+          &:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
           }
         }
       }

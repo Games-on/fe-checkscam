@@ -1,36 +1,49 @@
-<h2>Thêm tin tức</h2>
+<div class="news-form-container">
+  <div class="form-header">
+    <h2>Thêm tin tức mới</h2>
+    <p class="subtitle">Điền đầy đủ thông tin để tạo bản tin mới</p>
+  </div>
 
-<div class="mb-3">
-  <label class="form-label">Tên</label>
-  <input type="text" class="form-control" placeholder="Nhập tên" [(ngModel)]="name" />
+  <div class="news-form">
+    <div class="form-group">
+      <label class="form-label" for="name">Tiêu đề</label>
+      <input id="name" type="text" class="form-control" placeholder="Nhập tiêu đề tin tức" [(ngModel)]="name" />
+    </div>
 
+    <div class="form-group">
+      <label class="form-label" for="description">Mô tả ngắn</label>
+      <input id="description" type="text" class="form-control" placeholder="Nhập mô tả ngắn" [(ngModel)]="shortDescription" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="content">Nội dung chi tiết</label>
+      <textarea id="content" [(ngModel)]="content" class="form-control content-textarea" placeholder="Nhập nội dung..."></textarea>
+    </div>
+
+    <div class="form-group file-upload-container">
+      <label class="form-label" for="files"><i class="fas fa-image"></i> Ảnh đính kèm</label>
+      <input id="files" type="file" class="form-control" accept="image/*" multiple (change)="onFileSelect($event)" />
+      <small class="file-hint">Chấp nhận các định dạng JPG, PNG, GIF. Tối đa 5MB mỗi ảnh.</small>
+    </div>
+
+    <div *ngIf="selectedFiles.length" class="selected-files">
+      <strong>Tệp đã chọn:</strong>
+      <div class="file-list">
+        <div *ngFor="let f of selectedFiles" class="file-item">
+          <i class="fas fa-paperclip"></i>
+          <span class="file-name">{{ f.name }}</span>
+          <span class="file-size">({{ f.size | number }} bytes)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-secondary" type="button" (click)="goBack()">
+        Hủy
+      </button>
+      <button class="btn btn-primary" type="button" (click)="createNews()">
+      Tạo
+      </button>
+    </div>
+  </div>
 </div>
-
-<div class="mb-3">
-  <label class="form-label">Mô tả</label>
-  <input type="text" class="form-control" placeholder="Nhập mô tả" [(ngModel)]="shortDescription" />
-</div>
-
-<div class="mb-3">
-  <label class="form-label">Nội dung</label>
-  <textarea name=""  type="text"  [(ngModel)]="content" id="" class="form-control" placeholder="Nhập nội dung"></textarea>
-</div>
-
-<div class="mb-3">
-  <label class="form-label" for="files">Ảnh đính kèm (PNG, JPG, GIF)</label>
-  <input id="files" type="file" class="form-control" accept="image/*" multiple (change)="onFileSelect($event)" />
-</div>
-
-<!-- Danh sách file -->
-<div *ngIf="selectedFiles.length" class="mb-3">
-  <label class="form-label">Các tệp đã chọn:</label>
-  <ul class="mb-0">
-    <li *ngFor="let f of selectedFiles">
-      {{ f.name }} ({{ f.size | number }} bytes)
-    </li>
-  </ul>
-</div>
-
-<button type="button" class="btn btn-primary w-100" (click)="createNews()">
-  Tạo
-</button>

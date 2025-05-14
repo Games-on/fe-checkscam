@@ -1,34 +1,80 @@
 .container.mt-4 {
     display: flex;
-    justify-content: center
-  }
-  
-  .card.p-4 {
+    justify-content: center;
+    padding-top: 75px;
+}
+
+.card.p-4 {
     max-width: 800px;
     width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     border: 1px solid #e0e0e0;
     background-color: #f9f9f9;
-  }
-  
-  label {
+}
+
+label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
     color: #555;
-  }
-  
-  h4.fw-bold {
+}
+
+h4.fw-bold {
     color: #333; 
     margin-bottom: 1rem;
     border-bottom: 2px solid #ccc;
     padding-bottom: 0.5rem;
-  }
-  
-  p {
+}
+
+p {
     line-height: 1.8;
     color: #444;
     margin-bottom: 1rem;
-  }
-  
+}
+
+// --- Bổ sung style hiện đại, fit nội dung bên phải sidebar ---
+.news-detail-full {
+  position: relative;
+  // margin-left: 260px; /* Khoảng cách bằng chiều rộng sidebar */
+  padding: 20px;
+  background: #f7f8fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.news-detail-card {
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  padding: 32px 40px;
+  box-sizing: border-box;
+}
+
+.news-detail-row {
+  margin-bottom: 18px;
+}
+
+.news-detail-label {
+  display: block;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 4px;
+  font-size: 1rem;
+}
+
+.news-detail-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 8px 0;
+}
+
+.news-detail-desc,
+.news-detail-content {
+  color: #333;
+  font-size: 1.05rem;
+  margin: 0;
+  line-height: 1.6;
+}

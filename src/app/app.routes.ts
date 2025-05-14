@@ -11,6 +11,12 @@ import { ViewNewsComponent } from './components/news/view-news/view-news.compone
 import { CreateUserComponent } from './components/user/create-user/create-user.component';
 import { DetailNewsComponent } from './components/news/detail-news/detail-news.component';
 import { DetailReportComponent } from './components/report/detail-report/detail-report.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+// import { ChatBoxComponent } from './components/chatbot/chat-box/chat-box.component';
+import { AboutUsComponent } from './components/about-us/about-us.component'; 
+import { ChatBoxComponent } from './components/chat-box/chat-box.component';
+import { ListNewsComponent } from './components/news/list-news/list-news.component';
+
 
 export const routes: Routes = [
     {
@@ -22,15 +28,19 @@ export const routes: Routes = [
           { path: 'create-news', component: CreateNewsComponent },
           { path: 'news', component: NewsComponent },
           { path: 'reports', component: ReportComponent },
+          { path: 'dashboard', component: DashboardComponent },
+          { path: 'detail-news/:id', component: DetailNewsComponent }, 
           { path: '', redirectTo: '/chatbot', pathMatch: 'full' },
         ],
       },
-      { path: 'chatbot', component: ChatbotComponent }, 
+      { path: 'chatbot', component: ChatbotComponent}, 
+      { path: 'chatbox', component: ChatBoxComponent },
       { path: 'login', component: LoginComponent }, 
       { path: 'create-report', component: CreateReportComponent }, 
-      { path: 'view-news', component: ViewNewsComponent }, 
-      { path: 'detail-news/:id', component: DetailNewsComponent }, 
+      { path: 'list-news', component: ListNewsComponent }, 
       { path: 'detail-report/:id', component: DetailReportComponent }, 
+      { path: 'about-us', component: AboutUsComponent },
+      { path: 'view-news/:id', component: ViewNewsComponent },
       { path: '**', redirectTo: '/chatbot' },
 ];
 

@@ -32,4 +32,16 @@ export class ReportService {
   getReportById(id: number): Observable<any> {
     return this.http.get(`${environment.apiBaseUrl}/report/${id}`);
   }
+
+  uploadFiles(reportId: number | string, formData: FormData): Observable<any> {
+    return this.http.post<any>(`${environment.apiBaseUrl}/report/uploads/${reportId}`, formData);
+  }
+
+  handleReport(body: {
+    idReport: number;
+    status: 2 | 3;
+    idScamTypeAfterHandle: number | null;
+  }): Observable<any> {
+    return this.http.post(`${environment.apiBaseUrl}/report/handle`, body);
+  }
 }

@@ -1,187 +1,218 @@
-.chatbot-wrapper {
+.chat-wrapper {
+  background-color: #f0f4f8; // nền riêng cho khung chat
+  background-image: url('/assets/img/back-ground.jpg');
+  background-size: cover;
+  background-position: center;
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.chatbot-header {
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px); // Điều chỉnh lại nếu chiều cao header khác
   padding: 20px;
-  background: #2196F3;
-  color: white;
-  border-radius: 12px 12px 0 0;
-
-  h3 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-
-  .subtitle {
-    margin: 5px 0 0;
-    font-size: 0.9rem;
-    opacity: 0.9;
-  }
+  background-color: #f4f7f6; // Màu nền nhẹ cho trang chứa box chat
+  padding-top: 100px; // Tạo khoảng cách phía trên với header
 }
 
-.chatbot-container {
+.chat-container {
+  color: #e2e8f0;
+  background-color: #0d1b2a;
+  width: 100%;
+  max-width: 700px; // Chiều rộng của box
+  height: calc(100vh - 150px); // Chiều cao của box
   display: flex;
   flex-direction: column;
-  height: 600px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+  background-color: #ffffff; // Nền trắng bên trong box
+  overflow: hidden;
 }
 
 .chat-display {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  background: #f5f5f5;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 3px;
-  }
+  flex-grow: 1;
+  overflow-y: auto; // Tạo thanh cuộn
+  padding: 15px;
+  display: flex;
+  flex-direction: column; // Xếp tin nhắn từ trên xuống
 }
 
 .message-wrapper {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 10px;
+  display: flex; // Kích hoạt Flexbox
 
-  &.user-message {
-    align-items: flex-end;
+  // Mặc định (không có class align-right), tin nhắn căn trái (của bot)
+  justify-content: flex-start;
 
-    .message-content {
-      background: #2196F3;
-      color: white;
-      border-radius: 15px 15px 0 15px;
-    }
-  }
-
-  &.bot-message {
-    align-items: flex-start;
-
-    .message-content {
-      background: white;
-      color: #333;
-      border-radius: 15px 15px 15px 0;
-    }
+  // Style khi là tin nhắn của người dùng (có class align-right)
+  &.align-right {
+    justify-content: flex-end; // Căn nội dung sang phải
   }
 }
 
 .message-content {
-  max-width: 70%;
-  padding: 12px 16px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  max-width: 80%; // Chiều rộng tối đa của bong bóng chat
+  padding: 8px 12px;
+  border-radius: 15px;
+  word-wrap: break-word;
 
-  .message-text {
-    margin-bottom: 4px;
-    line-height: 1.4;
+  background-color: #334155; // màu bot
+  color: #e2e8f0;
+
+  // Style cho bong bóng chat của người dùng (khi message-wrapper có class align-right)
+  .message-wrapper.align-right & { // Áp dụng style cho message-content khi nằm trong message-wrapper.align-right
+    background-color: #0ea5e9; // người dùng
+    color: #fff;
   }
 
-  .message-time {
-    font-size: 0.75rem;
-    opacity: 0.7;
-    text-align: right;
-  }
+}
+
+.chat-input-wrapper {
+  padding: 15px;
+  border-top: 1px solid #e0e0e0;
+  background-color: #1e293b;
 }
 
 .chat-input {
-  padding: 20px;
-  background: white;
-  border-top: 1px solid #eee;
-}
-
-.input-wrapper {
   display: flex;
-  gap: 10px;
-  align-items: flex-end;
-}
+  align-items: center;
+  gap: 10px; // Khoảng cách giữa dropdown, input, button
 
-.input-type-select {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: white;
-  min-width: 120px;
-  cursor: pointer;
+  .input-type-select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    // Thêm style tùy chỉnh cho dropdown
+  }
 
-  &:focus {
-    outline: none;
-    border-color: #2196F3;
+  .form-control.form-control-lg {
+    flex-grow: 1; // Input chiếm hết không gian
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    // Điều chỉnh style Bootstrap hoặc viết lại
+  }
+
+  .btn.btn-primary.btn-lg {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+     // Điều chỉnh style Bootstrap hoặc viết lại
   }
 }
 
-textarea {
-  flex: 1;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  resize: none;
-  height: 60px;
-  font-family: inherit;
-  font-size: 1rem;
+.about-us-section {
+  background-color: #ffffff; // Nền trắng (dựa trên hình ảnh)
+  padding: 60px 0; // Khoảng trống trên dưới cho section
+  position: relative;
+  overflow: hidden;
 
-  &:focus {
-    outline: none;
-    border-color: #2196F3;
+  .container {
+    max-width: 1100px; // Giới hạn chiều rộng nội dung
+    margin: 0 auto;
+    padding: 0 15px;
   }
 
-  &:disabled {
-    background: #f5f5f5;
-    cursor: not-allowed;
+  .about-us-content {
+      display: flex; // Sử dụng Flexbox để tạo hai cột
+      align-items: center; // Căn giữa theo chiều dọc
+      gap: 30px; // Khoảng cách giữa hai cột
+      flex-wrap: wrap; // Cho phép xuống dòng trên mobile
+  }
+
+  .graphic-column {
+      flex-basis: 45%; // Cột đồ họa chiếm 45% (có thể điều chỉnh)
+      min-width: 250px; // Chiều rộng tối thiểu
+      text-align: center; // Căn giữa nội dung (ảnh)
+       @media (max-width: 768px) {
+            flex-basis: 100%; // Chiếm 100% trên mobile
+            margin-bottom: 30px; // Khoảng cách dưới trên mobile
+        }
+
+        img {
+            max-width: 100%; // Đảm bảo ảnh không tràn ra ngoài
+            height: auto;
+        }
+  }
+
+  .text-column {
+      flex-basis: 50%; // Cột text chiếm 50% (có thể điều chỉnh)
+      min-width: 300px; // Chiều rộng tối thiểu
+       @media (max-width: 768px) {
+            flex-basis: 100%; // Chiếm 100% trên mobile
+            text-align: center; // Căn giữa text
+        }
+  }
+
+  .section-label {
+    font-size: 0.9em;
+    color: #555; // Màu xám
+    margin-bottom: 5px;
+    font-weight: bold;
+     text-transform: uppercase; // Viết hoa
+     letter-spacing: 1px; // Khoảng cách chữ
+  }
+
+  .section-main-title {
+    font-size: 2em; // Kích thước font tiêu đề chính
+    font-weight: bold;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px; // Khoảng cách dưới tiêu đề chính
+    line-height: 1.2;
+     @media (max-width: 768px) {
+        font-size: 1.8em;
+     }
+      br { // Khoảng cách giữa các dòng
+          display: block;
+          content: "";
+          margin-bottom: 5px;
+      }
+  }
+
+  .section-description {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #555; // Màu xám
+    margin-top: 0;
+    margin-bottom: 20px; // Khoảng cách dưới mô tả
+  }
+
+  .btn-about-us {
+    display: inline-block;
+    background-color: #4CAF50; // Màu nền nút (xanh lá cây)
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    &:hover {
+      background-color: darken(#4CAF50, 10%);
+    }
   }
 }
 
-.send-button {
-  padding: 12px 24px;
-  background: #2196F3;
-  color: white;
+.chat-input .form-control.form-control-lg {
+  background-color: #334155;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+}
+
+.chat-input .btn.btn-primary.btn-lg {
+  background-color: #38bdf8;
+  color: #fff;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s;
 
-  &:hover:not(:disabled) {
-    background: #1976D2;
+  &:hover {
+    background-color: #0ea5e9;
   }
-
-  &:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
-}
-
-.loading-spinner {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #ffffff;
-  border-radius: 50%;
-  border-top-color: transparent;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.result-message {
-  margin-top: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: #333;
 }

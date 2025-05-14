@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
   styleUrl: './create-news.component.scss'
 })
 export class CreateNewsComponent implements OnInit {
+  selectedFiles: File[] = [];
   shortDescription: string = '';
   name: string = '';
   content: string = '';
@@ -26,24 +27,33 @@ export class CreateNewsComponent implements OnInit {
 
   ngOnInit() { }
 
+  onFileSelect(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.selectedFiles = Array.from(input.files);
+    }
+  }
+
+  goBack() {
+    this.router.navigate(['/news']);
+  }
+
   createNews() { 
     const newsDTO: NewsDTO = {
-          name: this.name,
-          shortDescription: this.shortDescription,
-          content: this.content
-        };
+      name: this.name,
+      shortDescription: this.shortDescription,
+      content: this.content
+    };
     
-        this.newsService.createNews(newsDTO).subscribe({
-          next: (response) => {
-            debugger
-            // const token = response.accessToken;
-            // this.tokenService.saveToken(token);
-            this.router.navigate(['/news']);
-          },
-          error: (error) => {
-            debugger
-            alert(error?.error);
-          }
-        });
+    this.newsService.createNews(newsDTO).subscribe({
+      next: (response) => {
+        debugger
+        this.router.navigate(['/news']);
+      },
+      error: (error) => {
+        debugger
+        alert(error?.error || 'Có lỗi xảy ra khi tạo tin tức');
+      }
+    });
   }
 }

@@ -1,10 +1,19 @@
-<div class="container mt-4">
-    <div class="card p-4">
-        <label for="text">Tên</label>
-        <h4 class="fw-bold">{{ post.name }}</h4>
-        <label for="text">Mô tả</label>
-        <p>{{ post.shortDescription }}</p>
-        <label for="text">Nội dung</label>
-        <p>{{ post.content }}</p>
+<div class="news-detail-full">
+  <div class="news-detail-card">
+    <div class="news-detail-row">
+      <span class="news-detail-label">Tên</span>
+      <h2 class="news-detail-title">{{ post.name }}</h2>
     </div>
+    <hr />
+    <div class="news-detail-row">
+      <span class="news-detail-label">Mô tả</span>
+      <p class="news-detail-desc">{{ post.shortDescription }}</p>
+    </div>
+    <div class="news-detail-row">
+      <span class="news-detail-label">Nội dung</span>
+      <p class="news-detail-content">{{ post.content }}</p>
+    </div>
+  </div>
 </div>
+
+<!-- <app-footer></app-footer> -->

@@ -1,18 +1,20 @@
-<h2>Danh sách tin tức</h2>
-<table class="data-table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Tên</th>
-      <th>Mô tả</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let post of posts">
-      <td>{{ post.id }}</td>
-      <td><a routerLink="/detail-news/{{post.id}}">{{ post.name }}</a></td>
-      <td>{{ post.shortDescription }}</td>
-    </tr>
-  </tbody>
-</table>
-<button class="btn btn-primary" routerLink="/chatbot">Trở lại</button>
+<app-header (aiTuVanClicked)="onAiTuVanClicked()"></app-header>
+<div class="news-detail-full">
+  <div class="news-detail-card">
+    <div class="news-detail-row">
+      <span class="news-detail-label">Tên</span>
+      <h2 class="news-detail-title">{{ post.name }}</h2>
+    </div>
+    <hr />
+    <div class="news-detail-row">
+      <span class="news-detail-label">Mô tả</span>
+      <p class="news-detail-desc">{{ post.shortDescription }}</p>
+    </div>
+    <div class="news-detail-row">
+      <span class="news-detail-label">Nội dung</span>
+      <p class="news-detail-content">{{ post.content }}</p>
+    </div>
+  </div>
+</div>
+<app-chat-box *ngIf="showChatbox" (close)="closeChatbox()"></app-chat-box>
+<app-footer></app-footer>

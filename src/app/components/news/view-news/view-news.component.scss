@@ -1,146 +1,79 @@
-h2 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 1.5em;
-  }
-  
-  .controls {
+.container.mt-4 {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .search-bar {
-    display: flex;
-    input[type='text'] {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px 0 0 4px;
-      outline: none;
-      background-color: #f8f8f8;
-    }
-    button {
-      background-color: transparent;
-      color: #555;
-      border: 1px solid #ccc;
-      padding: 8px 12px;
-      border-radius: 0 4px 4px 0;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #eee;
-    }
-    i {
-      margin-right: 5px;
-    }
-  }
-  
-  .add-btn {
-    background-color: #28a745; /* Green */
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .add-btn:hover {
-    background-color: #218838;
-  }
-  
-  .data-table {
+    justify-content: center;
+    padding-top: 75px;
+}
+
+.card.p-4 {
+    max-width: 800px;
     width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    overflow: hidden;
-    background-color: #fff;
-  }
-  
-  .data-table th,
-  .data-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  .data-table th {
-    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
     font-weight: bold;
     color: #555;
-  }
-  
-  .data-table tbody tr:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .action-icons {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-  }
-  
-  .icon-button {
-    background: none;
-    border: none;
-    color: #555;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .icon-button i {
-    font-size: 1em;
-  }
-  
-  .icon-button:hover {
-    background-color: #eee;
-    color: #007bff;
-  }
-  
-  .pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    padding: 10px 0;
-    border-top: 1px solid #eee;
-    color: #555;
-    font-size: 0.9em;
-  }
-  
-  .records-per-page label {
-    margin-right: 10px;
-  }
-  
-  .records-per-page select {
-    padding: 6px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    color: #555;
-  }
-  
-  .page-navigation button {
-    background-color: #eee; /* Grey buttons */
-    border: 1px solid #ccc;
-    padding: 6px 10px;
-    margin: 0 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: #555;
-  }
-  
-  .page-navigation button:hover {
-    background-color: #ddd;
-  }
-  
-  .page-navigation span {
-    margin: 0 10px;
-  }
+}
+
+h4.fw-bold {
+    color: #333; 
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 0.5rem;
+}
+
+p {
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+// --- Bổ sung style hiện đại, fit nội dung bên phải sidebar ---
+.news-detail-full {
+  position: relative;
+  padding: 95px 20px 20px 20px; /* padding: top right bottom left */
+  background: #f7f8fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.news-detail-card {
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  padding: 32px 40px;
+  box-sizing: border-box;
+}
+
+.news-detail-row {
+  margin-bottom: 18px;
+}
+
+.news-detail-label {
+  display: block;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 4px;
+  font-size: 1rem;
+}
+
+.news-detail-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 8px 0;
+}
+
+.news-detail-desc,
+.news-detail-content {
+  color: #333;
+  font-size: 1.05rem;
+  margin: 0;
+  line-height: 1.6;
+}

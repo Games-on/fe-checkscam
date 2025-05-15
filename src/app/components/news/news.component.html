@@ -1,4 +1,3 @@
-<!-- QUẢN LÝ TIN TỨC -->
 <div class="container-fluid">
   <div class="header-actions">
     <h1 class="h3 mb-2 text-gray-800">Quản lý tin tức</h1>
@@ -32,7 +31,7 @@
             </td>
             <td>{{ post.shortDescription }}</td>
             <td class="text-center">
-              <button class="btn btn-sm edit-btn">
+              <button class="btn btn-sm edit-btn" routerLink="/update-news/{{post.id}}">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
               <button class="btn btn-sm delete-btn"

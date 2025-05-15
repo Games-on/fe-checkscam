@@ -43,7 +43,7 @@
 
     ngOnInit() {
       if (this.data) {
-        console.log('User data:', this.data); // Debug log
+        console.log('User data:', this.data);
         this.userId = this.data.id;
         this.name = this.data.name;
         this.email = this.data.email;

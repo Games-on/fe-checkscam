@@ -16,6 +16,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AboutUsComponent } from './components/about-us/about-us.component'; 
 import { ChatBoxComponent } from './components/chat-box/chat-box.component';
 import { ListNewsComponent } from './components/news/list-news/list-news.component';
+import { UpdateNewsComponent } from './components/news/update-news/update-news.component';
 
 
 export const routes: Routes = [
@@ -26,6 +27,7 @@ export const routes: Routes = [
           { path: 'users', component: UserComponent },
           { path: 'create-user', component: CreateUserComponent },
           { path: 'create-news', component: CreateNewsComponent },
+          { path: 'update-news/:id', component: UpdateNewsComponent },
           { path: 'news', component: NewsComponent },
           { path: 'reports', component: ReportComponent },
           { path: 'dashboard', component: DashboardComponent },

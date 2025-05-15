@@ -1,5 +1,9 @@
 <app-header (aiTuVanClicked)="onAiTuVanClicked()"></app-header>
+
 <div class="chat-wrapper">
+  <div>
+    <!-- <img width= "200px" src="https://sdmntprwestus.oaiusercontent.com/files/00000000-1fe8-6230-bd9f-7d981bd4e9b8/raw?se=2025-05-15T04%3A37%3A24Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=61180a4f-34a9-42b7-b76d-9ca47d89946d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-14T22%3A44%3A54Z&ske=2025-05-15T22%3A44%3A54Z&sks=b&skv=2024-08-04&sig=Vzy54YiWTgmIcIMBMtxgxELhK3xqMzp%2B3XdQ4%2BxuxUw%3D" alt="banner"> -->
+  </div>
   <div class="chat-container">
     <div class="chat-display">
       <div *ngFor="let message of messages"
@@ -24,24 +28,10 @@
       </div>
     </div>
   </div>
+<div>
+    <!-- <img width= "200px" src="https://sdmntprwestus.oaiusercontent.com/files/00000000-1fe8-6230-bd9f-7d981bd4e9b8/raw?se=2025-05-15T04%3A37%3A24Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=61180a4f-34a9-42b7-b76d-9ca47d89946d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-14T22%3A44%3A54Z&ske=2025-05-15T22%3A44%3A54Z&sks=b&skv=2024-08-04&sig=Vzy54YiWTgmIcIMBMtxgxELhK3xqMzp%2B3XdQ4%2BxuxUw%3D" alt="banner"> -->
+  </div>
 </div>
-
-<!-- <div class="info-banner-section">
-    <div class="container">
-      <div class="banner-content">
-        <div class="text-content">
-          <p class="sub-title">BÁO CHÍ & TRUYỀN THÔNG ĐÁNH GIÁ</p>
-          <h2 class="main-title">NGUỒN TIN CẬY <br> HÀNG ĐẦU CHỐNG <br> LỪA ĐẢO TRỰC <br> TUYẾN</h2>
-        </div>
-        <div class="description-content">
-          <p>CheckScam tự hào được các kênh truyền thông uy tín trong và ngoài nước thường xuyên đề cập như một nguồn thông tin đáng tin cậy về tình hình lừa đảo, giả mạo, mạo danh và tội phạm mạng tại Việt Nam. Chúng tôi không ngừng cung cấp kiến thức thực thức giúp người dùng tự bảo vệ mình trong thế giới số ngày càng phức tạp.</p>
-          <a href="#" class="btn-learn-more">
-            Tìm hiểu thêm <i class="arrow-icon">→</i>
-          </a>
-        </div>
-      </div>
-      </div>
-  </div> -->
 
    <div class="about-us-section">
     <div class="container">
@@ -59,8 +49,6 @@
       </div>
     </div>
   </div>
-
-  
 
 <app-chat-box *ngIf="showChatbox" (close)="closeChatbox()"></app-chat-box>
 <app-footer></app-footer>

@@ -4,7 +4,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NewsService } from '../../../services/news.service';
 import { HeaderComponent } from '../../header/header.component';
-import { FooterComponent } from '../../footer/footer.component';   // nếu muốn dùng
+import { FooterComponent } from '../../footer/footer.component';  
 
 interface AttachmentDto {
   id: number;

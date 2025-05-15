@@ -14,6 +14,10 @@
       <span class="news-detail-label">Nội dung</span>
       <p class="news-detail-content">{{ post.content }}</p>
     </div>
+    <div class="news-detail-row">
+      <span class="news-detail-label">Ảnh</span>
+      <p class="news-detail-content">{{ post.attachments }}</p>
+    </div>
   </div>
 </div>
 <app-chat-box *ngIf="showChatbox" (close)="closeChatbox()"></app-chat-box>

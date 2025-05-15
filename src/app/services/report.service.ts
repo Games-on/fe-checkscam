@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilService } from './http.util.service';
 import { Observable } from 'rxjs';
@@ -44,4 +44,15 @@ export class ReportService {
   }): Observable<any> {
     return this.http.post(`${environment.apiBaseUrl}/report/handle`, body);
   }
+
+  getMonthlyStats(year: number): Observable<any[]> {
+    const params = new HttpParams().set('year', year.toString());
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/report/monthly`, { params });
+  }
+
+  getYearlyStats(): Observable<{ year: number; count: number }[]> {
+  return this.http.get<{ year: number; count: number }[]>(
+    `${environment.apiBaseUrl}/report/yearly`
+  );
+}
 }

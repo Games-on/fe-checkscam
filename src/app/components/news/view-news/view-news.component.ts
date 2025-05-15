@@ -1,58 +1,93 @@
+/* view-news.component.ts */
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NewsService } from '../../../services/news.service';
-import { NewsDTO } from '../../../dtos/news.dto';
 import { HeaderComponent } from '../../header/header.component';
-import { FooterComponent } from '../../footer/footer.component';
-import { FormsModule } from '@angular/forms';
-import { ChatBoxComponent } from "../../chat-box/chat-box.component"; // Import FormsModule
+import { FooterComponent } from '../../footer/footer.component';   // nếu muốn dùng
+
+interface AttachmentDto {
+  id: number;
+  url?: string | null;
+}
+
 
 @Component({
   selector: 'app-view-news',
-  standalone: true,
+  standalone: true,                           
   imports: [
+    CommonModule,                              
     HeaderComponent,
-    CommonModule,
-    ChatBoxComponent,
-    FooterComponent
-],
+    // FooterComponent                         
+  ],
   templateUrl: './view-news.component.html',
-  styleUrl: './view-news.component.scss'
+  styleUrls: ['./view-news.component.scss']  
 })
 export class ViewNewsComponent implements OnInit {
+
   post: any = {};
-  showChatbox: boolean = false;
+  attachmentDto: AttachmentDto[] = [];
+  selectedImageUrl: string | null = null;
+
+  readonly imageBaseUrl = 'http://localhost:8080/api/v1/report/image/';
 
   constructor(
     private newsService: NewsService,
-    private route: ActivatedRoute,
-    private router: Router,
-  ) { }
+    private route: ActivatedRoute
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadNewsById(id);
   }
 
-  loadNewsById(id: number) {
+  private loadNewsById(id: number): void {
     this.newsService.getNewsById(id).subscribe({
-      next: (response) => {
-        debugger
-        this.post = response;
+      next: (res) => {
+         console.log('attachments from API', res.attachments);
+        this.post = res;
+        this.attachmentDto = res.attachments ?? [];   // đổi tên trường nếu cần
       },
-      error: (error) => {
-        debugger
-        alert(error.error);
+      error: (err) => {
+        alert(err?.error || 'Lỗi khi tải bài viết');
       }
     });
   }
 
-  onAiTuVanClicked() {
-    this.showChatbox = true;
+  /* ---------- Helpers ---------- */
+
+  getImageUrl({ url }: AttachmentDto): string {
+    if (!url) return 'assets/img/placeholder.png';
+    if (url.startsWith('http')) return url;
+
+    const fileName = url.split('/').pop();
+    return fileName ? `${this.imageBaseUrl}${encodeURIComponent(fileName)}` 
+                    : 'assets/img/placeholder.png';
   }
 
-  closeChatbox() {
-    this.showChatbox = false;
+  trackById(_: number, item: AttachmentDto): number {
+    return item.id;
+  }
+  getFileName(att: AttachmentDto): string {
+    return att.url?.split('/').pop() ?? 'Đính kèm';
+  }
+  /* ---------- Lightbox ---------- */
+  openImage(url: string): void {
+    this.selectedImageUrl = url;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeImage(): void {
+    this.selectedImageUrl = null;
+    document.body.style.overflow = '';
+  }
+
+  @HostListener('window:keydown.escape')
+  onEscKey(): void {
+    if (this.selectedImageUrl) this.closeImage();
+  }
+
+  onImageError(ev: Event): void {
+    (ev.target as HTMLImageElement).src = 'assets/img/placeholder.png';
   }
 }

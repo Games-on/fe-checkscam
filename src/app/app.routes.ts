@@ -16,6 +16,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AboutUsComponent } from './components/about-us/about-us.component'; 
 import { ChatBoxComponent } from './components/chat-box/chat-box.component';
 import { ListNewsComponent } from './components/news/list-news/list-news.component';
+import { UpdateNewsComponent } from './components/news/update-news/update-news.component';
 
 
 export const routes: Routes = [
@@ -30,6 +31,7 @@ export const routes: Routes = [
           { path: 'reports', component: ReportComponent },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'detail-news/:id', component: DetailNewsComponent }, 
+          { path: 'update-news/:id', component: UpdateNewsComponent }, 
           { path: '', redirectTo: '/chatbot', pathMatch: 'full' },
         ],
       },

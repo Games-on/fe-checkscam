@@ -10,6 +10,7 @@ import { NewsDTO } from '../dtos/news.dto';
 })
 export class NewsService {
   private apiNews = `${environment.apiBaseUrl}/news`;
+  private apiUpdateNews = `${environment.apiBaseUrl}/news`;
   constructor(
     private http: HttpClient,
     private httpUtilService: HttpUtilService
@@ -41,5 +42,7 @@ export class NewsService {
     return this.http.post<any>(`${environment.apiBaseUrl}/news/uploads/${newsId}`, formData);
   }
 
-  
+  updateNews(id: number,newsDTO: NewsDTO): Observable<any> {
+    return this.http.put(`${environment.apiBaseUrl}/news/${id}`, newsDTO);
+  }
 }

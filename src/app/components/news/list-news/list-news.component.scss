@@ -1,6 +1,6 @@
     .news-page-container {
         background-color: #f0f4f8; // nền riêng cho khung chat
-        background-image: url('/assets/img/back-ground.jpg');
+        // background-image: url('/assets/img/back-ground.jpg');
         background-size: cover;
         background-position: center;
         min-height: 100vh;
@@ -37,7 +37,7 @@
 
     .news-page-container .page-title {
         text-align: center;
-        color: white;
+        color: black;
         margin-bottom: 30px;
         font-size: 2em;
         font-weight: bold;
@@ -93,6 +93,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        color: white;
     }
 
     .news-page-container .search-and-pagination .pagination-controls button {
@@ -220,9 +221,9 @@
     }
 
     .news-page-container .pagination-info {
+        color: white;
         text-align: center;
         margin-top: 20px;
-        color: #555;
         width: 100%;
         /* Căn giữa thông tin phân trang */
     }

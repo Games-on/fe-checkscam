@@ -1,12 +1,11 @@
-  <nav class="header-nav" [class.hidden]="isHeaderHidden">
-    <div class="container">
-      <a class="brand" href="#">
-        CheckScam </a>
+<nav class="header-nav" [class.hidden]="isHeaderHidden">
+  <div class="container">
+    <a class="brand" href="#">CheckScam</a>
 
-      <div class="actions">
-        <a class="btn btn-ai" (click)="onAiTuVanClick()">AI Tư vấn</a>
-        <a routerLink="/list-news" class="btn btn-bao-ve">Tin tức</a>
-        <a routerLink="/create-report" class="btn btn-bao-cao">Báo cáo</a>
-      </div>
-    </div>
-  </nav>
+    <ul class="nav-links">
+      <li><a (click)="onAiTuVanClick()">AI Tư vấn</a></li>
+      <li><a routerLink="/list-news">Tin tức</a></li>
+      <li><a routerLink="/create-report">Báo cáo</a></li>
+    </ul>
+  </div>
+</nav>

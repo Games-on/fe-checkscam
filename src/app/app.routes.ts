@@ -32,6 +32,7 @@ export const routes: Routes = [
           { path: 'reports', component: ReportComponent },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'detail-news/:id', component: DetailNewsComponent }, 
+          { path: 'update-news/:id', component: UpdateNewsComponent }, 
           { path: '', redirectTo: '/chatbot', pathMatch: 'full' },
         ],
       },

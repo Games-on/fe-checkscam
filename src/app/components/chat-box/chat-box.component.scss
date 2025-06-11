@@ -95,6 +95,7 @@
     border-top: 1px solid #e0e0e0;
     display: flex;
     gap: 10px;
+    // font-size: 14px;
 
     input {
       flex: 1;
@@ -109,6 +110,7 @@
     }
 
     button {
+      padding: 8px 15px;
       background-color: #00796b;
       color: white;
       border: none;

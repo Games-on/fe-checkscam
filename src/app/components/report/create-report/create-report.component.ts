@@ -61,10 +61,10 @@
         return;
       }
       // >> Cập nhật: Kiểm tra thêm các trường mới và checkbox đồng ý
-      if (this.isFormInvalid()) {
-        alert('Vui lòng điền đầy đủ các trường bắt buộc và đồng ý với điều khoản.');
-        return;
-      }
+      // if (this.isFormInvalid()) {
+      //   alert('Vui lòng điền đầy đủ các trường bắt buộc và đồng ý với điều khoản.');
+      //   return;
+      // }
 
       const info2 = this.type === 2 ? this.accountHolderName : undefined;
       const info3 = this.type === 2 ? this.bankName : undefined;

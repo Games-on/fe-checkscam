@@ -6,6 +6,802 @@ html, body {
   height: 100%;
 }
 
+/* ========== KEYFRAMES ANIMATIONS ========== */
+
+/* Title slide in animation */
+@keyframes titleSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtitle fade in animation */
+@keyframes subtitleFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Search box slide up animation */
+@keyframes searchBoxSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Highlight pulse animation for safe-text */
+@keyframes highlightPulse {
+  0%, 100% {
+    text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.8), 0 0 10px rgba(211, 47, 47, 0.3);
+  }
+  50% {
+    text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.8), 0 0 20px rgba(211, 47, 47, 0.6);
+  }
+}
+
+/* Robot floating animation */
+@keyframes robotFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Robot fade in animation */
+@keyframes robotFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Background squares enhanced animation */
+@keyframes floatRotate {
+  0%, 100% {
+    transform: rotate(45deg) translateY(0px) scale(1);
+  }
+  25% {
+    transform: rotate(50deg) translateY(-10px) scale(1.05);
+  }
+  50% {
+    transform: rotate(40deg) translateY(-20px) scale(1);
+  }
+  75% {
+    transform: rotate(55deg) translateY(-10px) scale(0.95);
+  }
+}
+
+/* Security badge bounce animation */
+@keyframes securityBounce {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+}
+
+/* AI chip glow animation */
+@keyframes chipGlow {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(233, 196, 106, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(233, 196, 106, 0.7), 0 0 15px rgba(233, 196, 106, 0.3);
+  }
+}
+
+/* Vietnam star spin animation */
+@keyframes starSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Enhanced pulse animation for robot glow */
+@keyframes enhancedPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.1;
+  }
+  75% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.2;
+  }
+}
+
+/* Loading animation for search button */
+@keyframes buttonPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Typing effect animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Gradient shift animation for background */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Spinner pulse animation */
+@keyframes spinPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Entrance animation for page load */
+@keyframes pageEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Wobble animation for interactive elements */
+@keyframes wobble {
+  0%, 100% {
+    transform: translateX(0%);
+  }
+  15% {
+    transform: translateX(-25px) rotate(-5deg);
+  }
+  30% {
+    transform: translateX(20px) rotate(3deg);
+  }
+  45% {
+    transform: translateX(-15px) rotate(-3deg);
+  }
+  60% {
+    transform: translateX(10px) rotate(2deg);
+  }
+  75% {
+    transform: translateX(-5px) rotate(-1deg);
+  }
+}
+
+/* ========== ROBOT CHẠY QUANH SEARCH BOX ========== */
+
+/* Robot runner animation - chạy khớp với viền search box */
+@keyframes robotRun {
+  0% {
+    left: -45px;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg) scaleX(1);
+  }
+  12.5% {
+    left: 10%;
+    top: -45px;
+    transform: translateY(0) translateX(-50%) rotate(45deg) scaleX(1);
+  }
+  25% {
+    left: 50%;
+    top: -45px;
+    transform: translateY(0) translateX(-50%) rotate(90deg) scaleX(1);
+  }
+  37.5% {
+    left: 90%;
+    top: -45px;
+    transform: translateY(0) translateX(-50%) rotate(135deg) scaleX(1);
+  }
+  50% {
+    left: calc(100% + 25px);
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg) scaleX(-1);
+  }
+  62.5% {
+    left: 90%;
+    top: calc(100% + 25px);
+    transform: translateY(0) translateX(-50%) rotate(225deg) scaleX(1);
+  }
+  75% {
+    left: 50%;
+    top: calc(100% + 25px);
+    transform: translateY(0) translateX(-50%) rotate(270deg) scaleX(1);
+  }
+  87.5% {
+    left: 10%;
+    top: calc(100% + 25px);
+    transform: translateY(0) translateX(-50%) rotate(315deg) scaleX(1);
+  }
+  100% {
+    left: -45px;
+    top: 50%;
+    transform: translateY(-50%) rotate(360deg) scaleX(1);
+  }
+}
+
+/* Robot legs animation */
+@keyframes robotLegsRun {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+  }
+  25% {
+    transform: translateX(-2px) scaleX(0.8);
+  }
+  50% {
+    transform: translateX(0) scaleX(1.2);
+  }
+  75% {
+    transform: translateX(2px) scaleX(0.8);
+  }
+}
+
+/* Robot legs running fast */
+@keyframes robotLegsFast {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-1px) rotate(5deg);
+  }
+}
+
+.robot-eyes {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  height: 8px;
+  
+  /* Mắt trái */
+  &::before {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #fff;
+    border-radius: 50%;
+    left: 0;
+    top: 0;
+    animation: robotBlink 3s ease-in-out infinite;
+  }
+  
+  /* Mắt phải */
+  &::after {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #fff;
+    border-radius: 50%;
+    right: 0;
+    top: 0;
+    animation: robotBlink 3s ease-in-out infinite;
+    animation-delay: 0.1s; /* Chớp mắt hơi lệch pha */
+  }
+}
+
+.robot-legs {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 8px;
+  
+  /* Chân trái */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    bottom: 0;
+    width: 3px;
+    height: 8px;
+    background: #FF6B35;
+    border-radius: 1.5px;
+    animation: robotLegsRun 0.4s ease-in-out infinite;
+  }
+  
+  /* Chân phải */
+  &::after {
+    content: '';
+    position: absolute;
+    right: 2px;
+    bottom: 0;
+    width: 3px;
+    height: 8px;
+    background: #FF6B35;
+    border-radius: 1.5px;
+    animation: robotLegsRun 0.4s ease-in-out infinite;
+    animation-delay: 0.2s; /* Chân phải chạy ngược pha */
+  }
+}
+@keyframes robotBounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Robot blink animation */
+@keyframes robotBlink {
+  0%, 90%, 100% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.3;
+  }
+}
+
+/* Robot message animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  85% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
+
+/* Robot click animation */
+@keyframes robotExcited {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.3) rotate(-10deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(10deg);
+  }
+  75% {
+    transform: scale(1.2) rotate(-5deg);
+  }
+}
+
+/* Robot speed boost animation */
+@keyframes robotSpeedBoost {
+  0% {
+    filter: drop-shadow(0 0 5px #FF6B35);
+  }
+  50% {
+    filter: drop-shadow(0 0 15px #FF6B35) drop-shadow(0 0 25px #FFD23F);
+  }
+  100% {
+    filter: drop-shadow(0 0 5px #FF6B35);
+  }
+}
+
+/* Robot shadow animation */
+@keyframes robotShadow {
+  0%, 100% {
+    transform: translateX(-50%) scale(1, 0.3);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.2, 0.5);
+    opacity: 0.2;
+  }
+}
+
+.search-robot {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, #FF6B35, #FF8A65);
+  border-radius: 12px;
+  animation: robotRun 10s linear infinite, robotBounce 0.6s ease-in-out infinite;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  /* Robot shadow */
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    width: 30px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    animation: robotShadow 0.6s ease-in-out infinite;
+    z-index: -1;
+  }
+  
+  /* Robot antenna */
+  &::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background: #FF6B35;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 1px;
+  }
+  
+  /* Hover effect */
+  &:hover {
+    animation-play-state: paused;
+    transform: scale(1.2);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+  }
+  
+  /* Click effect */
+  &:active {
+    animation: robotExcited 0.6s ease-in-out, robotSpeedBoost 0.6s ease-in-out;
+  }
+
+  @media (max-width: 768px) {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    
+    &::before {
+      width: 20px;
+      height: 8px;
+      bottom: -15px;
+    }
+    
+    &::after {
+      width: 1px;
+      height: 6px;
+      top: -6px;
+    }
+    
+    .robot-eyes {
+      top: 8px;
+      left: 8px;
+      width: 14px;
+      height: 6px;
+      
+      &::before, &::after {
+        width: 3px;
+        height: 3px;
+      }
+    }
+    
+    .robot-legs {
+      bottom: -10px;
+      width: 15px;
+      height: 6px;
+      
+      &::before, &::after {
+        width: 2px;
+        height: 6px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 25px;
+    height: 25px;
+    font-size: 0.9rem;
+    
+    &::before {
+      width: 18px;
+      height: 6px;
+      bottom: -12px;
+    }
+    
+    &::after {
+      height: 5px;
+      top: -5px;
+    }
+    
+    .robot-eyes {
+      top: 6px;
+      left: 6px;
+      width: 12px;
+      height: 5px;
+      
+      &::before, &::after {
+        width: 2.5px;
+        height: 2.5px;
+      }
+    }
+    
+    .robot-legs {
+      bottom: -8px;
+      width: 12px;
+      height: 5px;
+      
+      &::before, &::after {
+        width: 1.5px;
+        height: 5px;
+      }
+    }
+  }
+}
+
+/* Robot trail effect */
+.search-robot-trail {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 107, 53, 0.3);
+  border-radius: 50%;
+  animation: robotRun 10s linear infinite;
+  animation-delay: -0.3s;
+  z-index: 99;
+  
+  &:nth-child(3) {
+    animation-delay: -0.6s;
+    background: rgba(255, 107, 53, 0.2);
+    width: 6px;
+    height: 6px;
+  }
+  
+  &:nth-child(4) {
+    animation-delay: -0.9s;
+    background: rgba(255, 107, 53, 0.1);
+    width: 4px;
+    height: 4px;
+  }
+}
+
+/* Enhanced robot interactions */
+.search-robot:hover .robot-legs::before,
+.search-robot:hover .robot-legs::after {
+  animation-duration: 0.2s; /* Chạy nhanh hơn khi hover */
+}
+
+.search-box-container.loading .search-robot .robot-legs::before,
+.search-box-container.loading .search-robot .robot-legs::after {
+  animation: robotLegsFast 0.1s ease-in-out infinite; /* Siêu nhanh khi loading */
+}
+
+/* Turbo mode legs */
+.search-robot.turbo .robot-legs::before,
+.search-robot.turbo .robot-legs::after {
+  animation: robotLegsFast 0.08s ease-in-out infinite;
+  background: #FFD23F; /* Màu vàng khi turbo */
+  box-shadow: 0 0 8px #FFD23F;
+}
+
+/* Search box glow when robot is near */
+.search-box-container:hover .search-robot {
+  animation-duration: 6s; /* Tăng tốc khi hover */
+}
+
+.search-box-container:focus-within .search-robot {
+  animation-duration: 5s; /* Chạy nhanh hơn khi focus */
+  filter: drop-shadow(0 0 15px #FF6B35);
+}
+
+.search-box-container .search-robot:hover + * {
+  border-color: #FF6B35;
+}
+
+/* Robot excited when search is happening */
+.search-box-container.loading .search-robot {
+  animation: robotRun 4s linear infinite, robotExcited 0.5s ease-in-out infinite;
+}
+
+/* Title gradient shift animation */
+@keyframes titleGradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Word drop animation for title */
+@keyframes wordDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) rotateX(90deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-10px) rotateX(45deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+/* Special word drop for "VIỆT" */
+@keyframes wordDropSpecial {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) rotateX(90deg) scale(0.5);
+  }
+  30% {
+    opacity: 0.5;
+    transform: translateY(-20px) rotateX(45deg) scale(0.8);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateY(10px) rotateX(-10deg) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+  }
+}
+
+/* Safe text shimmer animation */
+@keyframes safeTextShimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Glow pulse for safe text */
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.3;
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0.8;
+    filter: blur(15px);
+  }
+}
+
+/* Search box breathing animation */
+@keyframes searchBoxBreathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+}
+
+/* Search box focus animation */
+@keyframes searchBoxFocus {
+  0% {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 8px 30px rgba(244, 162, 97, 0.4);
+  }
+}
+
+/* Search box pulse animation */
+@keyframes searchBoxPulse {
+  0%, 100% {
+    box-shadow: 0 8px 30px rgba(244, 162, 97, 0.4);
+  }
+  50% {
+    box-shadow: 0 12px 40px rgba(244, 162, 97, 0.6);
+  }
+}
+
+/* Border glow animation */
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Button morph animation */
+@keyframes buttonMorph {
+  0%, 100% {
+    border-radius: 50%;
+    transform: scale(1);
+  }
+  25% {
+    border-radius: 40%;
+    transform: scale(1.05);
+  }
+  50% {
+    border-radius: 45%;
+    transform: scale(1.1);
+  }
+  75% {
+    border-radius: 55%;
+    transform: scale(1.05);
+  }
+}
+
+/* Icon float animation */
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(5deg);
+  }
+}
+
+/* Icon spin animation */
+@keyframes iconSpin {
+  0% {
+    transform: scale(1.2) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.3) rotate(180deg);
+  }
+  100% {
+    transform: scale(1.2) rotate(360deg);
+  }
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
@@ -19,8 +815,9 @@ app-header {
   top: 0;
   left: 0;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: linear-gradient(135deg, rgba(244, 162, 97, 0.92), rgba(233, 196, 106, 0.90)); /* Màu nhạt hơn, bớt chói */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(244, 162, 97, 0.25); /* Giảm cường độ shadow */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,11 +829,49 @@ app-header {
   }
 }
 
+/* Thêm cải thiện cho touch interaction trên mobile */
+@media (max-width: 768px) {
+  /* Tăng kích thước touch target */
+  .search-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .input-type-select {
+    min-height: 44px;
+  }
+  
+  /* Giảm hiệu ứng hover trên touch devices */
+  .hero-robot-image:hover {
+    transform: none;
+  }
+  
+  /* Tối ưu font size cho readability */
+  .main-title {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  .subtitle {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+}
+
+/* Đảm bảo scrolling mượt trên iOS */
+@supports (-webkit-overflow-scrolling: touch) {
+  .main-section {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 .main-section {
   position: relative;
   min-height: calc(100vh - 80px);
 
-  background: linear-gradient(135deg, #0b2241 0%, #1e3a5f 100%);
+  background: linear-gradient(135deg, #F4E4BC 0%, #F0D78C 50%, #FEFBF3 100%); /* Background nhạt hơn để chữ đậm nổi bật */
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease-in-out infinite;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -49,6 +884,19 @@ app-header {
   padding-right: 20px;
 
   z-index: 0;
+  
+  /* Overlay nhẹ để tăng độ tương phản cho chữ */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
   @media (max-width: 768px) {
     padding-top: 60px;
@@ -63,6 +911,22 @@ app-header {
     padding-bottom: 20px;
     padding-left: 10px;
     padding-right: 10px;
+  }
+  
+  @media (max-width: 375px) {
+    padding-top: 55px;
+    padding-bottom: 18px;
+    padding-left: 8px;
+    padding-right: 8px;
+    min-height: calc(100vh - 55px);
+  }
+  
+  @media (max-width: 320px) {
+    padding-top: 50px;
+    padding-bottom: 15px;
+    padding-left: 6px;
+    padding-right: 6px;
+    min-height: calc(100vh - 50px);
   }
 }
 
@@ -82,7 +946,7 @@ app-header {
   height: 80px;
   transform: rotate(45deg);
   opacity: 0.2;
-  animation: float 6s ease-in-out infinite;
+  animation: floatRotate 8s ease-in-out infinite; /* Animation mới */
 
   @media (max-width: 768px) {
     width: 60px;
@@ -101,11 +965,11 @@ app-header {
 }
 
 .green-square {
-  background: linear-gradient(45deg, #3b9055, #4CAF50);
+  background: linear-gradient(45deg, #FF6B35, #FF5722);
 }
 
 .yellow-square {
-  background: linear-gradient(45deg, #f7b32b, #FFC107);
+  background: linear-gradient(45deg, #FFD23F, #FF9800);
 }
 
 .top-left {
@@ -155,16 +1019,31 @@ app-header {
   align-items: center;
   justify-content: center;
   gap: 50px;
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
   margin: auto;
   flex-wrap: wrap;
   z-index: 1;
+  position: relative; /* Đảm bảo hiển thị trên overlay */
 
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 30px;
     text-align: center;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 25px;
+  }
+  
+  @media (max-width: 375px) {
+    gap: 20px;
+    padding: 0 5px;
+  }
+  
+  @media (max-width: 320px) {
+    gap: 15px;
+    padding: 0 3px;
   }
 }
 
@@ -172,6 +1051,9 @@ app-header {
   text-align: center;
   flex-basis: 50%;
   min-width: 300px;
+  
+  /* Thêm entrance animation */
+  animation: pageEntrance 1s ease-out;
 
   @media (max-width: 768px) {
     flex-basis: 100%;
@@ -179,35 +1061,294 @@ app-header {
   }
 }
 
+.hero-illustration {
+  flex-basis: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  
+  .robot-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .hero-robot {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 15px 35px rgba(255, 107, 53, 0.3));
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-10px) scale(1.05);
+        filter: drop-shadow(0 25px 50px rgba(255, 107, 53, 0.4));
+      }
+    }
+    
+    .robot-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(244, 162, 97, 0.15) 0%, transparent 70%); /* Màu nhạt hơn */
+      border-radius: 50%;
+      animation: enhancedPulse 4s ease-in-out infinite; /* Sử dụng animation mới */
+      z-index: -1;
+    }
+    
+    .floating-elements {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      
+      .security-badge {
+        position: absolute;
+        top: 10%;
+        right: 15%;
+        animation: float 4s ease-in-out infinite, securityBounce 6s ease-in-out infinite;
+        
+        svg {
+          filter: drop-shadow(0 4px 8px rgba(244, 162, 97, 0.3)); /* Màu shadow nhạt hơn */
+          transition: transform 0.3s ease;
+        }
+        
+        &:hover svg {
+          transform: scale(1.1) rotate(5deg);
+        }
+      }
+      
+      .ai-chip {
+        position: absolute;
+        top: 20%;
+        left: 10%;
+        background: linear-gradient(45deg, #E9C46A, #F4A261); /* Màu nhạt hơn */
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(233, 196, 106, 0.4); /* Shadow nhạt hơn */
+        animation: float 4s ease-in-out infinite 1s, chipGlow 3s ease-in-out infinite;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-5px) scale(1.05);
+          box-shadow: 0 8px 25px rgba(233, 196, 106, 0.6);
+        }
+        
+        span {
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+      }
+      
+      .vietnam-star {
+        position: absolute;
+        bottom: 15%;
+        left: 20%;
+        animation: float 4s ease-in-out infinite 2s, starSpin 8s linear infinite;
+        
+        svg {
+          filter: drop-shadow(0 4px 8px rgba(233, 196, 106, 0.4)); /* Màu shadow vàng nhạt hơn */
+          transition: all 0.3s ease;
+        }
+        
+        &:hover {
+          svg {
+            transform: scale(1.2) rotate(15deg);
+            filter: drop-shadow(0 6px 12px rgba(233, 196, 106, 0.6));
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    flex-basis: 100%;
+    margin-top: 20px;
+    
+    .robot-container .hero-robot {
+      max-width: 250px; /* Giảm từ 300px */
+    }
+    
+    .robot-container .hero-robot-image {
+      max-width: 240px; /* Phù hợp với kích thước mới */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .robot-container .hero-robot {
+      max-width: 220px; /* Giảm từ 250px */
+    }
+    
+    .robot-container .hero-robot-image {
+      max-width: 200px; /* Phù hợp với kích thước mới */
+    }
+    
+    .robot-container .floating-elements {
+      .security-badge, .ai-chip, .vietnam-star {
+        transform: scale(0.8);
+      }
+    }
+  }
+  
+  @media (max-width: 375px) {
+    .robot-container .hero-robot {
+      max-width: 200px;
+    }
+    
+    .robot-container .hero-robot-image {
+      max-width: 180px;
+    }
+    
+    .robot-container .floating-elements {
+      .security-badge, .ai-chip, .vietnam-star {
+        transform: scale(0.7);
+      }
+    }
+  }
+  
+  @media (max-width: 320px) {
+    .robot-container .hero-robot {
+      max-width: 180px;
+    }
+    
+    .robot-container .hero-robot-image {
+      max-width: 160px;
+    }
+    
+    .robot-container .floating-elements {
+      .security-badge, .ai-chip, .vietnam-star {
+        transform: scale(0.6);
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
 .main-title {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
-  color: white;
+  color: #404040; /* Màu xám nhạt hơn cho hài hòa */
   margin-bottom: 20px;
   line-height: 1.1;
-  font-weight: bold;
+  font-weight: 800;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  
+  /* Chỉ dùng text shadow, bỏ gradient effect */
+  text-shadow: 
+    3px 3px 8px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(255, 255, 255, 0.5),
+    1px 1px 3px rgba(0, 0, 0, 0.3);
+  
+  /* Title words animation */
+  .title-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(50px) rotateX(90deg);
+    animation: wordDrop 0.8s ease-out forwards;
+    
+    &.word-1 {
+      animation-delay: 0.2s;
+    }
+    
+    &.word-2 {
+      animation-delay: 0.4s;
+    }
+    
+    &.word-3 {
+      animation-delay: 0.6s;
+    }
+    
+    &.word-4 {
+      animation-delay: 0.8s;
+      animation: wordDropSpecial 1s ease-out forwards 0.8s;
+    }
+  }
 
   @media (max-width: 480px) {
     font-size: 2rem;
     margin-bottom: 20px;
     margin-top: 30px;
   }
+  
+  @media (max-width: 375px) {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    margin-top: 25px;
+    line-height: 1.2;
+  }
+  
+  @media (max-width: 320px) {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
 }
 
 .safe-text {
-  color: #3b9055;
+  /* Hiệu ứng đặc biệt cho chữ VIỆT - màu đỏ thuần */
+  color: #B71C1C; /* Màu đỏ đậm thuần */
+  display: inline-block;
+  position: relative;
+  
+  /* Text shadow mạnh hơn cho chữ VIỆT */
+  text-shadow: 
+    2px 2px 6px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(255, 255, 255, 0.6),
+    1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
-  color: #ccc;
+  color: #404040; /* Màu xám nhạt hơn đồng nhất với title */
   font-size: clamp(1rem, 2vw, 1.2rem);
   margin-bottom: 30px;
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1.4;
+  
+  /* Text shadow mạnh hơn */
+  text-shadow: 
+    2px 2px 6px rgba(255, 255, 255, 0.9),
+    0 0 10px rgba(255, 255, 255, 0.4),
+    1px 1px 2px rgba(0, 0, 0, 0.2);
+  
+  animation: subtitleFadeIn 1.5s ease-out 0.3s both;
 
   @media (max-width: 480px) {
     margin-bottom: 20px;
+  }
+  
+  @media (max-width: 375px) {
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 320px) {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
   }
 }
 
@@ -221,10 +1362,55 @@ app-header {
   max-width: 600px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Cho phép robot chạy ra ngoài */
   flex-wrap: nowrap;
   justify-content: space-between;
   gap: 10px;
+  
+  /* Hiệu ứng đặc biệt */
+  animation: searchBoxSlideUp 1.8s ease-out 0.6s both, searchBoxBreathe 4s ease-in-out infinite 2s;
+  transition: all 0.3s ease;
+  
+  /* Glowing border effect */
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(45deg, #F4A261, #E9C46A, #F4A261);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  
+  /* Animated border */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50px;
+    background: linear-gradient(45deg, #F4A261, #E9C46A, #FFD23F, #F4A261);
+    background-size: 400% 400%;
+    z-index: -1;
+    animation: borderGlow 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+  
+  &:focus-within {
+    animation: searchBoxFocus 0.5s ease-out, searchBoxPulse 2s ease-in-out infinite 0.5s;
+    
+    &::before {
+      opacity: 1;
+      animation: borderGlow 1.5s linear infinite;
+    }
+  }
 
   @media (max-width: 768px) {
     padding: 10px;
@@ -237,13 +1423,28 @@ app-header {
     border-radius: 25px;
     gap: 5px;
   }
+  
+  @media (max-width: 375px) {
+    padding: 6px;
+    border-radius: 20px;
+    gap: 4px;
+    max-width: 95%;
+  }
+  
+  @media (max-width: 320px) {
+    padding: 5px;
+    border-radius: 18px;
+    gap: 3px;
+    max-width: 98%;
+    margin: 0 auto;
+  }
 }
 
 .input-type-select {
   border: none;
   padding: 12px 30px 12px 15px;
   border-radius: 50px;
-  background: linear-gradient(45deg, #4CAF50, #45a049);
+  background: linear-gradient(45deg, #F4A261, #E9C46A); /* Màu mới phù hợp */
   color: white;
   font-size: 1rem;
   font-weight: 600;
@@ -260,6 +1461,13 @@ app-header {
   z-index: 2;
   box-sizing: border-box;
   height: 50px;
+  transition: all 0.3s ease; /* Thêm transition */
+  
+  &:hover {
+    background: linear-gradient(45deg, #E9C46A, #F4A261); /* Đảo ngược gradient */
+    transform: scale(1.02); /* Phóng to nhẹ */
+    box-shadow: 0 4px 15px rgba(244, 162, 97, 0.4);
+  }
 
   @media (max-width: 768px) {
     width: auto;
@@ -274,6 +1482,22 @@ app-header {
     padding: 8px 20px 8px 10px;
     font-size: 0.85rem;
     height: 35px;
+  }
+  
+  @media (max-width: 375px) {
+    min-width: 100px;
+    padding: 7px 18px 7px 8px;
+    font-size: 0.8rem;
+    height: 32px;
+    border-radius: 16px;
+  }
+  
+  @media (max-width: 320px) {
+    min-width: 90px;
+    padding: 6px 16px 6px 7px;
+    font-size: 0.75rem;
+    height: 30px;
+    border-radius: 15px;
   }
 
   option {
@@ -298,8 +1522,14 @@ app-header {
   width: 100%;
   box-sizing: border-box;
   height: 100%;
+  transition: all 0.3s ease; /* Thêm transition */
 
   padding: 12px 15px; /* Adjust padding as needed */
+  
+  &:focus {
+    transform: scale(1.02); /* Nhẹ nhàng phóng to khi focus */
+    background-color: rgba(244, 162, 97, 0.05); /* Highlight nhẹ */
+  }
 
   @media (max-width: 768px) {
     padding: 10px 10px;
@@ -309,6 +1539,16 @@ app-header {
   @media (max-width: 480px) {
     padding: 8px 8px;
   }
+  
+  @media (max-width: 375px) {
+    padding: 7px 6px;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 320px) {
+    padding: 6px 5px;
+    font-size: 0.85rem;
+  }
 
   &::placeholder {
     color: #666;
@@ -316,7 +1556,7 @@ app-header {
 }
 
 .search-button {
-  background: linear-gradient(45deg, #4CAF50, #45a049);
+  background: linear-gradient(45deg, #F4A261, #E9C46A); /* Màu mới phù hợp */
   border: none;
   border-radius: 50%;
   width: 50px;
@@ -328,9 +1568,39 @@ app-header {
   align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 4px 15px rgba(244, 162, 97, 0.3); /* Shadow mới */
   color: white; /* Add color for Font Awesome icon */
   font-size: 1.2em; /* Size for Font Awesome icon */
+  position: relative;
+  overflow: hidden;
+  
+  /* Animation đặc biệt */
+  animation: buttonMorph 3s ease-in-out infinite;
+  
+  /* Icon animation */
+  i {
+    transition: all 0.3s ease;
+    animation: iconFloat 2s ease-in-out infinite;
+  }
+  
+  /* Ripple effect */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  &:active::before {
+    width: 300px;
+    height: 300px;
+  }
 
   @media (max-width: 768px) {
     width: 40px;
@@ -347,10 +1617,32 @@ app-header {
     min-height: 35px;
     font-size: 0.9em; /* Adjust size for smaller screens */
   }
+  
+  @media (max-width: 375px) {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 0.85em;
+  }
+  
+  @media (max-width: 320px) {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    font-size: 0.8em;
+  }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+    transform: translateY(-3px) scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(244, 162, 97, 0.5); /* Màu hover mới */
+    animation: buttonMorph 1.5s ease-in-out infinite; /* Tăng tốc animation */
+    
+    i {
+      transform: scale(1.2) rotate(-5deg);
+      animation: iconSpin 0.8s ease-in-out;
+    }
   }
 
   &:disabled {
@@ -358,6 +1650,7 @@ app-header {
     cursor: not-allowed;
     transform: none;
     box-shadow: none; /* Remove shadow when disabled */
+    animation: buttonPulse 1s ease-in-out infinite; /* Animation khi loading */
   }
 
   img {
@@ -402,17 +1695,17 @@ app-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #4CAF50;
+  color: #F4A261; /* Màu phù hợp */
   font-weight: 500;
   animation: fadeIn 0.3s ease-out;
 
   .spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid #4CAF50;
+    border: 4px solid rgba(244, 162, 97, 0.3); /* Màu phù hợp */
+    border-top: 4px solid #F4A261;
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite, spinPulse 2s ease-in-out infinite; /* Thêm pulse effect */
   }
 }
 
@@ -474,7 +1767,7 @@ app-header {
 
   h2 {
     font-size: clamp(1.5rem, 3vw, 2rem);
-    color: #0b2241;
+    color: #D32F2F;
     font-weight: 700;
     margin: 0;
     line-height: 1.3;
@@ -486,7 +1779,7 @@ app-header {
   }
 
   .highlight-info {
-    color: #4CAF50;
+    color: #FF6B35;
   }
 
   .status-tag {
@@ -497,9 +1790,9 @@ app-header {
     white-space: nowrap; /* Prevent text wrapping */
 
     &.status-safe {
-      background-color: #e6ffe6; /* Light green */
-      color: #3b9055; /* Darker green */
-      border: 1px solid #4CAF50;
+      background-color: #FFF3E0; /* Light orange */
+      color: #FF6B35; /* Orange */
+      border: 1px solid #FF6B35;
     }
 
     &.status-scam {
@@ -524,7 +1817,7 @@ app-header {
   p {
     margin-bottom: 10px;
     strong {
-      color: #0b2241;
+      color: #D32F2F;
     }
   }
 
@@ -540,7 +1833,7 @@ app-header {
 
   h3 {
     font-size: 1.3em;
-    color: #0b2241;
+    color: #D32F2F;
     margin-bottom: 15px;
     font-weight: 600;
     border-bottom: 1px dashed #eee;
@@ -589,7 +1882,7 @@ app-header {
 
   h3 {
     font-size: 1.3em;
-    color: #0b2241;
+    color: #D32F2F;
     margin-bottom: 15px;
     font-weight: 600;
     border-bottom: 1px dashed #eee;
@@ -675,6 +1968,8 @@ app-header {
   border: 1px solid rgba(255, 255, 255, 0.2);
   width: 100%;
   max-width: 1000px;
+  position: relative;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     padding: 30px 20px;
@@ -688,12 +1983,29 @@ app-header {
   }
 }
 
+.stats-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  
+  .stats-bg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
   text-align: center;
   color: white;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -713,7 +2025,7 @@ app-header {
 .counter-number {
   font-size: clamp(2.5rem, 4vw, 3rem);
   font-weight: 700;
-  color: #4CAF50;
+  color: #FF6B35;
   margin-bottom: 10px;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
@@ -730,9 +2042,26 @@ app-header {
   margin: 40px 0;
   width: 100%;
   max-width: 800px;
+  position: relative;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     margin: 30px 0;
+  }
+}
+
+.community-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  
+  .community-bg {
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -740,12 +2069,16 @@ app-header {
   font-size: clamp(1.3rem, 3vw, 1.5rem);
   margin-bottom: 10px;
   font-weight: 600;
+  position: relative;
+  z-index: 1;
 }
 
 .community-desc {
   color: #ccc;
   margin-bottom: 25px;
   font-size: clamp(0.9rem, 2vw, 1rem);
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 480px) {
     margin-bottom: 20px;
@@ -757,6 +2090,8 @@ app-header {
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 480px) {
     flex-direction: column;
@@ -914,21 +2249,30 @@ app-header {
 .feature-icon {
   width: 80px;
   height: 80px;
-  background: linear-gradient(45deg, #4CAF50, #45a049);
+  background: linear-gradient(45deg, #FF6B35, #FF5722);
   border-radius: 50%;
   margin: 0 auto 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
-  font-size: 3em;
-  color: white;
+  box-shadow: 0 5px 15px rgba(255, 107, 53, 0.2);
+  color: #FF6B35;
+  transition: all 0.3s ease;
 
   @media (max-width: 480px) {
     width: 60px;
     height: 60px;
     margin-bottom: 15px;
-    font-size: 2.5em;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+  }
+
+  svg {
+    filter: brightness(0) invert(1);
+    color: white;
   }
 
   img, .icon-svg {
@@ -1006,6 +2350,25 @@ app-header {
   align-items: center;
   position: relative;
 
+  svg {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 15px 30px rgba(255, 107, 53, 0.1));
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    @media (max-width: 992px) {
+      max-width: 80%;
+    }
+
+    @media (max-width: 480px) {
+      max-width: 95%;
+    }
+  }
+
   img {
     max-width: 100%;
     height: auto;
@@ -1041,7 +2404,7 @@ app-header {
 
 .section-label {
   font-size: 1.1em;
-  color: #4CAF50;
+  color: #FF6B35;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -1090,7 +2453,7 @@ app-header {
 .btn-about-us {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(45deg, #4CAF50, #66BB6A);
+  background: linear-gradient(45deg, #FF6B35, #FF8A65);
   color: white;
   padding: 15px 30px;
   border-radius: 50px;
@@ -1098,12 +2461,12 @@ app-header {
   font-weight: 600;
   font-size: 1.05em;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(76, 175, 80, 0.4);
-    background: linear-gradient(45deg, #45a049, #5cb860);
+    box-shadow: 0 12px 25px rgba(255, 107, 53, 0.4);
+    background: linear-gradient(45deg, #FF5722, #FF7043);
   }
 
   .arrow-icon {
@@ -1123,7 +2486,7 @@ app-header {
 }
 
 .extension-section {
-  background: linear-gradient(135deg, #1e3a5f 0%, #0b2241 100%);
+  background: linear-gradient(135deg, #FF5722 0%, #D32F2F 100%);
   padding: 80px 0;
   color: white;
   text-align: center;
@@ -1304,9 +2667,56 @@ app-chat-box {
 }
 
 app-footer {
-  background-color: #0b2241;
+  background-color: #D32F2F;
   color: white;
   padding: 20px 0;
   text-align: center;
   font-size: 0.9em;
+}
+
+/* Custom styles for robot image */
+.hero-robot-image {
+  max-width: 280px; /* Giảm thêm từ 320px xuống 280px */
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+  filter: drop-shadow(0 10px 25px rgba(244, 162, 97, 0.3)); /* Đổi màu shadow cho phù hợp */
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Giảm shadow intensity */
+  
+  /* Thêm animation */
+  animation: robotFloat 3s ease-in-out infinite, robotFadeIn 2s ease-out 0.9s both;
+  
+  &:hover {
+    transform: translateY(-8px) scale(1.03); /* Giảm scale từ 1.05 xuống 1.03 */
+    filter: drop-shadow(0 15px 35px rgba(244, 162, 97, 0.4)); /* Màu shadow nhạt hơn */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Giảm shadow */
+    animation-play-state: paused; /* Tạm dừng float khi hover */
+  }
+  
+  @media (max-width: 768px) {
+    max-width: 240px; /* Giảm từ 260px xuống 240px */
+    border-radius: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    max-width: 200px; /* Giảm từ 220px xuống 200px */
+    border-radius: 12px;
+  }
+  
+  /* Thêm responsive cho điện thoại nhỏ hơn */
+  @media (max-width: 375px) {
+    max-width: 180px; /* Điện thoại nhỏ hơn */
+    border-radius: 10px;
+    
+    &:hover {
+      transform: translateY(-5px) scale(1.02); /* Hiệu ứng nhẹ hơn trên mobile */
+    }
+  }
+  
+  @media (max-width: 320px) {
+    max-width: 160px; /* iPhone SE và các màn hình rất nhỏ */
+    border-radius: 8px;
+  }
 }

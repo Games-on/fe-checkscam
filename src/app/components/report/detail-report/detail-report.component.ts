@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { ReportService } from '../../../services/report.service';               // ↔︎ chỉnh đường dẫn nếu khác
+import { ReportService } from '../../../services/report.service';               
 import { InformationTypeToStringPipe } from '../../shareds/pipes/information-type-to-string.pipe';
 import { InformationType } from '../../shareds/enums/information-type.enum';
 
@@ -16,7 +16,7 @@ interface ReportData {
   info: string;
   description?: string;
   status?: number;
-  type: number | string;              // dữ liệu trả về có thể là chuỗi hoặc số
+  type: number | string;              
   idScamTypeAfterHandle?: number;
   emailAuthorReport: string;
   reason: string;
@@ -32,7 +32,7 @@ interface ReportData {
   imports: [
     CommonModule,
     RouterModule,
-    InformationTypeToStringPipe     // pipe standalone
+    InformationTypeToStringPipe     
   ],
   templateUrl: './detail-report.component.html',
   styleUrls: ['./detail-report.component.scss']
@@ -108,9 +108,7 @@ export class DetailReportComponent implements OnInit {
           return;
         }
 
-        /** Bảo đảm attachmentDto luôn là mảng */
         data.attachmentDto = Array.isArray(data.attachmentDto) ? data.attachmentDto : [];
-        /** Ép kiểu type sang number để pipe hoạt động đúng */
         data.type = Number(data.type);
         this.report = data;
       },
@@ -125,7 +123,7 @@ export class DetailReportComponent implements OnInit {
   /* ---------------- lightbox ---------------- */
   openImage(url: string): void {
     this.selectedImageUrl = url;
-    document.body.style.overflow = 'hidden';   // khoá cuộn nền
+    document.body.style.overflow = 'hidden';   
   }
 
   closeImage(): void {

@@ -1,45 +1,78 @@
 <app-header></app-header>
-<div class="container mt-4">
-    <div class="card p-4">
-        <label for="text">Tên</label>
-        <h4 class="fw-bold">{{ post.name }}</h4>
-        <label for="text">Mô tả</label>
-        <p>{{ post.shortDescription }}</p>
-        <label for="text">Nội dung</label>
-        <p>{{ post.content }}</p>
-        <div class="report-section">
-            <label for="attachments-section">Tệp đính kèm</label>
-          
-            <div id="attachments-section"
-                 class="attachments-container mt-2"
-                 *ngIf="attachmentDto?.length; else noAttachments">
-          
-              <div *ngFor="let attachment of attachmentDto; trackBy: trackById"
-                   class="attachment-item mb-3">
-          
-                   <img  [src]="getImageUrl(attachment)"
-                   [alt]="getFileName(attachment)"
-                   class="img-fluid rounded report-image"
-                   (click)="openImage(getImageUrl(attachment))"
-                   (error)="onImageError($event)">
-             
-             <p class="text-muted small mt-1">
-               {{ getFileName(attachment) }}
-             </p>
-              </div>
+
+<div class="main-content-area">
+    <div class="container news-page-container">
+        <div class="news-main-column">
+            <div class="card news-detail-card">
+                <div class="back-button-container">
+                    <button class="btn btn-back" (click)="goBack()">
+                        <i class="fas fa-arrow-left"></i> Quay lại
+                    </button>
+                </div>
+
+                <h1 class="news-title">{{ post.name }}</h1>
+                <div class="news-meta">
+                    <span class="news-date">
+                        <i class="far fa-clock"></i> {{ post.publishedDate | date:'M/d/yyyy, h:mm a' }}
+                    </span> 
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ currentUrl }}" target="_blank" class="social-share-icon facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+                <hr class="news-divider">
+
+                <div *ngIf="attachmentDto && attachmentDto.length > 0" class="main-image-container">
+                    <img [src]="getImageUrl(attachmentDto[0])" 
+                         [alt]="getFileName(attachmentDto[0])"
+                         class="main-news-image"
+                         (click)="openImage(getImageUrl(attachmentDto[0]))"
+                         (error)="onImageError($event)">
+                </div>
+
+                <div class="news-content" [innerHTML]="post.content">
+                    </div>
+
+                <div class="attachments-section mt-4" *ngF="attachmentDto?.length && attachmentDto.length > 1">
+                    <h3>Hình ảnh khác</h3>
+                    <div class="other-attachments-grid">
+                        <div *ngFor="let attachment of attachmentDto.slice(1); trackBy: trackById" 
+                             class="attachment-item-small">
+                            <img [src]="getImageUrl(attachment)"
+                                 [alt]="getFileName(attachment)"
+                                 class="small-attachment-image"
+                                 (click)="openImage(getImageUrl(attachment))"
+                                 (error)="onImageError($event)">
+                            <p class="attachment-name">{{ getFileName(attachment) }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          
-            <ng-template #noAttachments>
-              <p class="report-value">Không có tệp đính kèm.</p>
-            </ng-template>
-          
-            <!-- Lightbox -->
-            <div class="lightbox" *ngIf="selectedImageUrl" (click)="closeImage()">
-              <img [src]="selectedImageUrl" alt="Xem ảnh">
+        </div>
+
+        <div class="news-sidebar-column">
+            <div class="card sidebar-card">
+                <h3 class="sidebar-title">Xem thêm</h3>
+                <ul class="related-news-list">
+                    <li *ngFor="let relatedNewsItem of relatedNews; trackBy: trackById">
+                        <a [routerLink]="['/view-news', relatedNewsItem.id]" class="related-news-link" (click)="loadNewsById(relatedNewsItem.id)">
+                            <img [src]="getImageUrlForRelated(relatedNewsItem)" alt="{{ relatedNewsItem.name }}" class="related-news-thumbnail">
+                            <div class="related-news-info">
+                                <h4 class="related-news-title">{{ relatedNewsItem.name }}</h4>
+                                <p class="related-news-date">{{ relatedNewsItem.publishedDate | date:'M/d/yyyy' }}</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li *ngIf="relatedNews.length === 0">
+                        <p class="no-related-news">Không có tin tức liên quan.</p>
+                    </li>
+                </ul>
             </div>
-          </div>
-          
+        </div>
     </div>
 </div>
 
-<!-- <app-footer></app-footer> -->
+<div class="lightbox" *ngIf="selectedImageUrl" (click)="closeImage()">
+  <img [src]="selectedImageUrl" alt="Xem ảnh">
+</div>
+
+<app-footer></app-footer>

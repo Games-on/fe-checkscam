@@ -1,139 +1,283 @@
-/* Styles cho trang About Us */
+/* src/app/components/about-us/about-us.component.scss */
+
+/* Variables (Optional but highly recommended for consistency) */
+$primary-color: #4CAF50; // Màu xanh lá cây của CheckScam
+$secondary-color: #2c3e50; // Màu xanh đậm
+$text-color: #333; // Màu chữ chính
+$light-text-color: #666; // Màu chữ phụ
+$background-light: #f8fbfd; // Nền sáng
+$border-color: #eee; // Màu đường viền
+
 .about-us-page {
-  padding: 20px;
-  font-family: sans-serif;
-  line-height: 1.6;
-  color: #333;
+  padding-top: 60px; // Đảm bảo không bị dính vào header
+  padding-bottom: 60px;
+  background-color: $background-light;
+  font-family: 'Inter', sans-serif; // Sử dụng font hiện đại hơn (cần import từ Google Fonts)
+  line-height: 1.7;
+  color: $text-color;
+  animation: fadeIn 0.8s ease-out; // Hiệu ứng mờ dần khi load trang
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .container {
-  max-width: 960px;
+  max-width: 1000px; // Rộng hơn một chút
   margin: 0 auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 40px; // Padding lớn hơn bên trong container
+  background-color: white; // Nền trắng cho container
+  border-radius: 12px; // Bo tròn hơn
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); // Bóng đổ sâu và rõ ràng hơn
+  position: relative; // Để các hiệu ứng khác
+  overflow: hidden; // Đảm bảo nội dung không tràn ra ngoài border-radius
+
+  @media (max-width: 768px) {
+    padding: 30px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px;
+  }
 }
 
 .back-button {
   background: none;
   border: none;
-  color: #28a745;
+  color: $primary-color;
   cursor: pointer;
-  font-size: 1em;
-  margin-bottom: 15px;
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 25px;
   padding: 0;
-}
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease, transform 0.3s ease;
 
-h1 {
-  color: #28a745;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.author {
-  font-style: italic;
-  color: #6c757d;
-  margin-bottom: 5px;
-  text-align: center;
-}
-
-.date {
-  color: #6c757d;
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 0.9em;
-}
-
-.social-share {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-section {
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
-
-  &:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
+  .back-arrow {
+    margin-right: 8px;
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
   }
-}
-
-section h2 {
-  color: #007bff;
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-section p {
-  margin-bottom: 10px;
-}
-
-section ul {
-  list-style: disc;
-  padding-left: 20px;
-  margin-bottom: 10px;
-}
-
-section li {
-  margin-bottom: 5px;
-}
-
-section a {
-  color: #007bff;
-  text-decoration: none;
 
   &:hover {
-    text-decoration: underline;
+    color: darken($primary-color, 10%);
+    transform: translateX(-5px);
+
+    .back-arrow {
+      transform: translateX(-3px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1em;
+    margin-bottom: 20px;
   }
 }
 
-/* Style cho phần đội ngũ ô tròn */
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $border-color;
+
+  h1 {
+    font-size: 3em;
+    color: $secondary-color;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    font-weight: 800; // Tiêu đề rất đậm
+
+    .highlight-text {
+      color: $primary-color; // Màu xanh lá cho "CheckScam"
+    }
+
+    @media (max-width: 768px) {
+      font-size: 2.2em;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.8em;
+    }
+  }
+
+  .author-date {
+    font-size: 0.95em;
+    color: $light-text-color;
+    font-style: italic;
+
+    .highlight-text {
+      color: $secondary-color; // Màu đậm hơn cho tên tác giả
+      font-weight: 600;
+    }
+  }
+
+  .social-share-buttons {
+    margin-top: 20px;
+    .share-icon {
+      display: inline-flex;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #f0f0f0;
+      color: $text-color;
+      justify-content: center;
+      align-items: center;
+      margin: 0 5px;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: $primary-color;
+        color: white;
+        transform: translateY(-3px);
+      }
+      &.facebook-share { background-color: #3b5998; color: white; &:hover { background-color: darken(#3b5998, 10%); } }
+      // Thêm các style cho icon Twitter, LinkedIn nếu sử dụng
+    }
+  }
+}
+
+.section-block {
+  margin-bottom: 40px;
+  padding: 30px;
+  background-color: #fefefe; // Nền hơi khác cho mỗi block
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); // Bóng đổ nhẹ cho từng block
+  border-left: 5px solid $primary-color; // Đường viền nổi bật bên trái
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  &:last-of-type { // Chỉ cho section block cuối cùng
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    padding: 25px;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px;
+    margin-bottom: 25px;
+  }
+}
+
+.section-icon {
+  font-size: 2.5em; // Kích thước icon lớn hơn
+  color: $primary-color;
+  margin-bottom: 15px;
+  display: block; // Đảm bảo icon đứng một mình trên một dòng
+  text-align: center;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1)); // Bóng đổ cho icon
+}
+
+.section-title {
+  font-size: 2em;
+  color: $secondary-color;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+
+  &::after { // Gạch chân tinh tế dưới tiêu đề
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: $primary-color;
+    margin: 10px auto 0; // Căn giữa
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.8em;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5em;
+  }
+}
+
+p {
+  font-size: 1.05em;
+  color: $text-color;
+  margin-bottom: 15px;
+  text-align: justify; // Căn đều hai bên cho đoạn văn bản
+  
+  .highlight-date, .highlight-tech {
+    font-weight: 600;
+    color: $primary-color;
+  }
+}
+
+// Styles cho phần đội ngũ ô tròn (Giữ nguyên như bạn đã cung cấp, nhưng tôi sẽ thêm một số điều chỉnh nhỏ để phù hợp hơn)
 .team-circles-container {
-  display: flex; /* Sắp xếp các ô tròn theo hàng ngang */
-  justify-content: center; /* Căn giữa các ô tròn */
-  align-items: center; /* Căn giữa theo chiều dọc (nếu cần) */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; // Căn chỉnh các ô tròn lên trên
   margin-top: 30px;
   margin-bottom: 30px;
-  gap: 30px; /* Khoảng cách giữa các ô tròn */
-  flex-wrap: wrap; /* Cho phép các ô tròn xuống dòng trên màn hình nhỏ */
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .team-circle {
   display: flex;
-  flex-direction: column; /* Sắp xếp ảnh và chức vụ theo cột dọc */
-  align-items: center; /* Căn giữa nội dung bên trong ô tròn */
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  width: 150px; // Tăng kích thước tổng thể của mỗi ô team
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-8px); // Nâng lên khi hover
+  }
 }
 
 .circle-image {
-  width: 120px; /* Kích thước đường kính của ô tròn */
-  height: 120px; /* Kích thước đường kính của ô tròn */
-  border-radius: 50%; /* Tạo hình tròn */
-  overflow: hidden; /* Ẩn phần ảnh thừa */
+  width: 120px; // Kích thước đường kính của ô tròn
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
   margin-bottom: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng đổ nhẹ */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); // Bóng đổ rõ ràng hơn
+  border: 4px solid $primary-color; // Viền màu xanh lá
 }
 
 .circle-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Đảm bảo ảnh vừa vặn khung tròn */
+  object-fit: cover;
+}
+
+.member-name {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: $secondary-color;
+  margin-top: 10px; // Khoảng cách với ảnh
+  margin-bottom: 5px;
 }
 
 .member-title {
   font-size: 0.9em;
-  color: #555;
-  margin-top: 5px;
+  color: $light-text-color;
 }
 
 /* Responsive cho phần đội ngũ ô tròn */
 @media (max-width: 768px) {
   .team-circles-container {
     gap: 20px;
+  }
+
+  .team-circle {
+    width: 120px;
   }
 
   .circle-image {
@@ -144,15 +288,80 @@ section a {
 
 @media (max-width: 576px) {
   .team-circles-container {
-    flex-direction: column; /* Xếp các ô tròn theo cột dọc trên màn hình rất nhỏ */
-    align-items: center;
+    flex-direction: row; // Giữ hàng ngang nếu màn hình vẫn cho phép
+    justify-content: center;
+    gap: 15px; // Giảm gap
   }
 
   .team-circle {
-    margin-bottom: 20px;
+    width: 100px; // Kích thước nhỏ hơn nữa trên mobile nhỏ
+    margin-bottom: 0; // Bỏ margin-bottom nếu sắp xếp hàng ngang
+  }
 
-    &:last-child {
-      margin-bottom: 0;
+  .circle-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .member-name {
+    font-size: 1em;
+  }
+
+  .member-title {
+    font-size: 0.8em;
+  }
+}
+
+
+.btn-primary {
+  display: inline-block;
+  background: linear-gradient(45deg, $primary-color, lighten($primary-color, 10%)); // Gradient xanh lá
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px; // Bo tròn vừa phải
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3); // Bóng đổ
+  margin-top: 20px; // Khoảng cách với đoạn văn bản
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+    background: linear-gradient(45deg, darken($primary-color, 5%), $primary-color);
+  }
+}
+
+.contact-info {
+  margin-top: 20px;
+  p {
+    margin-bottom: 10px;
+    font-size: 1em;
+    strong {
+      color: $secondary-color;
     }
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: 500;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.page-footer {
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid $border-color;
+  color: $light-text-color;
+  font-size: 0.9em;
+
+  @media (max-width: 480px) {
+    margin-top: 30px;
+    font-size: 0.8em;
   }
 }

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { EditorModule } from '@tinymce/tinymce-angular'; 
 
 import { NewsService } from '../../../services/news.service';
 import { NewsDTO } from '../../../dtos/news.dto';
@@ -10,7 +11,7 @@ import { NewsDTO } from '../../../dtos/news.dto';
 @Component({
   selector: 'app-create-news',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, EditorModule], 
   templateUrl: './create-news.component.html',
   styleUrls: ['./create-news.component.scss']
 })
@@ -25,18 +26,16 @@ export class CreateNewsComponent {
     private router: Router
   ) {}
 
-  /** khi chọn file */
   onFileSelect(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.selectedFiles = input.files ? Array.from(input.files) : [];
   }
 
-  /** tạo tin & upload ảnh */
   createNews(): void {
     const dto: NewsDTO = {
       name: this.name,
       shortDescription: this.shortDescription,
-      content: this.content
+      content: this.content 
     };
 
     this.newsService.createNews(dto).subscribe({

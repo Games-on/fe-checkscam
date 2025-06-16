@@ -35,7 +35,7 @@
                     const token = response.access_token;
                     this.tokenService.saveToken(token);
                     this.userService.saveUserData(response);
-                    this.router.navigate(['/dashboard']);
+                    this.router.navigate(['/admin']);
                 },
                 error: (error) => {
                     debugger
@@ -44,8 +44,8 @@
             });
         }
 
-        forgotPassword(event: any) { // Thêm tham số "event" ở đây
-            event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+        forgotPassword(event: any) { 
+            event.preventDefault(); 
             alert('Vui lòng liên hệ quản trị viên để được cấp lại mật khẩu.');
         }
     }

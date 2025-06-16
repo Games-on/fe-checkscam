@@ -1,35 +1,100 @@
-
-<div class="about-us-page">
+<app-header></app-header> <div class="about-us-page">
   <div class="container">
-    <button class="back-button" (click)="goBack()">← Quay lại</button>
-    <h1>Về Chúng Tôi</h1>
-    <p class="author">Viết bởi: Author</p>
-    <p class="date">04/13/2025, 9:12:29 AM</p>
-    <div class="social-share">
-      </div>
-    <section>
-    
-      <p><strong>CheckScam (CS)</strong> là một dự án phi lợi nhuận của Việt Nam, chính thức hoạt động từ ngày 13 tháng 04 năm 2025, với mục tiêu hỗ trợ người dùng kiểm tra độ tin cậy của các trang web và ngăn chặn truy cập vào các trang web không an toàn, bảo vệ người dùng trên môi trường trực tuyến.</p>
+    <button class="back-button" (click)="goBack()">
+      <span class="back-arrow">←</span> Quay lại
+    </button>
+
+    <header class="page-header">
+      <h1>Về chúng tôi</h1>
+      <p class="author-date">
+        Viết bởi: <span class="highlight-text">Đội ngũ CheckScam</span> | Ngày: 06/13/2025
+      </p>
+      </header>
+
+    <section class="section-block intro-section">
+      <div class="section-icon">🌐</div>
+      <h2 class="section-title">Giới Thiệu Chung</h2>
+      <p>
+        <strong>CheckScam (CS)</strong> là một dự án phi lợi nhuận của Việt Nam, chính thức hoạt động từ ngày
+        <span class="highlight-date">01 tháng 07 năm 2025</span>, với sứ mệnh cao cả:
+        **bảo vệ người dùng trên môi trường trực tuyến.** Chúng tôi cam kết kiểm tra độ tin cậy của các trang web và
+        ngăn chặn truy cập vào những nguồn không an toàn, góp phần xây dựng một không gian mạng lành mạnh hơn cho mọi người.
+      </p>
     </section>
 
-    <section>
-      <strong>Sứ mệnh và hoạt động</strong>
-      <p>Dự án cung cấp các thông tin cảnh báo lừa đảo và giải pháp bảo mật, giúp người dùng nhận diện và tránh các trang web lừa đảo, độc hại trên các nền tảng như Facebook, YouTube, TikTok và nhiều nền tảng khác. CS sử dụng công nghệ trí tuệ nhân tạo (AI) và học máy (Machine Learning - ML), kết hợp với sự đóng góp từ cộng đồng, để xây dựng một không gian mạng an toàn hơn.</p>
+    <section class="section-block mission-section">
+      <div class="section-icon">🎯</div>
+      <h2 class="section-title">Sứ Mệnh và Hoạt Động</h2>
+      <p>
+        Dự án cung cấp các thông tin cảnh báo lừa đảo và giải pháp bảo mật toàn diện, giúp người dùng dễ dàng
+        nhận diện và chủ động tránh xa các trang web lừa đảo, độc hại trên nhiều nền tảng phổ biến như
+        **Facebook, YouTube, TikTok** và các kênh trực tuyến khác. CheckScam tiên phong áp dụng
+        <span class="highlight-tech">công nghệ Trí tuệ Nhân tạo (AI) và Học máy (Machine Learning - ML)</span>
+        tiên tiến, kết hợp chặt chẽ với sự đóng góp quý báu từ cộng đồng, nhằm xây dựng và duy trì một cơ sở dữ liệu lừa đảo khổng lồ, cập nhật liên tục.
+      </p>
+      <p>
+        Mỗi báo cáo, mỗi dữ liệu được cộng đồng cung cấp đều là mảnh ghép quan trọng, giúp hệ thống AI của chúng tôi
+        trở nên thông minh hơn, phát hiện lừa đảo chính xác hơn.
+      </p>
     </section>
 
-    <section>
-      <strong>Kêu gọi cộng đồng</strong>
-      <p>CheckScam rất mong nhận được sự đóng góp từ cộng đồng nhằm hoàn thiện sản phẩm và nâng cao khả năng bảo vệ người dùng trước các mối đe dọa trực tuyến. </p>
+    <section class="section-block team-section">
+      <div class="section-icon">🤝</div>
+      <h2 class="section-title">Đội Ngũ Phát Triển</h2>
+      <p>
+        CheckScam được xây dựng và vận hành bởi một đội ngũ đam mê, tâm huyết với mục tiêu tạo ra giá trị cho cộng đồng.
+        Chúng tôi là những chuyên gia trong lĩnh vực công nghệ thông tin, an toàn thông tin và phân tích dữ liệu.
+      </p>
+      <div class="team-circles-container">
+        <div class="team-circle">
+          <div class="circle-image">
+            <img src="path/to/author_image_1.jpg" alt="Thành viên 1">
+          </div>
+          <p class="member-name">Andev</p>
+          <p class="member-title">Trưởng dự án</p>
+        </div>
+        <div class="team-circle">
+          <div class="circle-image">
+            <img src="path/to/author_image_2.jpg" alt="Thành viên 2">
+          </div>
+          <p class="member-name">Duc</p>
+          <p class="member-title">Trưởng dự án</p>
+        </div>
+        <div class="team-circle">
+          <div class="circle-image">
+            <img src="path/to/author_image_3.jpg" alt="Thành viên 3">
+          </div>
+          <p class="member-name">Trang</p>
+          <p class="member-title">Trưởng dự án</p>
+        </div>
+        </div>
     </section>
 
-    <section>
-      <strong>Kết nối với chúng tôi qua:</strong>
-      <ul>
-        <p>Contact: </p>
-        <p>Email: </p>
-        <p></p>
-      </ul>
+    <section class="section-block community-section">
+      <div class="section-icon">📣</div>
+      <h2 class="section-title">Kêu Gọi Cộng Đồng</h2>
+      <p>
+        CheckScam là một dự án mở, luôn chào đón sự đóng góp từ mọi cá nhân và tổ chức. Sự tham gia của cộng đồng
+        là yếu tố then chốt giúp chúng tôi hoàn thiện sản phẩm, nâng cao khả năng bảo vệ người dùng trước
+        các mối đe dọa trực tuyến ngày càng tinh vi. Hãy cùng chung tay xây dựng một cộng đồng mạng an toàn và đáng tin cậy!
+      </p>
+      <a href="https://your-contribution-link.com" target="_blank" class="btn-primary">
+        Tìm hiểu cách đóng góp
+      </a>
     </section>
-    <p>Hãy cùng chung tay xây dựng một cộng đồng mạng an toàn và đáng tin cậy!</p>
+
+    <section class="section-block contact-section">
+      <div class="section-icon">✉️</div>
+      <h2 class="section-title">Kết Nối Với Chúng Tôi</h2>
+      <div class="contact-info">
+        <p><strong>Email:</strong> <a href="mailto:contact&#64;checkscam.vn">contact&#64;checkscam.vn</a></p>
+        <p><strong>Điện thoại:</strong> <a href="tel:+84123456789">+84 123 456 789</a> (Chỉ giờ hành chính)</p>
+        <p><strong>Fanpage Facebook:</strong> <a href="https://www.facebook.com/checkscam.official" target="_blank">CheckScam Official</a></p>
+        </div>
+    </section>
+
+    <footer class="page-footer">
+      <p>Cảm ơn bạn đã tin tưởng và đồng hành cùng CheckScam.</p>
+    </footer>
   </div>
 </div>

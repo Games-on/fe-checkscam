@@ -1,7 +1,7 @@
 .header-nav {
   background-color: #1a313a;
-  height: 64px; // ⬅️ Thêm chiều cao cố định cho header
-  padding: 0; // ⬅️ Loại bỏ padding trên dưới gây lệch
+  height: 64px;
+  padding: 0;
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
@@ -11,11 +11,11 @@
   .container {
     display: flex;
     justify-content: space-between;
-    align-items: center; // ✅ Căn giữa dọc các phần tử
+    align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 16px; // tăng padding ngang cho dễ nhìn
-    height: 100%; // ✅ đảm bảo con chiếm full chiều cao header
+    padding: 0 16px;
+    height: 100%;
   }
 
   .brand {
@@ -24,15 +24,20 @@
     font-weight: bold;
     text-decoration: none;
     display: flex;
-    align-items: center; // ✅ căn giữa dọc text brand
-    height: 100%; // để nó align theo header
+    align-items: center;
+    height: 100%;
+  }
+
+  /* Ẩn nút toggle trên desktop */
+  .menu-toggle {
+    display: none;
   }
 
   .nav-links {
     display: flex;
     list-style: none;
     gap: 24px;
-    align-items: center; 
+    align-items: center;
     margin: 0px;
 
     li a {
@@ -43,7 +48,7 @@
       transition: all 0.3s ease;
       font-weight: 500;
       display: flex;
-      align-items: center; // ✅ căn giữa text trong link
+      align-items: center;
       height: 100%;
     }
 
@@ -56,5 +61,92 @@
 
   &.hidden {
     transform: translateY(-100%);
+  }
+
+  /* MEDIA QUERIES CHO MOBILE */
+  @media (max-width: 768px) {
+    height: 60px; /* Điều chỉnh chiều cao header cho mobile nếu cần */
+
+    .container {
+      padding: 0 10px; /* Giảm padding ngang trên mobile */
+    }
+
+    .brand {
+      font-size: 1.6rem;
+    }
+
+    /* Hiển thị nút toggle trên mobile */
+    .menu-toggle {
+      display: block;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      position: relative; /* Để tạo hiệu ứng X */
+      width: 30px;
+      height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 101; /* Đảm bảo nút này nằm trên menu khi mở */
+    }
+
+    .hamburger-icon {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #fff;
+      border-radius: 2px;
+      transition: all 0.3s ease; /* Hiệu ứng chuyển đổi thành X */
+    }
+
+    /* Hiệu ứng chuyển đổi thành X */
+    .hamburger-icon:nth-child(1).open {
+      transform: translateY(10px) rotate(45deg);
+    }
+    .hamburger-icon:nth-child(2).open {
+      opacity: 0; /* Biến mất thanh giữa */
+    }
+    .hamburger-icon:nth-child(3).open {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+
+    /* Ẩn menu links theo mặc định trên mobile */
+    .nav-links {
+      position: fixed;
+      top: 0; /* Bắt đầu từ đỉnh */
+      right: -100%; /* Đẩy ra ngoài màn hình */
+      width: 250px; /* Chiều rộng của sidebar menu */
+      height: 100vh; /* Chiếm toàn bộ chiều cao viewport */
+      background-color: #1a313a; /* Cùng màu với header hoặc màu khác */
+      flex-direction: column; /* Xếp các mục theo chiều dọc */
+      justify-content: flex-start; /* Đẩy nội dung lên trên */
+      padding-top: 80px; /* Tạo khoảng trống cho header */
+      box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+      transition: right 0.3s ease-in-out; /* Hiệu ứng trượt vào/ra */
+      z-index: 99; /* Đặt dưới nút toggle nhưng trên nội dung khác */
+    }
+
+    /* Hiển thị menu khi có class menu-open */
+    .nav-links.menu-open {
+      right: 0; /* Trượt vào màn hình */
+    }
+
+    .nav-links li {
+      width: 100%; /* Mỗi mục chiếm toàn bộ chiều rộng */
+      border-bottom: 1px solid rgba(255,255,255,0.1); /* Đường phân cách */
+    }
+
+    .nav-links li:last-child {
+      border-bottom: none;
+    }
+
+    .nav-links li a {
+      padding: 15px 20px; /* Padding lớn hơn cho mục mobile */
+      width: 100%;
+      box-sizing: border-box; /* Đảm bảo padding nằm trong chiều rộng */
+      justify-content: flex-start; /* Căn trái text */
+    }
   }
 }

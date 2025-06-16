@@ -12,7 +12,7 @@
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a class="nav-link" routerLink="/admin/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
@@ -21,7 +21,7 @@
         <!-- Admin only menu items -->
         <ng-container *ngIf="isAdmin">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a class="nav-link" routerLink="/admin/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
               <i class="fa-solid fa-users"></i>
               <span>Quản lý tài khoản</span>
             </a>
@@ -30,14 +30,14 @@
 
         <!-- Common menu items for both Admin and Collaborator -->
         <li class="nav-item">
-          <a class="nav-link" routerLink="/news" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a class="nav-link" routerLink="/admin/news" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <i class="fa-solid fa-newspaper"></i>
             <span>Quản lý tin tức</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/reports" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a class="nav-link" routerLink="/admin/reports" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <i class="fa-solid fa-scroll"></i>
             <span>Quản lý báo cáo</span>
           </a>

@@ -1,58 +1,215 @@
 <app-header (aiTuVanClicked)="onAiTuVanClicked()"></app-header>
 
-<div class="chat-wrapper">
-  
-  <div>
-    <img width= "380px" src="../../../assets/img/banner.jpg" alt="banner">
+<div class="main-section">
+  <div class="background-elements">
+    <div class="square green-square top-left"></div>
+    <div class="square yellow-square bottom-right"></div>
+    <div class="square green-square mid-left"></div>
+    <div class="square yellow-square mid-right"></div>
+    <div class="square green-square bottom-left-small"></div>
+    <div class="square yellow-square top-right-small"></div>
   </div>
-  <div class="chat-container">
-    <div class="chat-display">
-      <div *ngFor="let message of messages"
-           class="message-wrapper"
-           [class.align-right]="message.isUser">
-        <div class="message-content">
-          <div class="message-text">{{ message.text }}</div>
+
+  <div class="content-wrapper">
+    <div class="main-content">
+      <h1 class="main-title">BẠN CÓ ĐANG <br> LƯỚT WEB <span class="safe-text">AN TOÀN?</span></h1>
+      <p class="subtitle">Kiểm tra ngay số điện thoại, tài khoản ngân hàng và website có an toàn hay không</p>
+
+      <div class="search-box-container">
+        <select [(ngModel)]="selectedType" (change)="onTypeChange()" class="input-type-select">
+          <option [ngValue]="1">📱 Số điện thoại</option>
+          <option [ngValue]="2">🏦 Số tài khoản</option>
+          <option [ngValue]="3">🌐 URL</option>
+        </select>
+        <input class="search-input" type="text" placeholder="Nhập thông tin cần kiểm tra..."
+          [(ngModel)]="info" (keydown.enter)="sendMessage()">
+        <button class="search-button" type="submit" (click)="sendMessage()" [disabled]="!info.trim() || isLoading">
+          <i [class]="currentSearchIcon"></i> </button>
+      </div>
+
+      <div class="status-messages">
+        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <div class="loading-spinner" *ngIf="isLoading">
+          <div class="spinner"></div>
+          <p>Đang tra cứu...</p>
         </div>
       </div>
     </div>
-    <div class="chat-input-wrapper">
-      <div class="chat-input">
-        <select [(ngModel)]="selectedType" class="input-type-select">
-          <option [ngValue]="1">Số điện thoại</option>
-          <option [ngValue]="2">Số tài khoản</option>
-          <option [ngValue]="3">URL</option>
-        </select>
-        <input class="form-control form-control-lg" type="text" placeholder="Nhập thông tin cần tra cứu"
-          [(ngModel)]="info" (keydown.enter)="sendMessage()">
-        <button class="btn btn-primary btn-lg" id="submitButton" type="submit" (click)="sendMessage()"
-          [disabled]="!info.trim()">Gửi</button>
+  </div>
+
+  <div class="result-section" *ngIf="searchResult && !isLoading">
+    <div class="result-header">
+      <h2>Kết Quả Tra Cứu cho: <span class="highlight-info">{{ searchResult.info }}</span></h2>
+      <span class="status-tag" [class.status-safe]="searchResult.reportDescription !== 'Thông tin báo cáo liên quan đã được tìm thấy.'" [class.status-scam]="searchResult.reportDescription === 'Thông tin báo cáo liên quan đã được tìm thấy.'">
+        {{ searchResult.reportDescription }}
+      </span>
+    </div>
+
+    <div class="result-details">
+      <p><strong>Loại:</strong> {{ selectedType === 1 ? 'Số điện thoại' : selectedType === 2 ? 'Số tài khoản' : 'URL' }}</p>
+      <p *ngIf="searchResult.description"><strong>Mô tả:</strong> {{ searchResult.description }}</p>
+      <p *ngIf="searchResult.moneyScam && searchResult.moneyScam !== '0'"><strong>Số tiền bị lừa:</strong> {{ searchResult.moneyScam | currency:'VND':'symbol':'1.0-0':'vi' }}</p>
+      <p *ngIf="searchResult.verifiedCount"><strong>Số lượt báo cáo:</strong> {{ searchResult.verifiedCount }}</p>
+      <p *ngIf="searchResult.lastReportAt && searchResult.lastReportAt !== '0001-01-01T00:00:00'"><strong>Báo cáo gần nhất:</strong> {{ searchResult.lastReportAt | date:'dd/MM/yyyy HH:mm' }}</p>
+
+      <div class="analysis-section" *ngIf="searchResult.analysis">
+        <h3>Phân tích chi tiết:</h3>
+        <div class="analysis-content" [innerHTML]="searchResult.analysis"></div>
+      </div>
+
+      <div class="evidence-section" *ngIf="searchResult.evidenceUrls && searchResult.evidenceUrls.length > 0">
+        <h3>Bằng chứng:</h3>
+        <div class="evidence-gallery">
+          <img *ngFor="let url of searchResult.evidenceUrls" [src]="'https://your-domain.com' + url" alt="Bằng chứng" class="evidence-thumbnail">
+          </div>
+      </div>
+    </div>
+    <button class="clear-result-button" (click)="searchResult = null; errorMessage = null;">Xóa kết quả</button>
+  </div>
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="counter-number">{{ scamReports }}</div>
+        <div class="stat-label">Báo cáo lừa đảo</div>
+      </div>
+      <div class="stat-item">
+        <div class="counter-number">{{ usersProtected }}</div>
+        <div class="stat-label">Người dùng được bảo vệ</div>
+      </div>
+      <div class="stat-item">
+        <div class="counter-number">{{ checkedItems }}</div>
+        <div class="stat-label">Mục đã kiểm tra</div>
+      </div>
+      <div class="stat-item">
+        <div class="counter-number">{{ accuracy }}</div>
+        <div class="stat-label">Độ chính xác</div>
       </div>
     </div>
   </div>
-  <div>
-    <img width= "380px" src="../../../assets/img/banner2.jpg" alt="banner">
-  </div>
-<div>
-    <!-- <img width= "200px" src="https://sdmntprwestus.oaiusercontent.com/files/00000000-1fe8-6230-bd9f-7d981bd4e9b8/raw?se=2025-05-15T04%3A37%3A24Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=61180a4f-34a9-42b7-b76d-9ca47d89946d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-14T22%3A44%3A54Z&ske=2025-05-15T22%3A44%3A54Z&sks=b&skv=2024-08-04&sig=Vzy54YiWTgmIcIMBMtxgxELhK3xqMzp%2B3XdQ4%2BxuxUw%3D" alt="banner"> -->
+
+  <div class="community-section-new">
+    <h3 class="community-title">Tham gia cộng đồng Checkscam</h3>
+    <p class="community-desc">Kết nối với cộng đồng để cập nhật thông tin bảo mật mới nhất</p>
+    <div class="social-links">
+      <a href="#" class="social-button facebook">
+        <img src="../../../assets/img/facebook.png" alt="Facebook"> Facebook
+      </a>
+      <a href="#" class="social-button telegram">
+        <img src="../../../assets/img/telegram.png" alt="Telegram"> Telegram
+      </a>
+      <a href="#" class="social-button zalo">
+        <img src="../../../assets/img/zalo.png" alt="Zalo"> Zalo
+      </a>
+    </div>
   </div>
 </div>
 
-   <div class="about-us-section">
-    <div class="container">
-      <div class="about-us-content">
-         <div class="graphic-column">
-            <img src="https://chongluadao.vn/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faboutus.c9f1d232.png&w=750&q=75" alt="About Us Graphic">
-          </div>
+<div class="features-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">TÍNH NĂNG</p>
+      <h2 class="section-main-title">Bảo vệ toàn diện khỏi lừa đảo</h2>
+    </div>
 
-        <div class="text-column">
-          <p class="section-label">VỀ CHÚNG TÔI</p>
-          <h2 class="section-main-title">VÌ MỘT INTERNET <br> AN TOÀN HƠN</h2>
-          <p class="section-description">Tại Việt Nam, CheckScam - Chúng tôi đang tập trung vào việc bảo vệ và nâng cao nhận thức người dùng về an toàn thông tin.</p>
-            <a routerLink="/about-us" class="btn-about-us">Xem thêm về chúng tôi</a>
-        </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3 class="feature-title">Kiểm tra số điện thoại</h3>
+        <p class="feature-description">Xác minh danh tính người gọi, phát hiện các số điện thoại lừa đảo đã được báo cáo bởi cộng đồng.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏦</div>
+        <h3 class="feature-title">Xác thực tài khoản ngân hàng</h3>
+        <p class="feature-description">Kiểm tra tính hợp lệ của số tài khoản ngân hàng trước khi thực hiện giao dịch chuyển tiền.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3 class="feature-title">Quét website an toàn</h3>
+        <p class="feature-description">Phân tích website để phát hiện các trang web giả mạo, lừa đảo hoặc chứa mã độc.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3 class="feature-title">AI Tư vấn thông minh</h3>
+        <p class="feature-description">Chatbot AI hỗ trợ 24/7, tư vấn và giải đáp các thắc mắc về an toàn thông tin.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3 class="feature-title">Cơ sở dữ liệu cập nhật</h3>
+        <p class="feature-description">Dữ liệu lừa đảo được cập nhật liên tục từ các nguồn uy tín và báo cáo từ cộng đồng.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3 class="feature-title">Cảnh báo thời gian thực</h3>
+        <p class="feature-description">Nhận thông báo ngay lập tức khi phát hiện các mối đe dọa mới hoặc chiêu trò lừa đảo.</p>
       </div>
     </div>
   </div>
+</div>
+
+<div class="about-us-section">
+  <div class="container">
+    <div class="about-us-content">
+      <div class="graphic-column">
+        <img src="https://chongluadao.vn/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faboutus.c9f1d232.png&w=750&q=75" alt="About Us Graphic">
+      </div>
+      <div class="text-column">
+        <p class="section-label">VỀ CHÚNG TÔI</p>
+        <h2 class="section-main-title">VÌ MỘT INTERNET <br> AN TOÀN HƠN</h2>
+        <p class="section-description">
+          CheckScam là nền tảng hàng đầu tại Việt Nam trong việc bảo vệ người dùng khỏi các hình thức lừa đảo trực tuyến.
+          Chúng tôi sử dụng công nghệ AI tiên tiến và cơ sở dữ liệu được cập nhật liên tục để mang lại sự an toàn tối đa cho người dùng internet Việt Nam.
+        </p>
+        <a routerLink="/about-us" class="btn-about-us">
+          Xem thêm về chúng tôi
+          <span class="arrow-icon">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-links-section">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-column">
+        <h3>Sản phẩm</h3>
+        <ul>
+          <li><a routerLink="/check-phone">Kiểm tra số điện thoại</a></li>
+          <li><a routerLink="/check-bank">Xác thực tài khoản ngân hàng</a></li>
+          <li><a routerLink="/check-website">Quét website an toàn</a></li>
+          <li><a routerLink="/extension">Tiện ích mở rộng</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Thông tin hữu ích</h3>
+        <ul>
+          <li><a routerLink="/useful-info/scam-types">Các kiểu lừa đảo phổ biến</a></li>
+          <li><a routerLink="/useful-info/email-scam">Nhận biết email lừa đảo</a></li>
+          <li><a routerLink="/useful-info/bank-security">Bảo mật tài khoản ngân hàng</a></li>
+          <li><a routerLink="/useful-info/online-shopping">Mua sắm online an toàn</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Hỗ trợ</h3>
+        <ul>
+          <li><a routerLink="/support/faq">Câu hỏi thường gặp</a></li>
+          <li><a routerLink="/support/guide">Hướng dẫn sử dụng</a></li>
+          <li><a routerLink="/support/report">Báo cáo lừa đảo</a></li>
+          <li><a routerLink="/support/contact">Liên hệ hỗ trợ</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Xem thêm</h3>
+        <ul>
+          <li><a routerLink="/terms">Điều khoản sử dụng</a></li>
+          <li><a routerLink="/privacy-policy">Chính sách bảo mật</a></li>
+          <li><a routerLink="/useful-info">Thông tin hữu ích</a></li>
+          <li><a routerLink="/about-us">Về chúng tôi</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <app-chat-box *ngIf="showChatbox" (close)="closeChatbox()"></app-chat-box>
 <app-footer></app-footer>

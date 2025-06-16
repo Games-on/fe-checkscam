@@ -27,7 +27,6 @@
 
     sendMessage() {
       if (this.messageText.trim()) {
-        // Add user message
         this.messages.push({
           text: this.messageText,
           isUser: true
@@ -38,13 +37,11 @@
           next: (response) => {
             debugger
             if (response.code === 0) {
-              // Add AI response
               this.messages.push({
                 text: response.message,
                 isUser: false
               });
             } else {
-              // Handle error response
               this.messages.push({
                 text: 'Xin lỗi, tôi không thể xử lý yêu cầu của bạn lúc này.',
                 isUser: false
@@ -53,7 +50,6 @@
           },
           error: (error) => {
             debugger
-            // Handle API error
             this.messages.push({
               text: 'Đã xảy ra lỗi khi kết nối với server.',
               isUser: false
@@ -62,7 +58,6 @@
           }
         });
 
-        // Clear input
         this.messageText = '';
       }
     }

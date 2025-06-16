@@ -24,11 +24,10 @@
   })
   export class ReportComponent implements OnInit {
 
-    /* ------------ dữ liệu bảng ------------ */
     reports: any[] = [];
 
     /* ------------ state dropdown ------------ */
-    dropdownOpenForId: number | null = null;     // id report đang mở
+    dropdownOpenForId: number | null = null;     
     scamTypes: ScamTypeDto[] = [];
     selectedScamTypeId: number | null = null;
     newScamType = { name: '', code: '' };

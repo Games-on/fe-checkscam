@@ -163,4 +163,69 @@ export class ChatbotComponent implements OnInit {
   closeChatbox() {
     this.showChatbox = false;
   }
+
+  // Robot interaction
+  onRobotClick(): void {
+    // Random robot actions with more variety
+    const actions = [
+      () => this.showRobotMessage('🤖 Xin chào! Tôi là Robot CheckScam! Chân tôi có nhanh không?'),
+      () => this.showRobotMessage('🛡️ Đang tuần tra bảo vệ bạn khỏi lừa đảo nè!'),
+      () => this.showRobotMessage('⚡ Tôi chạy quanh đây để kiểm tra thông tin cho bạn!'),
+      () => this.showRobotMessage('🔍 Hãy nhập thông tin vào ô tìm kiếm để tôi giúp bạn!'),
+      () => this.showRobotMessage('🏃‍♂️ Tôi có thể chạy nhanh hơn! Xem chân tôi đạp thế nào!'),
+      () => this.showRobotMessage('🚀 Bạn muốn xem tôi chạy TURBO không?'),
+      () => this.showRobotMessage('🤖 Chân robot của tôi hoạt động bằng AI tiên tiến!'),
+      () => this.showRobotMessage('👁️ Tôi chớp mắt để giữ cho bạn thấy cute!'),
+      () => this.speedUpRobot()
+    ];
+    
+    const randomAction = actions[Math.floor(Math.random() * actions.length)];
+    randomAction();
+  }
+
+  private showRobotMessage(message: string): void {
+    // Tạo temporary message bubble
+    const messageElement = document.createElement('div');
+    messageElement.innerHTML = message;
+    messageElement.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(45deg, #FF6B35, #FF8A65);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+      z-index: 10000;
+      animation: fadeInOut 3s ease-in-out;
+      max-width: 300px;
+      text-align: center;
+    `;
+    
+    document.body.appendChild(messageElement);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+      if (messageElement.parentNode) {
+        messageElement.parentNode.removeChild(messageElement);
+      }
+    }, 3000);
+  }
+
+  private speedUpRobot(): void {
+    const robot = document.querySelector('.search-robot') as HTMLElement;
+    if (robot) {
+      robot.style.animationDuration = '3s'; // Tăng tốc
+      robot.classList.add('turbo'); // Thêm turbo class cho chân
+      this.showRobotMessage('🚀 TURBO MODE ACTIVATED! Chân robot đang chạy siêu nhanh!');
+      
+      // Reset sau 5 giây
+      setTimeout(() => {
+        robot.style.animationDuration = '10s';
+        robot.classList.remove('turbo');
+      }, 5000);
+    }
+  }
 }

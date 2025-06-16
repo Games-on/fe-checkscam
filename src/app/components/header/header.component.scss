@@ -1,11 +1,11 @@
 .header-nav {
-  background-color: #1a313a;
+  background: linear-gradient(135deg, #FF6B35, #FF5722);
   height: 64px;
   padding: 0;
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 15px rgba(255, 107, 53, 0.3);
   transition: transform 0.3s ease-in-out;
 
   .container {
@@ -53,8 +53,9 @@
     }
 
     li a:hover {
-      background-color: #38bdf8;
-      box-shadow: 0 4px 10px rgba(56,189,248,0.4);
+      background-color: #FFD23F;
+      color: #D32F2F;
+      box-shadow: 0 4px 10px rgba(255, 210, 63, 0.4);
       transform: translateY(-2px);
     }
   }
@@ -119,7 +120,7 @@
       right: -100%; /* Đẩy ra ngoài màn hình */
       width: 250px; /* Chiều rộng của sidebar menu */
       height: 100vh; /* Chiếm toàn bộ chiều cao viewport */
-      background-color: #1a313a; /* Cùng màu với header hoặc màu khác */
+      background-color: #D32F2F; /* Cùng màu với header hoặc màu khác */
       flex-direction: column; /* Xếp các mục theo chiều dọc */
       justify-content: flex-start; /* Đẩy nội dung lên trên */
       padding-top: 80px; /* Tạo khoảng trống cho header */

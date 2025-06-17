@@ -1,0 +1,510 @@
+/* src/app/components/analyze/analyze.component.scss */
+
+/* --- STYLE CHO SEARCH BAR GIỐNG TRANG HOME --- */
+.main-search-container-analyze {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto 40px auto; /* Khoảng cách trên, dưới search bar và căn giữa */
+  max-width: 1200px; /* Đảm bảo nó nằm trong giới hạn của container chính nếu cần */
+  padding: 0 80px; /* Padding ngang khớp với container chính */
+}
+
+.search-input-group-analyze {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px; /* Giới hạn chiều rộng của search bar */
+  background: linear-gradient(to right, #ffe0b2, #ffd187); /* Màu gradient cam */
+  border-radius: 50px; /* Bo tròn mạnh */
+  padding: 8px 10px; /* Padding tổng thể */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Shadow nổi bật */
+  position: relative; /* Cho dropdown */
+  box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+}
+
+.dropdown-analyze {
+  position: relative;
+  height: 100%; /* Chiếm chiều cao của search-input-group */
+  display: flex;
+  align-items: center;
+  padding: 0 10px; /* Padding cho vùng dropdown button */
+  z-index: 10; /* Đảm bảo nút dropdown không bị che */
+}
+
+.dropdown-toggle-analyze {
+  background: none;
+  border: none;
+  color: #a0522d; /* Màu chữ nâu đỏ cho dropdown toggle */
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  outline: none; /* Bỏ outline khi focus */
+  user-select: none; /* Ngăn chặn việc chọn văn bản khi click */
+
+  i {
+    color: #8b4513; /* Màu icon nâu sẫm */
+    font-size: 1.2em;
+  }
+  .fa-caret-down {
+    margin-left: 5px;
+    font-size: 0.8em;
+  }
+}
+
+.dropdown-menu-analyze {
+  position: absolute;
+  top: 100%; /* Ngay dưới dropdown toggle */
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 1000; /* Đảm bảo hiển thị trên cùng */
+  padding: 8px 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  li {
+    .dropdown-item-analyze {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 1em;
+      transition: background-color 0.2s ease;
+      cursor: pointer; /* Thêm cursor pointer cho các item */
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+
+      i {
+        color: #007bff;
+      }
+    }
+  }
+}
+
+.input-field-analyze {
+  flex-grow: 1;
+  border: none;
+  background-color: white; /* Nền trắng cho input */
+  border-radius: 25px; /* Bo tròn input */
+  padding: 10px 15px;
+  font-size: 1.1em;
+  outline: none;
+  color: #333;
+  margin-left: 10px; /* Khoảng cách từ dropdown */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08); /* Shadow inset nhẹ */
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.search-button-analyze {
+  background-color: #f7a83b; /* Màu cam đậm */
+  color: white;
+  border: none;
+  border-radius: 50%; /* Nút tròn */
+  width: 50px; /* Kích thước nút */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px; /* Khoảng cách từ input */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Shadow cho nút */
+  flex-shrink: 0; /* Ngăn nút co lại */
+
+  &:hover {
+    background-color: #e6912b;
+  }
+}
+
+/* Responsive cho search bar */
+@media (max-width: 992px) {
+  .main-search-container-analyze {
+    padding: 0 30px; /* Giảm padding ngang */
+  }
+  .search-input-group-analyze {
+    flex-wrap: wrap; /* Cho phép các thành phần xuống dòng */
+    padding: 5px;
+    border-radius: 10px; /* Giảm bo tròn */
+  }
+  .dropdown-analyze {
+    width: 100%;
+    padding: 5px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Đường kẻ dưới dropdown trên mobile */
+    margin-bottom: 5px;
+  }
+  .dropdown-toggle-analyze {
+    justify-content: center; /* Căn giữa nội dung dropdown toggle */
+    width: 100%;
+  }
+  .dropdown-menu-analyze {
+    left: 50%;
+    transform: translateX(-50%) translateY(10px); /* Căn giữa dropdown trên mobile */
+    min-width: 90%; /* Chiếm phần lớn chiều rộng */
+  }
+  .dropdown-menu-analyze.show {
+    transform: translateX(-50%) translateY(0);
+  }
+  .input-field-analyze {
+    margin: 0;
+    border-radius: 5px; /* Giảm bo tròn trên mobile */
+    width: calc(100% - 60px); /* Để dành chỗ cho nút search */
+  }
+  .search-button-analyze {
+    position: absolute; /* Đặt nút search ở góc */
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px; /* Nút nhỏ hơn */
+    height: 40px;
+    font-size: 1.2em;
+    margin-left: 0;
+    border-radius: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-search-container-analyze {
+    padding: 0 20px; /* Giảm padding ngang thêm */
+  }
+  .input-field-analyze {
+    padding: 8px 12px; /* Giảm padding input */
+    font-size: 1em;
+  }
+  .dropdown-toggle-analyze {
+    font-size: 1em;
+    i {
+      font-size: 1.1em;
+    }
+  }
+}
+/* --- KẾT THÚC STYLE CHO SEARCH BAR GIỐNG TRANG HOME --- */
+
+
+/* Các style cũ của bạn được giữ nguyên bên dưới */
+.analyze-page-container {
+  /* Bạn đã có container này ở analyze.component.html cũ, nhưng giờ
+     thanh tìm kiếm nằm ngoài nó. Có lẽ cần đổi tên để tránh nhầm lẫn
+     hoặc bọc cả trang trong một div lớn hơn nếu muốn padding đồng bộ.
+     Hiện tại, tôi sẽ để CSS này và giả định .analyze-container trong HTML cũ
+     có padding riêng. */
+  /* padding: 40px 80px; */ /* Bỏ padding này ở đây nếu .main-search-container-analyze đã có */
+  max-width: 1200px;
+  margin: 20px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #f0f2f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  min-height: calc(100vh - 100px); /* Đảm bảo chiều cao tối thiểu */
+}
+
+/* Lưu ý: .analyze-container trong HTML của bạn đã có, nếu bạn muốn
+   padding 40px 80px và background-color #f0f2f5 áp dụng cho toàn bộ nội dung
+   ngoại trừ header/footer, thì hãy đặt các style này vào .analyze-container
+   thay vì .analyze-page-container (mà tôi đã sửa thành .main-search-container-analyze trong HTML).
+   Nếu không, sẽ có 2 lớp padding và background.
+   Tôi sẽ giữ nguyên CSS cũ của bạn, và bạn có thể điều chỉnh lại sau nếu thấy bị double padding. */
+.analyze-container { /* Thêm hoặc điều chỉnh style cho main.analyze-container */
+  padding: 40px 80px; /* Giữ nguyên padding như bạn đã có */
+  background-color: #f0f2f5; /* Giữ nguyên màu nền */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 20px auto; /* Điều chỉnh margin nếu cần */
+  box-sizing: border-box; /* Quan trọng để padding không làm tràn */
+}
+
+
+.analyze-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Căn h2 và status-box ra hai bên */
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+
+  h2 {
+    font-size: 2em;
+    color: #333;
+    margin: 0;
+    i {
+      margin-right: 10px;
+      color: #007bff; /* Màu icon header */
+    }
+  }
+
+  .status-box {
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    min-width: 180px; /* Đảm bảo kích thước tối thiểu */
+    p {
+      margin: 0;
+      line-height: 1.4;
+    }
+    .status-text {
+      font-size: 1.1em;
+    }
+    .risk-score {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    &.green { background-color: #28a745; }
+    &.yellowgreen { background-color: #4CAF50; }
+    &.orange { background-color: #ffc107; } /* Màu vàng cam */
+    &.red { background-color: #dc3545; }
+    &.gray { background-color: #6c757d; } /* Màu xám */
+  }
+}
+
+.analysis-content {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap; /* Cho phép các cột xuống dòng trên màn hình nhỏ */
+}
+
+.analysis-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1; /* Mặc định chia đều */
+
+  &.left-column {
+    flex-basis: calc(66.66% - 15px); /* Khoảng 2/3 cho cột trái */
+    max-width: calc(66.66% - 15px);
+  }
+
+  &.right-column {
+    flex-basis: calc(33.33% - 15px); /* Khoảng 1/3 cho cột phải */
+    max-width: calc(33.33% - 15px);
+  }
+
+  /* Media query cho màn hình vừa (chuyển sang 1 cột) */
+  @media (max-width: 992px) {
+    flex-basis: 100% !important; /* Cả hai cột chiếm toàn bộ chiều rộng */
+    max-width: 100% !important;
+  }
+}
+
+.section {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  flex-grow: 1; /* Cho phép các section trong cột giãn nở */
+  display: flex; /* Đảm bảo nội dung bên trong section cũng flex */
+  flex-direction: column; /* Sắp xếp nội dung theo chiều dọc */
+
+  h3 {
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    font-weight: 600;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .fas {
+      color: #ff6b35; /* Icon màu cam */
+    }
+  }
+  .summary-text { /* Cho AI Analysis Summary */
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+  }
+}
+
+.discovery-details .description-content,
+.recommendations-details .description-content {
+  font-size: 0.95em;
+  line-height: 1.6;
+  color: #555;
+  white-space: pre-wrap; /* RẤT QUAN TRỌNG: Giữ nguyên các khoảng trắng và xuống dòng từ chuỗi nguồn */
+  word-wrap: break-word; /* Đảm bảo văn bản không tràn ra ngoài */
+  flex-grow: 1; /* Cho phép nội dung lấp đầy không gian còn lại trong section */
+
+  p { margin-bottom: 1em; }
+  strong, b { font-weight: bold; color: #333; }
+  em, i { font-style: italic; }
+  ul {
+    list-style-type: disc; /* Vẫn hiển thị dấu chấm cho list */
+    margin-left: 25px;
+    margin-bottom: 1em;
+    li {
+      margin-bottom: 0.5em;
+    }
+  }
+  ol {
+    list-style-type: decimal;
+    margin-left: 25px;
+    margin-bottom: 1em;
+    li {
+      margin-bottom: 0.5em;
+    }
+  }
+  a {
+    color: #007bff;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  /* Các tiêu đề trong nội dung markdown (nếu có) */
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    color: #0056b3;
+    font-weight: 700;
+  }
+  h1 { font-size: 2em; }
+  h2 { font-size: 1.7em; }
+  h3 { font-size: 1.4em; }
+  h4 { font-size: 1.2em; }
+}
+
+/* Styles cho danh sách báo cáo (external-reports ul) */
+.external-reports ul {
+  list-style: none; /* Bỏ dấu chấm mặc định của ul */
+  padding: 0; /* Bỏ padding mặc định của ul */
+  margin: 0; /* Bỏ margin mặc định */
+  flex-grow: 1; /* Cho phép list lấp đầy không gian */
+  display: flex; /* Để căn chỉnh các li */
+  flex-direction: column; /* Sắp xếp li theo chiều dọc */
+  justify-content: space-between; /* Đẩy các li ra xa nhau nếu có đủ không gian */
+
+
+  li {
+    display: flex;
+    justify-content: space-between; /* Đẩy nội dung ra hai bên */
+    padding: 8px 0;
+    border-bottom: 1px solid #eee; /* Đường kẻ phân cách */
+    font-size: 1em;
+    color: #444;
+
+    &:last-child {
+      border-bottom: none; /* Bỏ đường kẻ cuối cùng */
+    }
+
+    span {
+      font-weight: bold;
+      color: #007bff;
+    }
+  }
+}
+
+.screenshot-capture {
+    /* Style riêng cho section nếu cần */
+    flex-grow: 1; /* Quan trọng: Cho phép phần này giãn nở */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Đẩy button xuống cuối */
+}
+
+.screenshot-placeholder {
+  text-align: center;
+  margin-top: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  background-color: #fefefe;
+  min-height: 200px; /* Đảm bảo có chiều cao tối thiểu */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Căn giữa nội dung nếu không có ảnh */
+  flex-grow: 1; /* Quan trọng: Placeholder giãn nở để chiếm không gian */
+
+  .screenshot-img { /* Class mới cho ảnh */
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+
+  p {
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+  }
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Khoảng cách từ ảnh hoặc placeholder */
+  width: 100%;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
+/* Responsive adjustments for overall container and columns */
+@media (max-width: 1200px) {
+  .analyze-page-container {
+    padding: 20px 40px;
+  }
+  .analyze-container { /* Điều chỉnh padding cho analyze-container */
+    padding: 20px 40px;
+  }
+}
+
+@media (max-width: 992px) {
+  .analyze-container { /* Điều chỉnh padding cho analyze-container */
+    padding: 15px 20px;
+  }
+}
+@media (max-width: 768px) {
+  .analyze-container { /* Điều chỉnh padding cho analyze-container */
+    padding: 10px 15px;
+  }
+  .analyze-header {
+    flex-direction: column; /* Stack header items */
+    align-items: flex-start;
+    .status-box {
+      margin-top: 15px;
+      width: 100%; /* Đảm bảo box chiếm hết chiều rộng */
+    }
+  }
+}

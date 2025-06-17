@@ -1,13 +1,15 @@
+// src/app/home/home.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CheckScamService } from '../../services/check-scam.service';
 import { CheckScamRequestDTO } from '../../dtos/check-scam-request.dto';
-import { RouterModule } from '@angular/router';
-import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component';
-import { ChatBoxComponent } from '../chat-box/chat-box.component';
+import { Router, RouterModule } from '@angular/router'; // Đảm bảo Router đã import
+import { HeaderComponent } from '../../components/header/header.component'; // Cập nhật đường dẫn theo cấu trúc file của bạn
+import { FooterComponent } from '../../components/footer/footer.component'; // Cập nhật đường dẫn theo cấu trúc file của bạn
+import { ChatBoxComponent } from '../../components/chat-box/chat-box.component'; // Cập nhật đường dẫn theo cấu trúc file của bạn
 
+// CẬP NHẬT LẠI INTERFACE NÀY ĐỂ KHỚP CHÍNH XÁC VỚI JSON TỪ BACKEND CỦA BẠN (như ảnh network)
 interface SearchApiResponse {
   info: string;
   type: number;
@@ -17,11 +19,12 @@ interface SearchApiResponse {
   dateReport: string | null;
   verifiedCount: number;
   lastReportAt: string;
-  evidenceUrls: string[];
-  analysis: string;
-  code?: number;
-  message?: string;
-  data?: any;
+  evidenceURLs: string[]; // <-- Chú ý chữ hoa 'URLs'
+  analysis: string; // Đây là trường 'analysis' từ backend
+  // Bỏ các trường `code`, `message`, `data` vì chúng không có ở cấp root của response API của bạn
+  // code?: number;
+  // message?: string;
+  // data?: any;
 }
 
 interface Message {
@@ -31,7 +34,7 @@ interface Message {
 }
 
 @Component({
-  selector: 'app-chatbot',
+  selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
@@ -41,16 +44,16 @@ interface Message {
     FooterComponent,
     ChatBoxComponent
   ],
-  templateUrl: './chatbot.component.html',
-  styleUrl: './chatbot.component.scss'
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss'
 })
-export class ChatbotComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   info: string = '';
   selectedType: number = 1;
   currentSearchIcon: string = 'fas fa-mobile-alt';
   
-  searchResult: SearchApiResponse | null = null;
+  // searchResult: SearchApiResponse | null = null; // Dòng này phải được comment hoặc xóa
   isLoading: boolean = false;
   errorMessage: string | null = null;
 
@@ -61,8 +64,12 @@ export class ChatbotComponent implements OnInit {
   usersProtected: number = 1000;
   checkedItems: number = 875;
   accuracy: string = '98,4%';
+searchResult: any;
 
-  constructor(private checkScamService: CheckScamService) { }
+  constructor(
+    private checkScamService: CheckScamService,
+    private router: Router // <-- Đảm bảo Router được inject
+  ) { }
 
   ngOnInit(): void {
     this.updateSearchIcon();
@@ -71,7 +78,7 @@ export class ChatbotComponent implements OnInit {
   onTypeChange(): void {
     this.updateSearchIcon();
     this.info = '';
-    this.searchResult = null;
+    // this.searchResult = null; // Không cần nữa
     this.errorMessage = null;
   }
 
@@ -95,14 +102,13 @@ export class ChatbotComponent implements OnInit {
     const value = this.info.trim();
     if (!value) {
       this.errorMessage = 'Vui lòng nhập thông tin cần tra cứu.';
-      this.searchResult = null;
       return;
     }
 
-    this.searchResult = null;
     this.errorMessage = null;
     this.isLoading = true;
 
+    // Các validate đầu vào (giữ nguyên)
     if (this.selectedType === 1 && !this.isPhoneNumber(value)) {
       this.errorMessage = 'Số điện thoại phải bắt đầu bằng 0 và gồm 10 chữ số.';
       this.isLoading = false;
@@ -125,24 +131,37 @@ export class ChatbotComponent implements OnInit {
     };
 
     this.checkScamService.checkScam(requestBody).subscribe({
-      next: (response) => {
+      next: (response: SearchApiResponse) => { // <-- Ép kiểu response thành SearchApiResponse
         this.isLoading = false;
-        if (response?.code === 200 && response?.data) {
-          this.searchResult = response.data;
+        console.log('API RESPONSE:', response); // Kiểm tra console để đảm bảo response đúng
+
+        // BỎ ĐIỀU KIỆN `response?.code === 200 && response?.data` VÌ RESPONSE KHÔNG CÓ CẤU TRÚC ĐÓ
+        // Thay vào đó, kiểm tra xem response có phải là một đối tượng hợp lệ không
+        if (response && response.info) { // Ví dụ: kiểm tra xem có trường 'info' không
+          console.log('API response successful. Navigating to /analyze.');
+          this.router.navigate(['/analyze'], {
+            state: {
+              result: response, // TRUYỀN TRỰC TIẾP TOÀN BỘ OBJECT RESPONSE NÀY
+              type: this.selectedType,
+              info: value
+            }
+          });
         } else {
-          this.searchResult = null;
-          this.errorMessage = response?.message || 'Không nhận được phản hồi hợp lệ từ bot.';
+          // Trường hợp response là 200 OK nhưng dữ liệu không như mong đợi
+          this.errorMessage = 'Cấu trúc phản hồi từ máy chủ không hợp lệ.';
+          console.error('Unexpected API response structure:', response);
         }
       },
       error: (error) => {
         this.isLoading = false;
-        this.searchResult = null;
         this.errorMessage = error?.error?.message || error?.message || 'Đã xảy ra lỗi khi tra cứu.';
+        console.error('API call failed:', error);
       }
     });
     this.info = '';
   }
 
+  // ... (giữ nguyên các hàm validate và robot interaction)
   private isPhoneNumber(value: string): boolean {
     return /^0\d{9}$/.test(value.trim());
   }
@@ -164,9 +183,7 @@ export class ChatbotComponent implements OnInit {
     this.showChatbox = false;
   }
 
-  // Robot interaction
   onRobotClick(): void {
-    // Random robot actions with more variety
     const actions = [
       () => this.showRobotMessage('🤖 Xin chào! Tôi là Robot CheckScam! Chân tôi có nhanh không?'),
       () => this.showRobotMessage('🛡️ Đang tuần tra bảo vệ bạn khỏi lừa đảo nè!'),
@@ -184,7 +201,6 @@ export class ChatbotComponent implements OnInit {
   }
 
   private showRobotMessage(message: string): void {
-    // Tạo temporary message bubble
     const messageElement = document.createElement('div');
     messageElement.innerHTML = message;
     messageElement.style.cssText = `
@@ -206,7 +222,6 @@ export class ChatbotComponent implements OnInit {
     
     document.body.appendChild(messageElement);
     
-    // Remove after 3 seconds
     setTimeout(() => {
       if (messageElement.parentNode) {
         messageElement.parentNode.removeChild(messageElement);
@@ -217,11 +232,10 @@ export class ChatbotComponent implements OnInit {
   private speedUpRobot(): void {
     const robot = document.querySelector('.search-robot') as HTMLElement;
     if (robot) {
-      robot.style.animationDuration = '3s'; // Tăng tốc
-      robot.classList.add('turbo'); // Thêm turbo class cho chân
+      robot.style.animationDuration = '3s';
+      robot.classList.add('turbo');
       this.showRobotMessage('🚀 TURBO MODE ACTIVATED! Chân robot đang chạy siêu nhanh!');
       
-      // Reset sau 5 giây
       setTimeout(() => {
         robot.style.animationDuration = '10s';
         robot.classList.remove('turbo');

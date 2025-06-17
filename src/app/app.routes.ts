@@ -4,7 +4,7 @@ import { UserComponent } from './components/user/user.component';
 import { NewsComponent } from './components/news/news.component';
 import { ReportComponent } from './components/report/report.component';
 import { CreateNewsComponent } from './components/news/create-news/create-news.component';
-import { ChatbotComponent } from './components/chatbot/chatbot.component';
+import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { CreateReportComponent } from './components/report/create-report/create-report.component';
 import { ViewNewsComponent } from './components/news/view-news/view-news.component';
@@ -17,11 +17,12 @@ import { ChatBoxComponent } from './components/chat-box/chat-box.component';
 import { ListNewsComponent } from './components/news/list-news/list-news.component';
 import { UpdateNewsComponent } from './components/news/update-news/update-news.component';
 import { PolicyComponent } from './components/policy/policy.component';
+import { AnalyzeComponent } from './components/analyze/analyze.component';
 
 
 
 export const routes: Routes = [
-    { path: '', component: ChatbotComponent, pathMatch: 'full' }, 
+    { path: '', component: HomeComponent, pathMatch: 'full' }, 
 
     {
         path: 'admin', 
@@ -44,6 +45,7 @@ export const routes: Routes = [
       
     { path: 'login', component: LoginComponent }, 
     { path: 'chatbox', component: ChatBoxComponent }, 
+    { path: 'analyze', component: AnalyzeComponent }, 
     { path: 'list-news', component: ListNewsComponent }, 
     { path: 'view-news/:id', component: ViewNewsComponent }, 
     { path: 'create-report', component: CreateReportComponent }, 

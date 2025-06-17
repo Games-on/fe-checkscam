@@ -1,0 +1,76 @@
+<app-header></app-header>
+
+<div class="main-search-container-analyze">
+  <div class="search-input-group-analyze">
+    <div class="dropdown-analyze">
+      <button class="dropdown-toggle-analyze" type="button" id="analyzeInputTypeDropdown" (click)="toggleDropdown()">
+        <i [class]="getInputTypeIcon()"></i> {{ getSelectedInputTypeLabel(currentSearchType) }}
+        <span class="fas fa-caret-down"></span> </button>
+      <ul class="dropdown-menu-analyze" [class.show]="isDropdownOpen" aria-labelledby="analyzeInputTypeDropdown">
+        <li><a class="dropdown-item-analyze" (click)="selectSearchInputType(1)"> <i class="fas fa-mobile-alt"></i> Số điện thoại</a></li>
+        <li><a class="dropdown-item-analyze" (click)="selectSearchInputType(2)"> <i class="fas fa-university"></i> Tài khoản ngân hàng</a></li>
+        <li><a class="dropdown-item-analyze" (click)="selectSearchInputType(3)"> <i class="fas fa-globe"></i> Link / Website</a></li>
+      </ul>
+    </div>
+    <input type="text" class="input-field-analyze" placeholder="Nhập thông tin cần kiểm tra..." [(ngModel)]="currentSearchInfo" (keyup.enter)="analyzeNewInput()">
+    <button class="search-button-analyze" (click)="analyzeNewInput()">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+</div>
+<main class="analyze-container">
+  <div class="analyze-header">
+    <h2><i [class]="getInputTypeIcon()"></i> {{ inputInfo }}</h2>
+    <div class="status-box" [ngClass]="getRiskColor()">
+      <p class="status-text">{{ getSafetyStatus() }}</p>
+      <p class="risk-score">Rủi ro: {{ riskLevelDescription }}</p>
+    </div>
+  </div>
+
+  <div class="analysis-content">
+    <div class="analysis-column left-column">
+      <div class="section ai-analysis-summary">
+        <h3><i class="fas fa-robot"></i> Phân tích AI:</h3>
+        <p class="summary-text">{{ analysisResult?.reportDescription }}</p>
+        <p class="summary-text">Số tiền lừa đảo: {{ analysisResult?.moneyScam }}</p>
+      </div>
+
+      <div class="section discovery-details">
+        <h3><i class="fas fa-lightbulb"></i> Phát hiện:</h3>
+        <div class="description-content">{{ detailedAnalysis }}</div>
+      </div>
+
+      <div class="section recommendations-details">
+        <h3><i class="fas fa-thumbs-up"></i> Khuyến nghị:</h3>
+        <div class="description-content">{{ recommendations }}</div>
+      </div>
+    </div>
+
+    <div class="analysis-column right-column">
+      <div class="section external-reports">
+        <h3><i class="fas fa-file-alt"></i> Báo cáo:</h3>
+        <ul>
+          <li>ChongLuaDao: <span>không tìm thấy</span></li>
+          <li>ScamAdviser: <span>{{ analysisResult?.trustScore || 'N/A' }}/100</span></li>
+          <li>Hudson Rock: <span>{{ analysisResult?.dataBreach || 'không tìm thấy' }}</span></li>
+          <li>Google Web Risk: <span>{{ analysisResult?.phishingList || 'không tìm thấy' }}</span></li>
+          <li>APWG: <span>{{ analysisResult?.apwgCategory || 'không tìm thấy' }}</span></li>
+        </ul>
+      </div>
+
+      <div class="section screenshot-capture">
+        <h3><i class="fas fa-camera"></i> Ghi hình trực tiếp</h3>
+        <div class="screenshot-placeholder">
+          <img *ngIf="(analysisResult?.evidenceURLs || []).length > 0"
+               [src]="analysisResult?.evidenceURLs?.[0]"
+               alt="Ghi hình trực tiếp" class="screenshot-img">
+          <p *ngIf="!(analysisResult?.evidenceURLs?.length)">Không có ảnh chụp màn hình.</p>
+        </div>
+        <button class="btn-primary">TẠO VÀ TÙY CHỈNH LIÊN KẾT</button>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>

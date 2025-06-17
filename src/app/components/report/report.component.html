@@ -39,7 +39,7 @@
                       <td>{{ report.id }}</td>
 
                       <td>
-                        <a routerLink="/detail-report/{{ report.id }}">{{ report.info }}</a>
+                        <a routerLink="/admin/detail-report/{{ report.id }}">{{ report.info }}</a>
                       </td>
 
                       <td>{{ report.description }}</td>
@@ -59,11 +59,9 @@
                           <i class="fa-solid fa-xmark"></i>
                         </button>
 
-                        <!-- DROPDOWN -->
                         <div *ngIf="dropdownOpenForId === report.id" class="dropdown-card"
                           (click)="$event.stopPropagation()">
 
-                          <!-- chọn scam‑type -->
                           <select [(ngModel)]="selectedScamTypeId">
                             <option [ngValue]="null" disabled selected>-- Chọn hình thức --</option>
                             <option *ngFor="let s of scamTypes" [ngValue]="s.id">
@@ -72,14 +70,12 @@
                             <option [ngValue]="0">➕ Thêm mới…</option>
                           </select>
 
-                          <!-- FORM THÊM MỚI -->
                           <div *ngIf="selectedScamTypeId === 0" class="new-box">
                             <input type="text" placeholder="Tên" [(ngModel)]="newScamType.name">
                             <input type="text" placeholder="Mã" [(ngModel)]="newScamType.code">
                             <button (click)="createScamTypeAndConfirm(report.id)">Lưu & xác nhận</button>
                           </div>
 
-                          <!-- NÚT OK khi chọn có sẵn -->
                           <div *ngIf="selectedScamTypeId && selectedScamTypeId !== 0">
                             <button (click)="confirmReport(report.id)">Xác nhận</button>
                           </div>
@@ -89,7 +85,6 @@
                       </td>
                   </tbody>
                 </table>
-                <!-- </div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div> -->
               </div>
             </div>
           </div>

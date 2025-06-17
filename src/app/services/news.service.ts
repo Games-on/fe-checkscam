@@ -11,6 +11,7 @@ import { NewsDTO } from '../dtos/news.dto';
 export class NewsService {
   private apiNews = `${environment.apiBaseUrl}/news`;
   private apiUpdateNews = `${environment.apiBaseUrl}/news`;
+
   constructor(
     private http: HttpClient,
     private httpUtilService: HttpUtilService
@@ -20,6 +21,11 @@ export class NewsService {
     return {
       headers: this.httpUtilService.createHeaders(),
     };
+  }
+
+  getAllNews(page: number = 0, size: number = 5): Observable<any> { 
+
+    return this.http.get<any>(`${this.apiNews}?page=${page}&size=${size}`);
   }
 
   getListNews(): Observable<any> {

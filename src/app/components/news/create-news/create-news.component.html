@@ -18,10 +18,10 @@
 
 <div class="mb-3">
   <label class="form-label">Nội dung</label>
-  <input type="text"
-         class="form-control"
-         placeholder="Nhập nội dung"
-         [(ngModel)]="content" />
+  <textarea class="form-control"
+            placeholder="Nhập nội dung"
+            [(ngModel)]="content"
+            rows="10" style="min-height: 200px; resize: vertical;" ></textarea>
 </div>
 
 <div class="mb-3">
@@ -34,7 +34,6 @@
          (change)="onFileSelect($event)" />
 </div>
 
-<!-- Danh sách file -->
 <div *ngIf="selectedFiles.length" class="mb-3">
   <label class="form-label">Các tệp đã chọn:</label>
   <ul class="mb-0">

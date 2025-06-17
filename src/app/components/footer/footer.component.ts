@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Thường cần CommonModule cho các structural directives (*ngIf, *ngFor) nếu component không standalone
-import { RouterLink } from '@angular/router'; // Nếu có link trong footer
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router'; 
 
 @Component({
   selector: 'app-footer', 

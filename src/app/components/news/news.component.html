@@ -3,7 +3,7 @@
     <h1 class="h3 mb-2 text-gray-800">Quản lý tin tức</h1>
 
     <button class="btn btn-primary bg-gradient-primary"
-           routerLink="/create-news" >
+           routerLink="/admin/create-news" >
       <i class="fas fa-plus"></i> Thêm
     </button>
   </div>
@@ -27,11 +27,11 @@
           <tr *ngFor="let post of posts">
             <td>{{ post.id }}</td>
             <td>
-              <a [routerLink]="['/detail-news', post.id]">{{ post.name }}</a>
+              <a [routerLink]="['/admin/detail-news', post.id]">{{ post.name }}</a>
             </td>
             <td>{{ post.shortDescription }}</td>
             <td class="text-center">
-              <button class="btn btn-sm edit-btn" routerLink="/update-news/{{post.id}}">
+              <button class="btn btn-sm edit-btn" routerLink="/amdin/update-news/{{post.id}}">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
               <button class="btn btn-sm delete-btn"

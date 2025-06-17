@@ -1,58 +1,483 @@
 <app-header (aiTuVanClicked)="onAiTuVanClicked()"></app-header>
 
-<div class="chat-wrapper">
-  
-  <div>
-    <img width= "380px" src="../../../assets/img/banner.jpg" alt="banner">
+<div class="main-section">
+  <div class="background-elements">
+    <div class="square green-square top-left"></div>
+    <div class="square yellow-square bottom-right"></div>
+    <div class="square green-square mid-left"></div>
+    <div class="square yellow-square mid-right"></div>
+    <div class="square green-square bottom-left-small"></div>
+    <div class="square yellow-square top-right-small"></div>
   </div>
-  <div class="chat-container">
-    <div class="chat-display">
-      <div *ngFor="let message of messages"
-           class="message-wrapper"
-           [class.align-right]="message.isUser">
-        <div class="message-content">
-          <div class="message-text">{{ message.text }}</div>
+
+  <div class="content-wrapper">
+    <div class="main-content">
+      <h1 class="main-title">
+      INTERNET AN TOÀN
+      <br>
+      CHO NGƯỜI VIỆT
+    </h1>
+      <p class="subtitle">Phát hiện lừa đảo qua số điện thoại, tài khoản ngân hàng và website độc hại</p>
+
+      <div class="search-box-container" [class.loading]="isLoading">
+        <!-- Robot chạy quanh search box -->
+        <div class="search-robot" (click)="onRobotClick()" title="Click vào tôi! 🤖">
+          <!-- Mắt robot -->
+          <div class="robot-eyes"></div>
+          <!-- Chân robot -->
+          <div class="robot-legs"></div>
+        </div>
+        <div class="search-robot-trail"></div>
+        <div class="search-robot-trail"></div>
+        <div class="search-robot-trail"></div>
+        
+        <select [(ngModel)]="selectedType" (change)="onTypeChange()" class="input-type-select">
+          <option [ngValue]="1">📱 Số điện thoại</option>
+          <option [ngValue]="2">🏦 Số tài khoản</option>
+          <option [ngValue]="3">🌐 URL</option>
+        </select>
+        <input class="search-input" type="text" placeholder="Nhập thông tin cần kiểm tra..."
+          [(ngModel)]="info" (keydown.enter)="sendMessage()">
+        <button class="search-button" type="submit" (click)="sendMessage()" [disabled]="!info.trim() || isLoading">
+          <i [class]="currentSearchIcon"></i> </button>
+      </div>
+
+      <div class="status-messages">
+        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <div class="loading-spinner" *ngIf="isLoading">
+          <div class="spinner"></div>
+          <p>Đang tra cứu...</p>
         </div>
       </div>
     </div>
-    <div class="chat-input-wrapper">
-      <div class="chat-input">
-        <select [(ngModel)]="selectedType" class="input-type-select">
-          <option [ngValue]="1">Số điện thoại</option>
-          <option [ngValue]="2">Số tài khoản</option>
-          <option [ngValue]="3">URL</option>
-        </select>
-        <input class="form-control form-control-lg" type="text" placeholder="Nhập thông tin cần tra cứu"
-          [(ngModel)]="info" (keydown.enter)="sendMessage()">
-        <button class="btn btn-primary btn-lg" id="submitButton" type="submit" (click)="sendMessage()"
-          [disabled]="!info.trim()">Gửi</button>
+    
+    <!-- Hero Illustration -->
+    <div class="hero-illustration">
+      <div class="robot-container">
+        <img src="assets/img/robot-ai-vietnam.jpg" alt="AI Robot Vietnam" class="hero-robot-image">
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        <div class="robot-glow"></div>
+        <div class="floating-elements">
+          <div class="security-badge">
+            <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 5 L30 10 L30 25 Q30 30 20 32 Q10 30 10 25 L10 10 Z" fill="#FF6B35" opacity="0.8"/>
+              <path d="M15 20 L18 23 L25 16" stroke="white" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <div class="ai-chip">
+            <span>AI</span>
+          </div>
+          <div class="vietnam-star">
+            <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 2 L18 11 L27 11 L20 17 L23 26 L15 20 L7 26 L10 17 L3 11 L12 11 Z" fill="#FFD700"/>
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div>
-    <img width= "380px" src="../../../assets/img/banner2.jpg" alt="banner">
+
+  <div class="result-section" *ngIf="searchResult && !isLoading">
+    <div class="result-header">
+      <h2>Kết Quả Tra Cứu cho: <span class="highlight-info">{{ searchResult.info }}</span></h2>
+      <span class="status-tag" [class.status-safe]="searchResult.reportDescription !== 'Thông tin báo cáo liên quan đã được tìm thấy.'" [class.status-scam]="searchResult.reportDescription === 'Thông tin báo cáo liên quan đã được tìm thấy.'">
+        {{ searchResult.reportDescription }}
+      </span>
+    </div>
+
+    <div class="result-details">
+      <p><strong>Loại:</strong> {{ selectedType === 1 ? 'Số điện thoại' : selectedType === 2 ? 'Số tài khoản' : 'URL' }}</p>
+      <p *ngIf="searchResult.description"><strong>Mô tả:</strong> {{ searchResult.description }}</p>
+      <p *ngIf="searchResult.moneyScam && searchResult.moneyScam !== '0'"><strong>Số tiền bị lừa:</strong> {{ searchResult.moneyScam | currency:'VND':'symbol':'1.0-0':'vi' }}</p>
+      <p *ngIf="searchResult.verifiedCount"><strong>Số lượt báo cáo:</strong> {{ searchResult.verifiedCount }}</p>
+      <p *ngIf="searchResult.lastReportAt && searchResult.lastReportAt !== '0001-01-01T00:00:00'"><strong>Báo cáo gần nhất:</strong> {{ searchResult.lastReportAt | date:'dd/MM/yyyy HH:mm' }}</p>
+
+      <div class="analysis-section" *ngIf="searchResult.analysis">
+        <h3>Phân tích chi tiết:</h3>
+        <div class="analysis-content" [innerHTML]="searchResult.analysis"></div>
+      </div>
+
+      <div class="evidence-section" *ngIf="searchResult.evidenceUrls && searchResult.evidenceUrls.length > 0">
+        <h3>Bằng chứng:</h3>
+        <div class="evidence-gallery">
+          <img *ngFor="let url of searchResult.evidenceUrls" [src]="'https://your-domain.com' + url" alt="Bằng chứng" class="evidence-thumbnail">
+          </div>
+      </div>
+    </div>
+    <button class="clear-result-button" (click)="searchResult = null; errorMessage = null;">Xóa kết quả</button>
   </div>
-<div>
-    <!-- <img width= "200px" src="https://sdmntprwestus.oaiusercontent.com/files/00000000-1fe8-6230-bd9f-7d981bd4e9b8/raw?se=2025-05-15T04%3A37%3A24Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=61180a4f-34a9-42b7-b76d-9ca47d89946d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-14T22%3A44%3A54Z&ske=2025-05-15T22%3A44%3A54Z&sks=b&skv=2024-08-04&sig=Vzy54YiWTgmIcIMBMtxgxELhK3xqMzp%2B3XdQ4%2BxuxUw%3D" alt="banner"> -->
+  <div class="stats-section">
+    <div class="stats-decoration">
+      <svg width="100%" height="100%" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" class="stats-bg">
+        <defs>
+          <linearGradient id="statsBg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:0.05" />
+            <stop offset="100%" style="stop-color:#FFD23F;stop-opacity:0.05" />
+          </linearGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#statsBg)"/>
+        
+        <!-- Floating Icons -->
+        <g opacity="0.3">
+          <circle cx="100" cy="80" r="6" fill="#FF6B35">
+            <animate attributeName="cy" values="80;60;80" dur="4s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="900" cy="320" r="8" fill="#FFD23F">
+            <animate attributeName="cy" values="320;300;320" dur="5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="200" cy="350" r="5" fill="#FF5722">
+            <animate attributeName="cy" values="350;330;350" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="800" cy="50" r="7" fill="#FF9800">
+            <animate attributeName="cy" values="50;30;50" dur="6s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+      </svg>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="counter-number">{{ scamReports }}</div>
+        <div class="stat-label">Báo cáo lừa đảo</div>
+      </div>
+      <div class="stat-item">
+        <div class="counter-number">{{ usersProtected }}</div>
+        <div class="stat-label">Người dùng được bảo vệ</div>
+      </div>
+      <div class="stat-item">
+        <div class="counter-number">{{ checkedItems }}</div>
+        <div class="stat-label">Mục đã kiểm tra</div>
+      </div>
+      <div class="stat-item">
+        <div class="counter-number">{{ accuracy }}</div>
+        <div class="stat-label">Độ chính xác</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="community-section-new">
+    <div class="community-decoration">
+      <svg width="100%" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" class="community-bg">
+        <defs>
+          <linearGradient id="communityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FFD23F;stop-opacity:0.1" />
+            <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:0.1" />
+          </linearGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#communityGrad)"/>
+        
+        <!-- Social Network Connections -->
+        <g stroke="#FFD23F" stroke-width="1" opacity="0.4">
+          <line x1="100" y1="50" x2="200" y2="80">
+            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" repeatCount="indefinite"/>
+          </line>
+          <line x1="200" y1="80" x2="300" y2="60">
+            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" begin="1s" repeatCount="indefinite"/>
+          </line>
+          <line x1="500" y1="120" x2="600" y2="90">
+            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" begin="2s" repeatCount="indefinite"/>
+          </line>
+          <line x1="600" y1="90" x2="700" y2="130">
+            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+          </line>
+        </g>
+        
+        <!-- Community Icons -->
+        <g fill="#FF6B35" opacity="0.3">
+          <circle cx="100" cy="50" r="4">
+            <animate attributeName="r" values="4;6;4" dur="4s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="200" cy="80" r="3">
+            <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="300" cy="60" r="5">
+            <animate attributeName="r" values="5;7;5" dur="5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="500" cy="120" r="4">
+            <animate attributeName="r" values="4;6;4" dur="3.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="600" cy="90" r="3">
+            <animate attributeName="r" values="3;5;3" dur="4.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="700" cy="130" r="4">
+            <animate attributeName="r" values="4;6;4" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+      </svg>
+    </div>
+    
+    <h3 class="community-title">Tham gia cộng đồng Checkscam</h3>
+    <p class="community-desc">Kết nối với cộng đồng để cập nhật thông tin bảo mật mới nhất</p>
+    <div class="social-links">
+      <a href="#" class="social-button facebook">
+        <img src="../../../assets/img/facebook.png" alt="Facebook"> Facebook
+      </a>
+      <a href="#" class="social-button telegram">
+        <img src="../../../assets/img/telegram.png" alt="Telegram"> Telegram
+      </a>
+      <a href="#" class="social-button zalo">
+        <img src="../../../assets/img/zalo.png" alt="Zalo"> Zalo
+      </a>
+    </div>
   </div>
 </div>
 
-   <div class="about-us-section">
-    <div class="container">
-      <div class="about-us-content">
-         <div class="graphic-column">
-            <img src="https://chongluadao.vn/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Faboutus.c9f1d232.png&w=750&q=75" alt="About Us Graphic">
-          </div>
+<div class="features-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">TÍNH NĂNG</p>
+      <h2 class="section-main-title">Bảo vệ toàn diện khỏi lừa đảo</h2>
+    </div>
 
-        <div class="text-column">
-          <p class="section-label">VỀ CHÚNG TÔI</p>
-          <h2 class="section-main-title">VÌ MỘT INTERNET <br> AN TOÀN HƠN</h2>
-          <p class="section-description">Tại Việt Nam, CheckScam - Chúng tôi đang tập trung vào việc bảo vệ và nâng cao nhận thức người dùng về an toàn thông tin.</p>
-            <a routerLink="/about-us" class="btn-about-us">Xem thêm về chúng tôi</a>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="8" width="20" height="30" rx="8" fill="white" stroke="white" stroke-width="2"/>
+            <rect x="17" y="12" width="16" height="2" rx="1" fill="currentColor"/>
+            <rect x="17" y="16" width="16" height="2" rx="1" fill="currentColor"/>
+            <rect x="17" y="20" width="10" height="2" rx="1" fill="currentColor"/>
+            <circle cx="25" cy="32" r="2" fill="currentColor"/>
+            <path d="M20 40 Q25 45 30 40" stroke="white" stroke-width="2" fill="none"/>
+          </svg>
         </div>
+        <h3 class="feature-title">Kiểm tra số điện thoại</h3>
+        <p class="feature-description">Xác minh danh tính người gọi, phát hiện các số điện thoại lừa đảo đã được báo cáo bởi cộng đồng.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="15" width="34" height="20" rx="4" fill="white"/>
+            <rect x="12" y="22" width="8" height="6" rx="1" fill="currentColor"/>
+            <rect x="25" y="19" width="12" height="2" rx="1" fill="currentColor"/>
+            <rect x="25" y="23" width="8" height="2" rx="1" fill="currentColor"/>
+            <rect x="25" y="27" width="10" height="2" rx="1" fill="currentColor"/>
+            <circle cx="35" cy="25" r="3" fill="#FFD700"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Xác thực tài khoản ngân hàng</h3>
+        <p class="feature-description">Kiểm tra tính hợp lệ của số tài khoản ngân hàng trước khi thực hiện giao dịch chuyển tiền.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="25" cy="25" r="18" fill="white"/>
+            <path d="M15 25 Q25 15 35 25 Q25 35 15 25" fill="currentColor"/>
+            <circle cx="25" cy="25" r="8" fill="white"/>
+            <circle cx="25" cy="25" r="4" fill="currentColor"/>
+            <path d="M25 7 L27 12 L25 17 L23 12 Z" fill="white"/>
+            <path d="M43 25 L38 27 L33 25 L38 23 Z" fill="white"/>
+            <path d="M25 43 L23 38 L25 33 L27 38 Z" fill="white"/>
+            <path d="M7 25 L12 23 L17 25 L12 27 Z" fill="white"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Quét website an toàn</h3>
+        <p class="feature-description">Phân tích website để phát hiện các trang web giả mạo, lừa đảo hoặc chứa mã độc.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="25" cy="20" r="12" fill="white"/>
+            <circle cx="20" cy="17" r="3" fill="currentColor"/>
+            <circle cx="30" cy="17" r="3" fill="currentColor"/>
+            <path d="M20 25 Q25 30 30 25" stroke="currentColor" stroke-width="2" fill="none"/>
+            <rect x="20" y="32" width="10" height="8" rx="2" fill="white"/>
+            <circle cx="23" cy="12" r="2" fill="#FFD700"/>
+            <circle cx="27" cy="12" r="2" fill="#FFD700"/>
+            <path d="M15 40 Q25 45 35 40" stroke="white" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">AI Tư vấn thông minh</h3>
+        <p class="feature-description">Chatbot AI hỗ trợ 24/7, tư vấn và giải đáp các thắc mắc về an toàn thông tin.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="15" width="30" height="20" rx="2" fill="white"/>
+            <rect x="12" y="18" width="6" height="3" fill="currentColor"/>
+            <rect x="20" y="18" width="8" height="1" fill="currentColor"/>
+            <rect x="20" y="21" width="6" height="1" fill="currentColor"/>
+            <rect x="12" y="25" width="4" height="3" fill="currentColor"/>
+            <rect x="18" y="25" width="6" height="1" fill="currentColor"/>
+            <rect x="18" y="28" width="4" height="1" fill="currentColor"/>
+            <rect x="25" y="25" width="4" height="3" fill="currentColor"/>
+            <rect x="31" y="25" width="6" height="1" fill="currentColor"/>
+            <circle cx="35" cy="20" r="2" fill="#FFD700"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Cơ sở dữ liệu cập nhật</h3>
+        <p class="feature-description">Dữ liệu lừa đảo được cập nhật liên tục từ các nguồn uy tín và báo cáo từ cộng đồng.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25 8 L35 18 L35 35 Q35 40 25 42 Q15 40 15 35 L15 18 Z" fill="white" stroke="white" stroke-width="1"/>
+            <circle cx="25" cy="25" r="8" fill="currentColor"/>
+            <path d="M21 25 L24 28 L30 22" stroke="white" stroke-width="2" fill="none"/>
+            <circle cx="18" cy="15" r="2" fill="#FFD700">
+              <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="32" cy="15" r="2" fill="#FFD700">
+              <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+        <h3 class="feature-title">Cảnh báo thời gian thực</h3>
+        <p class="feature-description">Nhận thông báo ngay lập tức khi phát hiện các mối đe dọa mới hoặc chiêu trò lừa đảo.</p>
       </div>
     </div>
   </div>
+</div>
+
+<div class="about-us-section">
+  <div class="container">
+    <div class="about-us-content">
+      <div class="graphic-column">
+        <svg width="500" height="400" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="aboutBg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:0.1" />
+              <stop offset="100%" style="stop-color:#FFD23F;stop-opacity:0.1" />
+            </linearGradient>
+            <radialGradient id="internetGrad" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" style="stop-color:#FFD54F;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:1" />
+            </radialGradient>
+          </defs>
+          
+          <!-- Background -->
+          <rect width="500" height="400" fill="url(#aboutBg)" rx="20"/>
+          
+          <!-- Internet Globe -->
+          <circle cx="250" cy="180" r="80" fill="url(#internetGrad)" opacity="0.8"/>
+          
+          <!-- Network Lines -->
+          <g stroke="#FF6B35" stroke-width="2" opacity="0.6">
+            <path d="M170 180 Q180 160 190 180 Q200 200 210 180 Q220 160 230 180">
+              <animate attributeName="d" values="M170 180 Q180 160 190 180 Q200 200 210 180 Q220 160 230 180;M170 180 Q180 200 190 180 Q200 160 210 180 Q220 200 230 180;M170 180 Q180 160 190 180 Q200 200 210 180 Q220 160 230 180" dur="4s" repeatCount="indefinite"/>
+            </path>
+            <path d="M270 180 Q280 200 290 180 Q300 160 310 180 Q320 200 330 180">
+              <animate attributeName="d" values="M270 180 Q280 200 290 180 Q300 160 310 180 Q320 200 330 180;M270 180 Q280 160 290 180 Q300 200 310 180 Q320 160 330 180;M270 180 Q280 200 290 180 Q300 160 310 180 Q320 200 330 180" dur="4s" repeatCount="indefinite"/>
+            </path>
+            <circle cx="250" cy="100" r="40" fill="none">
+              <animate attributeName="r" values="40;50;40" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="250" cy="260" r="30" fill="none">
+              <animate attributeName="r" values="30;40;30" dur="3s" begin="1s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          
+          <!-- Security Shields -->
+          <g>
+            <path d="M180 120 L190 130 L190 160 Q190 170 180 175 Q170 170 170 160 L170 130 Z" fill="#FF5722" opacity="0.8"/>
+            <path d="M175 140 L178 143 L185 136" stroke="white" stroke-width="2" fill="none"/>
+            
+            <path d="M320 120 L330 130 L330 160 Q330 170 320 175 Q310 170 310 160 L310 130 Z" fill="#FF5722" opacity="0.8"/>
+            <path d="M315 140 L318 143 L325 136" stroke="white" stroke-width="2" fill="none"/>
+            
+            <path d="M180 240 L190 250 L190 280 Q190 290 180 295 Q170 290 170 280 L170 250 Z" fill="#FF5722" opacity="0.8"/>
+            <path d="M175 260 L178 263 L185 256" stroke="white" stroke-width="2" fill="none"/>
+            
+            <path d="M320 240 L330 250 L330 280 Q330 290 320 295 Q310 290 310 280 L310 250 Z" fill="#FF5722" opacity="0.8"/>
+            <path d="M315 260 L318 263 L325 256" stroke="white" stroke-width="2" fill="none"/>
+          </g>
+          
+          <!-- Vietnam Elements -->
+          <rect x="220" y="50" width="60" height="36" fill="#D32F2F" rx="4"/>
+          <path d="M250 58 L255 68 L265 68 L258 74 L260 84 L250 79 L240 84 L242 74 L235 68 L245 68 Z" fill="#FFD700"/>
+          
+          <!-- Floating Security Icons -->
+          <g opacity="0.7">
+            <circle cx="100" cy="80" r="4" fill="#FFD700">
+              <animate attributeName="cy" values="80;70;80" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="400" cy="120" r="3" fill="#FF6B35">
+              <animate attributeName="cy" values="120;110;120" dur="4s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="80" cy="300" r="5" fill="#FF5722">
+              <animate attributeName="cy" values="300;290;300" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="420" cy="280" r="4" fill="#FFD23F">
+              <animate attributeName="cy" values="280;270;280" dur="3.5s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          
+          <!-- Text Decoration -->
+          <text x="250" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#D32F2F" opacity="0.8">INTERNET AN TOÀN</text>
+        </svg>
+      </div>
+      <div class="text-column">
+        <p class="section-label">VỀ CHÚNG TÔI</p>
+        <h2 class="section-main-title">VÌ MỘT INTERNET <br> AN TOÀN HƠN</h2>
+        <p class="section-description">
+          CheckScam là nền tảng hàng đầu tại Việt Nam trong việc bảo vệ người dùng khỏi các hình thức lừa đảo trực tuyến.
+          Chúng tôi sử dụng công nghệ AI tiên tiến và cơ sở dữ liệu được cập nhật liên tục để mang lại sự an toàn tối đa cho người dùng internet Việt Nam.
+        </p>
+        <a routerLink="/about-us" class="btn-about-us">
+          Xem thêm về chúng tôi
+          <span class="arrow-icon">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-links-section">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-column">
+        <h3>Sản phẩm</h3>
+        <ul>
+          <li><a routerLink="/check-phone">Kiểm tra số điện thoại</a></li>
+          <li><a routerLink="/check-bank">Xác thực tài khoản ngân hàng</a></li>
+          <li><a routerLink="/check-website">Quét website an toàn</a></li>
+          <li><a routerLink="/extension">Tiện ích mở rộng</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Thông tin hữu ích</h3>
+        <ul>
+          <li><a routerLink="/useful-info/scam-types">Các kiểu lừa đảo phổ biến</a></li>
+          <li><a routerLink="/useful-info/email-scam">Nhận biết email lừa đảo</a></li>
+          <li><a routerLink="/useful-info/bank-security">Bảo mật tài khoản ngân hàng</a></li>
+          <li><a routerLink="/useful-info/online-shopping">Mua sắm online an toàn</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Hỗ trợ</h3>
+        <ul>
+          <li><a routerLink="/support/faq">Câu hỏi thường gặp</a></li>
+          <li><a routerLink="/support/guide">Hướng dẫn sử dụng</a></li>
+          <li><a routerLink="/support/report">Báo cáo lừa đảo</a></li>
+          <li><a routerLink="/support/contact">Liên hệ hỗ trợ</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Xem thêm</h3>
+        <ul>
+          <li><a routerLink="/terms">Điều khoản sử dụng</a></li>
+          <li><a routerLink="/privacy-policy">Chính sách bảo mật</a></li>
+          <li><a routerLink="/useful-info">Thông tin hữu ích</a></li>
+          <li><a routerLink="/about-us">Về chúng tôi</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <app-chat-box *ngIf="showChatbox" (close)="closeChatbox()"></app-chat-box>
 <app-footer></app-footer>

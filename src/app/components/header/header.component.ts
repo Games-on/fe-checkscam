@@ -1,45 +1,64 @@
-  import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core'; // Import HostListener và OnInit
-  import { RouterLink } from '@angular/router';
-  import { CommonModule } from '@angular/common'; // Thường cần cho standalone components
+// src/app/components/header/header.component.ts
+import { Component, EventEmitter, HostListener, OnInit, Output, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common'; // Thường cần cho standalone components
+import { NavigationEnd, Router } from '@angular/router'; // Import Router và NavigationEnd
 
-  @Component({
-    selector: 'app-header',
-    standalone: true,
-    imports: [
-      RouterLink,
-      CommonModule
-    ],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.scss'
-  })
-  export class HeaderComponent implements OnInit {
+@Component({
+  selector: 'app-header',
+  standalone: true,
+  imports: [
+    RouterLink,
+    CommonModule
+  ],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss'
+})
+export class HeaderComponent implements OnInit {
+  // isHeaderHidden là một @Input để nhận giá trị từ component cha (AppComponent)
+  @Input() isHeaderHidden: boolean = false;
 
-    isHeaderHidden = false;
-    private lastScrollTop = 0; // Lưu vị trí cuộn trước đó
+  // Biến để quản lý trạng thái mở/đóng của menu mobile (hamburger)
+  isMenuOpen: boolean = false; // Đã khởi tạo giá trị ban đầu là false
 
-    constructor() { }
+  @Output() aiTuVanClicked = new EventEmitter<void>();
 
-    ngOnInit(): void {
-    }
-
-    @Output() aiTuVanClicked = new EventEmitter<void>();
-
-    onAiTuVanClick() {
-      this.aiTuVanClicked.emit();
-    }
-
-    // Lắng nghe sự kiện 'scroll' trên đối tượng 'window'
-    @HostListener('window:scroll', ['$event'])
-    onWindowScroll() {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-      // Xác định hướng cuộn
-      if (scrollTop > this.lastScrollTop && scrollTop > 50) { // Cuộn xuống và đã cuộn qua một đoạn nhất định (ví dụ: 50px)
-        this.isHeaderHidden = true; // Ẩn header
-      } else if (scrollTop < this.lastScrollTop || scrollTop < 50) { // Cuộn lên hoặc cuộn về đầu trang
-        this.isHeaderHidden = false; // Hiện header
+  constructor(private router: Router) { // Inject Router
+    // Lắng nghe sự kiện chuyển hướng để đóng menu mobile tự động
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isMenuOpen = false; // Đóng menu khi chuyển trang
+        document.body.classList.remove('no-scroll'); // Bỏ chặn cuộn
       }
+    });
+  }
 
-      this.lastScrollTop = scrollTop; // Cập nhật vị trí cuộn cuối cùng
+  ngOnInit(): void {
+    // Không cần logic cuộn ở đây
+  }
+
+  // Phương thức để mở/đóng menu mobile
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    if (this.isMenuOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
     }
   }
+
+  // Phương thức khi click vào 'AI Tư vấn'
+  onAiTuVanClick() {
+    this.isMenuOpen = false; // Đóng menu khi click vào mục
+    document.body.classList.remove('no-scroll'); // Bỏ chặn cuộn
+    this.aiTuVanClicked.emit(); 
+  }
+
+  // Các phương thức khác cho các routerLink nếu bạn muốn đóng menu sau khi click
+  // Ví dụ:
+  onNavLinkClick() {
+    this.isMenuOpen = false; // Đóng menu
+    document.body.classList.remove('no-scroll'); // Bỏ chặn cuộn
+    // RouterLink tự xử lý navigate, không cần logic navigate ở đây
+  }
+}

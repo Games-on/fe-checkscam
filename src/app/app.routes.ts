@@ -12,38 +12,42 @@ import { CreateUserComponent } from './components/user/create-user/create-user.c
 import { DetailNewsComponent } from './components/news/detail-news/detail-news.component';
 import { DetailReportComponent } from './components/report/detail-report/detail-report.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-// import { ChatBoxComponent } from './components/chatbot/chat-box/chat-box.component';
 import { AboutUsComponent } from './components/about-us/about-us.component'; 
 import { ChatBoxComponent } from './components/chat-box/chat-box.component';
 import { ListNewsComponent } from './components/news/list-news/list-news.component';
 import { UpdateNewsComponent } from './components/news/update-news/update-news.component';
+import { PolicyComponent } from './components/policy/policy.component';
+
 
 
 export const routes: Routes = [
+    { path: '', component: ChatbotComponent, pathMatch: 'full' }, 
+
     {
-        path: '',
+        path: 'admin', 
         component: LayoutComponent,
         children: [
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
+          { path: 'dashboard', component: DashboardComponent },
           { path: 'users', component: UserComponent },
           { path: 'create-user', component: CreateUserComponent },
+          { path: 'news', component: NewsComponent }, 
           { path: 'create-news', component: CreateNewsComponent },
-          { path: 'update-news/:id', component: UpdateNewsComponent },
-          { path: 'news', component: NewsComponent },
-          { path: 'reports', component: ReportComponent },
-          { path: 'dashboard', component: DashboardComponent },
           { path: 'detail-news/:id', component: DetailNewsComponent }, 
           { path: 'update-news/:id', component: UpdateNewsComponent }, 
-          { path: '', redirectTo: '/chatbot', pathMatch: 'full' },
+          { path: 'list-news', component: ListNewsComponent },
+          { path: 'reports', component: ReportComponent }, 
+          { path: 'create-report', component: CreateReportComponent }, 
+          { path: 'detail-report/:id', component: DetailReportComponent }, 
         ],
-      },
-      { path: 'chatbot', component: ChatbotComponent}, 
-      { path: 'chatbox', component: ChatBoxComponent },
-      { path: 'login', component: LoginComponent }, 
-      { path: 'create-report', component: CreateReportComponent }, 
-      { path: 'list-news', component: ListNewsComponent }, 
-      { path: 'detail-report/:id', component: DetailReportComponent }, 
-      { path: 'about-us', component: AboutUsComponent },
-      { path: 'view-news/:id', component: ViewNewsComponent },
-      { path: '**', redirectTo: '/chatbot' },
+    },
+      
+    { path: 'login', component: LoginComponent }, 
+    { path: 'chatbox', component: ChatBoxComponent }, 
+    { path: 'list-news', component: ListNewsComponent }, 
+    { path: 'view-news/:id', component: ViewNewsComponent }, 
+    { path: 'create-report', component: CreateReportComponent }, 
+    { path: 'about-us', component: AboutUsComponent },
+    { path: 'privacy-policy', component: PolicyComponent },
+    { path: '**', redirectTo: '' }, 
 ];
-

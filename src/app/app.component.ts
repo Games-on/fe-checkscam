@@ -8,7 +8,7 @@ import { RouterOutlet } from '@angular/router';
     RouterOutlet
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'checkscam-admin';

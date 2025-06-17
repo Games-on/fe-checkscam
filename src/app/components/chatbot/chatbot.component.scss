@@ -1251,19 +1251,18 @@ app-header {
 
 .main-title {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
-  color: #404040; /* Màu xám nhạt hơn cho hài hòa */
+  color: #404040; 
   margin-bottom: 20px;
+  margin-top: 20px;
   line-height: 1.1;
   font-weight: 800;
   text-align: center;
   
-  /* Chỉ dùng text shadow, bỏ gradient effect */
   text-shadow: 
     3px 3px 8px rgba(255, 255, 255, 0.9),
     0 0 15px rgba(255, 255, 255, 0.5),
     1px 1px 3px rgba(0, 0, 0, 0.3);
   
-  /* Title words animation */
   .title-word {
     display: inline-block;
     opacity: 0;

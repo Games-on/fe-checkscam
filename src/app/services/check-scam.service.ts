@@ -5,12 +5,14 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { CheckScamRequestDTO } from '../dtos/check-scam-request.dto';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class CheckScamService {
   private apiCheckScam = `${environment.apiBaseUrl}/check-scam`;
-  private apiChat = `${environment.apiBaseUrl}/check-scam/chat`;
+  private apiChat = `${environment.apiBaseUrl}/check-scam/chatbot`;
+
   constructor(
     private http: HttpClient,
     private httpUtilService: HttpUtilService
@@ -27,6 +29,7 @@ export class CheckScamService {
   }
 
   chat(message: string): Observable<any> {
-    return this.http.post(this.apiChat, message, this.getApiConfig());
+    const chatPayload = { message: message }; 
+    return this.http.post(this.apiChat, chatPayload, this.getApiConfig());
   }
 }

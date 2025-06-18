@@ -3,12 +3,10 @@
 <div class="report-page-container">
   <div class="two-column-layout">
 
-    <!-- ========== LEFT COLUMN ========= -->
     <div class="left-column">
       <form class="report-form" #reportForm="ngForm" (ngSubmit)="createReport()" novalidate>
         <h3 class="info-box-title">BÁO CÁO LỪA ĐẢO</h3>
 
-        <!-- Thông tin liên quan -->
         <div class="form-group">
           <label for="info">Thông tin liên quan:</label>
           <input
@@ -22,7 +20,6 @@
           />
         </div>
 
-        <!-- Loại thông tin + Ngân hàng (chỉ hiển thị khi là STK) -->
         <div class="form-group">
           <label for="type">Loại thông tin:</label>
           <select id="type" name="type" required [(ngModel)]="type">
@@ -67,9 +64,28 @@
         </div>
 
         <!-- File upload -->
-        <div class="form-group">
+          <div class="form-group">
           <label for="files">Tài liệu đính kèm (PNG, JPG, GIF):</label>
-          <input id="files" type="file" accept="image/*" multiple (change)="onFileSelect($event)" />
+
+          <div class="drop-zone"
+              (click)="fileInput.click()"
+              (dragover)="onDragOver($event)"
+              (dragleave)="onDragLeave($event)"
+              (drop)="onDrop($event)">
+            <div class="drop-zone-content">
+              <div class="file-icons">
+                <i class="fas fa-file-image text-danger file-icon-fa"></i>
+                <i class="fas fa-file-image text-primary file-icon-fa"></i>
+                <i class="far fa-file-image text-success file-icon-fa"></i>
+              </div>
+              <p>Kéo hoặc click vào đây để upload</p>
+              <input #fileInput id="files" type="file" accept="image/*" multiple (change)="onFileSelect($event)" style="display: none;" />
+            </div>
+          </div>
+
+          <div class="uploaded-bill-note">
+            <i class="fas fa-upload"></i> Upload bằng chứng & ảnh đoạn tin nhắn lừa đảo.
+          </div>
         </div>
 
         <div class="form-group" *ngIf="selectedFiles.length">
@@ -78,6 +94,12 @@
             <li *ngFor="let f of selectedFiles">{{ f.name }} ({{ f.size | number }} bytes)</li>
           </ul>
         </div>
+
+        <div class="info-section-bottom">
+          <p class="highlight-text">
+            CHÚ Ý: Điều 156 Bộ luật Hình sự 2015: Tội vu khống là bịa đặt hoặc lan truyền thông tin sai sự thật xúc phạm danh dự, hoặc tố cáo sai người khác phạm tội. Hình phạt gồm phạt tiền từ 10-50 triệu đồng và/hoặc phạt tù từ 3 tháng đến 7 năm, tùy mức độ vi phạm.
+          </p>
+  </div>
 
         <!-- Captcha -->
         <div class="form-group">

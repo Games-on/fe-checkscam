@@ -11,6 +11,9 @@ import { RouterLink } from '@angular/router';
   styleUrl: './footer.component.scss' 
 })
 export class FooterComponent {
+getCurrentYear() {
+throw new Error('Method not implemented.');
+}
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }

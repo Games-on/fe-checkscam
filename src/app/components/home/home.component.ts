@@ -131,23 +131,20 @@ searchResult: any;
     };
 
     this.checkScamService.checkScam(requestBody).subscribe({
-      next: (response: SearchApiResponse) => { // <-- Ép kiểu response thành SearchApiResponse
+      next: (response) => {
         this.isLoading = false;
-        console.log('API RESPONSE:', response); // Kiểm tra console để đảm bảo response đúng
+        console.log('API RESPONSE:', response);
 
-        // BỎ ĐIỀU KIỆN `response?.code === 200 && response?.data` VÌ RESPONSE KHÔNG CÓ CẤU TRÚC ĐÓ
-        // Thay vào đó, kiểm tra xem response có phải là một đối tượng hợp lệ không
-        if (response && response.info) { // Ví dụ: kiểm tra xem có trường 'info' không
+        if (response && response.info) {
           console.log('API response successful. Navigating to /analyze.');
           this.router.navigate(['/analyze'], {
             state: {
-              result: response, // TRUYỀN TRỰC TIẾP TOÀN BỘ OBJECT RESPONSE NÀY
+              result: response,
               type: this.selectedType,
               info: value
             }
           });
         } else {
-          // Trường hợp response là 200 OK nhưng dữ liệu không như mong đợi
           this.errorMessage = 'Cấu trúc phản hồi từ máy chủ không hợp lệ.';
           console.error('Unexpected API response structure:', response);
         }

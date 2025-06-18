@@ -1,0 +1,75 @@
+<app-header></app-header>
+
+<div class="ranking-container">
+  <div class="ranking-header">
+    <h1>Bảng xếp hạng</h1>
+  </div>
+
+  <!-- Top 3 Podium -->
+  <div class="podium-section">
+    <!-- Second Place -->
+    <div class="podium-card second" *ngIf="topReporters.length >= 2">
+      <div class="medal">
+        <span class="rank-number">2</span>
+      </div>
+      <div class="score">{{ topReporters[1].approvedReports }}</div>
+      <div class="username">{{ getMaskedEmail(topReporters[1].email) }}</div>
+    </div>
+
+    <!-- First Place -->
+    <div class="podium-card first" *ngIf="topReporters.length >= 1">
+      <div class="medal">
+        <span class="rank-number">1</span>
+      </div>
+      <div class="score">{{ topReporters[0].approvedReports }}</div>
+      <div class="username">{{ getMaskedEmail(topReporters[0].email) }}</div>
+    </div>
+
+    <!-- Third Place -->
+    <div class="podium-card third" *ngIf="topReporters.length >= 3">
+      <div class="medal">
+        <span class="rank-number">3</span>
+      </div>
+      <div class="score">{{ topReporters[2].approvedReports }}</div>
+      <div class="username">{{ getMaskedEmail(topReporters[2].email) }}</div>
+    </div>
+  </div>
+
+  <!-- Ranking Table -->
+  <div class="ranking-table-section">
+    <div class="table-container">
+      <div class="table-header">
+        <div class="header-col">Hạng</div>
+        <div class="header-col">Chiến binh</div>
+        <div class="header-col">Điểm</div>
+      </div>
+
+      <div class="table-body">
+        <div class="table-row" *ngFor="let reporter of getCurrentPageData(); let i = index">
+          <div class="rank-col">{{ reporter.rank }}.</div>
+          <div class="name-col">{{ getMaskedEmail(reporter.email) }}</div>
+          <div class="score-col">{{ reporter.approvedReports }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button 
+        class="pagination-btn prev"
+        [disabled]="currentPage === 1"
+        (click)="previousPage()">
+        ←
+      </button>
+      
+      <button 
+        class="pagination-btn next"
+        [disabled]="currentPage === totalPages"
+        (click)="nextPage()">
+        →
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

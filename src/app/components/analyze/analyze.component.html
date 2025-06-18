@@ -1,76 +1,182 @@
 <app-header></app-header>
 
+<!-- Search Box Section -->
 <div class="main-search-container-analyze">
-  <div class="search-input-group-analyze">
-    <div class="dropdown-analyze">
-      <button class="dropdown-toggle-analyze" type="button" id="analyzeInputTypeDropdown" (click)="toggleDropdown()">
-        <i [class]="getInputTypeIcon()"></i> {{ getSelectedInputTypeLabel(currentSearchType) }}
-        <span class="fas fa-caret-down"></span> </button>
-      <ul class="dropdown-menu-analyze" [class.show]="isDropdownOpen" aria-labelledby="analyzeInputTypeDropdown">
-        <li><a class="dropdown-item-analyze" (click)="selectSearchInputType(1)"> <i class="fas fa-mobile-alt"></i> Số điện thoại</a></li>
-        <li><a class="dropdown-item-analyze" (click)="selectSearchInputType(2)"> <i class="fas fa-university"></i> Tài khoản ngân hàng</a></li>
-        <li><a class="dropdown-item-analyze" (click)="selectSearchInputType(3)"> <i class="fas fa-globe"></i> Link / Website</a></li>
-      </ul>
-    </div>
-    <input type="text" class="input-field-analyze" placeholder="Nhập thông tin cần kiểm tra..." [(ngModel)]="currentSearchInfo" (keyup.enter)="analyzeNewInput()">
-    <button class="search-button-analyze" (click)="analyzeNewInput()">
-      <i class="fas fa-search"></i>
+  <div class="search-input-group-analyze" [class.loading]="isLoading">
+    <select [(ngModel)]="currentSearchType" (change)="onTypeChange()" class="input-type-select-analyze">
+      <option [ngValue]="1">📱 Số điện thoại</option>
+      <option [ngValue]="2">🏦 Số tài khoản</option>
+      <option [ngValue]="3">🌐 URL</option>
+    </select>
+    <input type="text" class="search-input-analyze" 
+           placeholder="Nhập thông tin cần kiểm tra..." 
+           [(ngModel)]="currentSearchInfo" 
+           (keydown.enter)="analyzeNewInput()">
+    <button class="search-button-analyze" (click)="analyzeNewInput()" [disabled]="!currentSearchInfo.trim() || isLoading">
+      <i [class]="getSearchInputTypeIcon()"></i>
     </button>
   </div>
+  
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message-analyze">
+    {{ errorMessage }}
+  </div>
 </div>
-<main class="analyze-container">
+
+<!-- MAIN CONTENT -->
+<main class="analyze-container" *ngIf="hasValidAnalysisData()">
   <div class="analyze-header">
     <h2><i [class]="getInputTypeIcon()"></i> {{ inputInfo }}</h2>
-    <div class="status-box" [ngClass]="getRiskColor()">
+    <div class="status-box" [ngClass]="getRiskColor()" *ngIf="getSafetyStatus() !== 'Đang phân tích...'">
       <p class="status-text">{{ getSafetyStatus() }}</p>
-      <p class="risk-score">Rủi ro: {{ riskLevelDescription }}</p>
     </div>
   </div>
 
   <div class="analysis-content">
+    <!-- Cột Trái: Báo cáo từ các nguồn -->
     <div class="analysis-column left-column">
-      <div class="section ai-analysis-summary">
-        <h3><i class="fas fa-robot"></i> Phân tích AI:</h3>
-        <p class="summary-text">{{ analysisResult?.reportDescription }}</p>
-        <p class="summary-text">Số tiền lừa đảo: {{ analysisResult?.moneyScam }}</p>
-      </div>
-
-      <div class="section discovery-details">
-        <h3><i class="fas fa-lightbulb"></i> Phát hiện:</h3>
-        <div class="description-content">{{ detailedAnalysis }}</div>
-      </div>
-
-      <div class="section recommendations-details">
-        <h3><i class="fas fa-thumbs-up"></i> Khuyến nghị:</h3>
-        <div class="description-content">{{ recommendations }}</div>
+      <div class="section external-reports">
+        <h3><i class="fas fa-file-alt"></i> Báo cáo từ các nguồn</h3>
+        <div class="reports-grid">
+          <div class="report-item">
+            <div class="report-header">
+              <i class="fas fa-shield-alt"></i>
+              <span class="report-name">ChongLuaDao</span>
+            </div>
+            <div class="report-status not-found">không tìm thấy</div>
+          </div>
+          
+          <div class="report-item">
+            <div class="report-header">
+              <i class="fas fa-chart-line"></i>
+              <span class="report-name">ScamAdviser</span>
+            </div>
+            <div class="report-status" [ngClass]="getScamAdviserClass(analysisResult?.trustScore)">
+              {{ analysisResult?.trustScore || 'N/A' }}/100
+            </div>
+          </div>
+          
+          <div class="report-item">
+            <div class="report-header">
+              <i class="fas fa-database"></i>
+              <span class="report-name">Hudson Rock</span>
+            </div>
+            <div class="report-status" [ngClass]="analysisResult?.dataBreach !== 'không tìm thấy' ? 'warning' : 'safe'">
+              {{ analysisResult?.dataBreach || 'không tìm thấy' }}
+            </div>
+          </div>
+          
+          <div class="report-item">
+            <div class="report-header">
+              <i class="fab fa-google"></i>
+              <span class="report-name">Google Web Risk</span>
+            </div>
+            <div class="report-status" [ngClass]="analysisResult?.phishingList !== 'không tìm thấy' ? 'danger' : 'safe'">
+              {{ analysisResult?.phishingList || 'không tìm thấy' }}
+            </div>
+          </div>
+          
+          <div class="report-item">
+            <div class="report-header">
+              <i class="fas fa-globe"></i>
+              <span class="report-name">APWG</span>
+            </div>
+            <div class="report-status" [ngClass]="analysisResult?.apwgCategory !== 'không tìm thấy' ? 'warning' : 'safe'">
+              {{ analysisResult?.apwgCategory || 'không tìm thấy' }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="analysis-column right-column">
-      <div class="section external-reports">
-        <h3><i class="fas fa-file-alt"></i> Báo cáo:</h3>
-        <ul>
-          <li>ChongLuaDao: <span>không tìm thấy</span></li>
-          <li>ScamAdviser: <span>{{ analysisResult?.trustScore || 'N/A' }}/100</span></li>
-          <li>Hudson Rock: <span>{{ analysisResult?.dataBreach || 'không tìm thấy' }}</span></li>
-          <li>Google Web Risk: <span>{{ analysisResult?.phishingList || 'không tìm thấy' }}</span></li>
-          <li>APWG: <span>{{ analysisResult?.apwgCategory || 'không tìm thấy' }}</span></li>
-        </ul>
+    <!-- Cột Giữa: Tất cả phân tích AI -->
+    <div class="analysis-column center-column">
+      <!-- Phân tích AI -->
+      <div class="section ai-analysis-summary">
+        <h3><i class="fas fa-robot"></i> Phân tích AI</h3>
+        <div class="summary-content">
+          <div class="summary-item risk-level">
+            <h4><i class="fas fa-exclamation-triangle"></i> Mức độ rủi ro</h4>
+            <div class="risk-indicator" [ngClass]="getRiskColor()">
+              <span class="risk-text">{{ getSafetyStatus() }}</span>
+              <div class="risk-description" [innerHTML]="formatText(riskLevelDescription)"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="section screenshot-capture">
-        <h3><i class="fas fa-camera"></i> Ghi hình trực tiếp</h3>
-        <div class="screenshot-placeholder">
-          <img *ngIf="(analysisResult?.evidenceURLs || []).length > 0"
-               [src]="analysisResult?.evidenceURLs?.[0]"
-               alt="Ghi hình trực tiếp" class="screenshot-img">
-          <p *ngIf="!(analysisResult?.evidenceURLs?.length)">Không có ảnh chụp màn hình.</p>
-        </div>
-        <button class="btn-primary">TẠO VÀ TÙY CHỈNH LIÊN KẾT</button>
+      <!-- Phát hiện chi tiết -->
+      <div class="section discovery-details">
+        <h3><i class="fas fa-search"></i> Phát hiện chi tiết</h3>
+        <div class="description-content" [innerHTML]="formatText(detailedAnalysis)"></div>
+      </div>
 
+      <!-- Khuyến nghị an toàn -->
+      <div class="section recommendations-details">
+        <h3><i class="fas fa-lightbulb"></i> Khuyến nghị an toàn</h3>
+        <div class="description-content" [innerHTML]="formatText(recommendations)"></div>
+      </div>
+    </div>
+
+    <!-- Cột Phải: Ghi hình trực tiếp - Thu nhỏ khung -->
+    <div class="analysis-column right-column">
+      <div class="section screenshot-capture compact">
+        <h3><i class="fas fa-camera"></i> Ghi hình trực tiếp <span class="evidence-count">({{ getEvidenceImages().length }})</span></h3>
+        <div class="screenshot-gallery" *ngIf="getEvidenceImages().length > 0; else noImages">
+          <!-- Tiêu đề cho khung ảnh -->
+          <div class="gallery-header">
+            <h4><i class="fas fa-images"></i> Bằng chứng hình ảnh</h4>
+            <span class="image-count">{{ getEvidenceImages().length }} ảnh</span>
+          </div>
+          
+          <!-- Container các ảnh -->
+          <div class="images-container">
+            <!-- Hiển thị tối đa 4 ảnh đầu -->
+            <div class="screenshot-item" *ngFor="let imageUrl of getDisplayedImages(); let i = index">
+              <div class="image-container loading">
+                <img [src]="getFullImageUrl(imageUrl)" 
+                     [alt]="'Bằng chứng ' + (i + 1)" 
+                     class="screenshot-img"
+                     (error)="onImageError($event)"
+                     (load)="onImageLoad($event)"
+                     (click)="onImageClick(imageUrl)"
+                     loading="lazy"
+                     style="cursor: pointer;">
+                <div class="loading-spinner" *ngIf="!imageLoaded">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Nút "+X ảnh" nếu có nhiều hơn 4 ảnh -->
+            <div class="screenshot-item more-images" *ngIf="getRemainingImagesCount() > 0" (click)="showAllImages()">
+              <div class="more-images-overlay">
+                <div class="more-count">+{{ getRemainingImagesCount() }}</div>
+                <div class="more-text">ảnh khác</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #noImages>
+          <div class="screenshot-placeholder compact">
+            <i class="fas fa-camera fa-2x"></i>
+            <p>Không có hình ảnh bằng chứng</p>
+            <small>Hệ thống chưa ghi nhận được hình ảnh nào</small>
+          </div>
+        </ng-template>
+        <button class="btn-primary compact">TẠO VÀ TÙY CHỈNH LIÊN KẾT</button>
       </div>
     </div>
   </div>
 </main>
+
+<!-- Placeholder khi chưa có kết quả -->
+<div class="no-result-placeholder" *ngIf="!hasValidAnalysisData()">
+  <div class="placeholder-content">
+    <i class="fas fa-search fa-3x"></i>
+    <h3>Nhập thông tin để bắt đầu phân tích</h3>
+    <p>Sử dụng thanh tìm kiếm ở trên để kiểm tra số điện thoại, URL hoặc số tài khoản</p>
+  </div>
+</div>
 
 <app-footer></app-footer>

@@ -18,6 +18,7 @@ import { ListNewsComponent } from './components/news/list-news/list-news.compone
 import { UpdateNewsComponent } from './components/news/update-news/update-news.component';
 import { PolicyComponent } from './components/policy/policy.component';
 import { AnalyzeComponent } from './components/analyze/analyze.component';
+import { RankingComponent } from './components/ranking/ranking.component';
 
 
 
@@ -46,6 +47,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent }, 
     { path: 'chatbox', component: ChatBoxComponent }, 
     { path: 'analyze', component: AnalyzeComponent }, 
+    { path: 'ranking', component: RankingComponent }, 
     { path: 'list-news', component: ListNewsComponent }, 
     { path: 'view-news/:id', component: ViewNewsComponent }, 
     { path: 'create-report', component: CreateReportComponent }, 

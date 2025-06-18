@@ -53,6 +53,8 @@ export class AnalyzeComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   errorMessage: string | null = null;
   imageLoaded: boolean = false;
+  showAllImagesFlag: boolean = false;  // Flag để hiển thị tất cả ảnh
+  maxDisplayImages: number = 4;        // Số ảnh tối đa hiển thị
 
   riskLevelDescription: string = 'Đang tải dữ liệu...';
   detailedAnalysis: string = 'Đang tải dữ liệu phân tích chi tiết...';
@@ -336,6 +338,12 @@ export class AnalyzeComponent implements OnInit, OnDestroy {
     const img = event.target as HTMLImageElement;
     console.log('Image loaded successfully:', img.src);
     this.imageLoaded = true;
+    
+    // Remove loading class from parent container
+    const container = img.closest('.image-container');
+    if (container) {
+      container.classList.remove('loading');
+    }
   }
 
   getImageName(imageUrl: string): string {
@@ -374,36 +382,73 @@ export class AnalyzeComponent implements OnInit, OnDestroy {
     return hasData;
   }
 
-  // Method xử lý click ảnh để xem to hơn
+  // Method xử lý click ảnh để xem to hơn - Enhanced version
   onImageClick(imageUrl: string): void {
     const fullUrl = this.getFullImageUrl(imageUrl);
     
-    // Tạo modal để hiển thị ảnh to
+    // Tạo modal container với enhanced styling
     const modal = document.createElement('div');
+    modal.className = 'image-modal-enhanced';
     modal.style.cssText = `
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 10000;
       cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(5px);
     `;
     
+    // Container cho ảnh với loading state
+    const imageContainer = document.createElement('div');
+    imageContainer.style.cssText = `
+      position: relative;
+      max-width: 95vw;
+      max-height: 95vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `;
+    
+    // Loading spinner
+    const loadingSpinner = document.createElement('div');
+    loadingSpinner.innerHTML = `
+      <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        font-size: 18px;
+      ">
+        <i class="fas fa-spinner fa-spin" style="font-size: 2em; margin-bottom: 10px;"></i>
+        <span>Đang tải ảnh...</span>
+      </div>
+    `;
+    imageContainer.appendChild(loadingSpinner);
+    
+    // Main image với zoom functionality - Hiển thị ảnh với kích thước gốc
     const img = document.createElement('img');
-    img.src = fullUrl;
     img.style.cssText = `
-      max-width: 90%;
-      max-height: 90%;
+      max-width: 90vw;  /* Để ảnh hiện thị lớn hơn */
+      max-height: 90vh;
+      width: auto;      /* Tự động điều chỉnh width */
+      height: auto;     /* Tự động điều chỉnh height */
       object-fit: contain;
-      border-radius: 8px;
+      border-radius: 12px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      cursor: zoom-in;
     `;
     
+    // Close button với enhanced styling
     const closeButton = document.createElement('div');
     closeButton.innerHTML = '×';
     closeButton.style.cssText = `
@@ -411,28 +456,165 @@ export class AnalyzeComponent implements OnInit, OnDestroy {
       top: 20px;
       right: 30px;
       color: white;
-      font-size: 40px;
+      font-size: 50px;
       font-weight: bold;
       cursor: pointer;
       z-index: 10001;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
     `;
     
-    modal.appendChild(img);
-    modal.appendChild(closeButton);
-    document.body.appendChild(modal);
+    // Download button
+    const downloadButton = document.createElement('a');
+    downloadButton.href = fullUrl;
+    downloadButton.download = `evidence-${Date.now()}.jpg`;
+    downloadButton.innerHTML = '<i class="fas fa-download"></i>';
+    downloadButton.style.cssText = `
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 10001;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: rgba(255, 107, 53, 0.8);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    `;
     
-    // Đóng modal khi click
-    const closeModal = () => {
-      document.body.removeChild(modal);
+    // Info panel
+    const infoPanel = document.createElement('div');
+    infoPanel.style.cssText = `
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      max-width: 300px;
+    `;
+    infoPanel.innerHTML = `
+      <div><strong>Bằng chứng ghi hình</strong></div>
+      <div style="margin-top: 5px; opacity: 0.8;">Click ảnh để zoom, ESC để đóng</div>
+    `;
+    
+    // Zoom functionality
+    let isZoomed = false;
+    
+    // Image load events
+    img.onload = () => {
+      loadingSpinner.style.display = 'none';
+      img.style.opacity = '1';
     };
     
-    modal.addEventListener('click', closeModal);
-    closeButton.addEventListener('click', closeModal);
+    img.onerror = () => {
+      loadingSpinner.innerHTML = `
+        <div style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: #ff6b6b;
+          font-size: 18px;
+        ">
+          <i class="fas fa-exclamation-triangle" style="font-size: 2em; margin-bottom: 10px;"></i>
+          <span>Không thể tải ảnh</span>
+        </div>
+      `;
+    };
     
-    // Thêm animation
-    modal.style.opacity = '0';
+    img.src = fullUrl;
+    
+    // Zoom functionality
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!isZoomed) {
+        img.style.transform = 'scale(1.5)';
+        img.style.cursor = 'zoom-out';
+        isZoomed = true;
+      } else {
+        img.style.transform = 'scale(1)';
+        img.style.cursor = 'zoom-in';
+        isZoomed = false;
+      }
+    });
+    
+    // Button hover effects
+    closeButton.addEventListener('mouseenter', () => {
+      closeButton.style.backgroundColor = 'rgba(255, 107, 53, 0.8)';
+      closeButton.style.transform = 'scale(1.1)';
+    });
+    
+    closeButton.addEventListener('mouseleave', () => {
+      closeButton.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+      closeButton.style.transform = 'scale(1)';
+    });
+    
+    downloadButton.addEventListener('mouseenter', () => {
+      downloadButton.style.backgroundColor = 'rgba(255, 107, 53, 1)';
+      downloadButton.style.transform = 'scale(1.1)';
+    });
+    
+    downloadButton.addEventListener('mouseleave', () => {
+      downloadButton.style.backgroundColor = 'rgba(255, 107, 53, 0.8)';
+      downloadButton.style.transform = 'scale(1)';
+    });
+    
+    // Assemble modal
+    imageContainer.appendChild(img);
+    modal.appendChild(imageContainer);
+    modal.appendChild(closeButton);
+    modal.appendChild(downloadButton);
+    modal.appendChild(infoPanel);
+    document.body.appendChild(modal);
+    
+    // Close modal function
+    const closeModal = () => {
+      modal.style.opacity = '0';
+      setTimeout(() => {
+        if (document.body.contains(modal)) {
+          document.body.removeChild(modal);
+          document.removeEventListener('keydown', handleEscape);
+        }
+      }, 300);
+    };
+    
+    // ESC key handler
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
+    
+    // Event listeners
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+    
+    closeButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
+    
+    document.addEventListener('keydown', handleEscape);
+    
+    // Show modal with animation
     setTimeout(() => {
-      modal.style.transition = 'opacity 0.3s ease';
       modal.style.opacity = '1';
     }, 10);
   }
@@ -451,5 +633,28 @@ export class AnalyzeComponent implements OnInit, OnDestroy {
     formatted = formatted.replace(/\n/g, '<br>');
     
     return formatted;
+  }
+
+  // Method lấy danh sách ảnh được hiển thị (tối đa 4 ảnh)
+  getDisplayedImages(): string[] {
+    const allImages = this.getEvidenceImages();
+    if (this.showAllImagesFlag || allImages.length <= this.maxDisplayImages) {
+      return allImages;
+    }
+    return allImages.slice(0, this.maxDisplayImages);
+  }
+
+  // Method lấy số ảnh còn lại
+  getRemainingImagesCount(): number {
+    const allImages = this.getEvidenceImages();
+    if (this.showAllImagesFlag || allImages.length <= this.maxDisplayImages) {
+      return 0;
+    }
+    return allImages.length - this.maxDisplayImages;
+  }
+
+  // Method hiển thị tất cả ảnh khi click vào "+X ảnh"
+  showAllImages(): void {
+    this.showAllImagesFlag = true;
   }
 }

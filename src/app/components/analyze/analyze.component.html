@@ -118,35 +118,53 @@
       </div>
     </div>
 
-    <!-- Cột Phải: Ghi hình trực tiếp -->
+    <!-- Cột Phải: Ghi hình trực tiếp - Thu nhỏ khung -->
     <div class="analysis-column right-column">
-      <div class="section screenshot-capture">
+      <div class="section screenshot-capture compact">
         <h3><i class="fas fa-camera"></i> Ghi hình trực tiếp <span class="evidence-count">({{ getEvidenceImages().length }})</span></h3>
         <div class="screenshot-gallery" *ngIf="getEvidenceImages().length > 0; else noImages">
-          <div class="screenshot-item" *ngFor="let imageUrl of getEvidenceImages(); let i = index">
-            <div class="image-container">
-              <img [src]="getFullImageUrl(imageUrl)" 
-                   [alt]="'Bằng chứng ' + (i + 1)" 
-                   class="screenshot-img"
-                   (error)="onImageError($event)"
-                   (load)="onImageLoad($event)"
-                   (click)="onImageClick(imageUrl)"
-                   loading="lazy"
-                   style="cursor: pointer;">
-              <div class="loading-spinner" *ngIf="!imageLoaded">
-                <i class="fas fa-spinner fa-spin"></i>
+          <!-- Tiêu đề cho khung ảnh -->
+          <div class="gallery-header">
+            <h4><i class="fas fa-images"></i> Bằng chứng hình ảnh</h4>
+            <span class="image-count">{{ getEvidenceImages().length }} ảnh</span>
+          </div>
+          
+          <!-- Container các ảnh -->
+          <div class="images-container">
+            <!-- Hiển thị tối đa 4 ảnh đầu -->
+            <div class="screenshot-item" *ngFor="let imageUrl of getDisplayedImages(); let i = index">
+              <div class="image-container loading">
+                <img [src]="getFullImageUrl(imageUrl)" 
+                     [alt]="'Bằng chứng ' + (i + 1)" 
+                     class="screenshot-img"
+                     (error)="onImageError($event)"
+                     (load)="onImageLoad($event)"
+                     (click)="onImageClick(imageUrl)"
+                     loading="lazy"
+                     style="cursor: pointer;">
+                <div class="loading-spinner" *ngIf="!imageLoaded">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Nút "+X ảnh" nếu có nhiều hơn 4 ảnh -->
+            <div class="screenshot-item more-images" *ngIf="getRemainingImagesCount() > 0" (click)="showAllImages()">
+              <div class="more-images-overlay">
+                <div class="more-count">+{{ getRemainingImagesCount() }}</div>
+                <div class="more-text">ảnh khác</div>
               </div>
             </div>
           </div>
         </div>
         <ng-template #noImages>
-          <div class="screenshot-placeholder">
-            <i class="fas fa-camera fa-3x"></i>
+          <div class="screenshot-placeholder compact">
+            <i class="fas fa-camera fa-2x"></i>
             <p>Không có hình ảnh bằng chứng</p>
-            <small>Hệ thống chưa ghi nhận được hình ảnh nào cho đối tượng này</small>
+            <small>Hệ thống chưa ghi nhận được hình ảnh nào</small>
           </div>
         </ng-template>
-        <button class="btn-primary">TẠO VÀ TÙY CHỈNH LIÊN KẾT</button>
+        <button class="btn-primary compact">TẠO VÀ TÙY CHỈNH LIÊN KẾT</button>
       </div>
     </div>
   </div>

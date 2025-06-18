@@ -1,24 +1,52 @@
 <footer class="app-footer">
   <div class="container">
-    <div class="footer-left">
-      <div class="footer-item">
-        <div class="language-scroll">
-            <span class="scroll-to-top" (click)="scrollToTop()">
-                <img src="path/to/your/arrow-up-icon.png" alt="Scroll to top">
-            </span>
-        </div>
+    <div class="footer-section footer-brand-info">
+      <div class="footer-logo">
+        <img src="path/to/your/logo.png" alt="Company Logo" class="logo"> 
       </div>
-       <div class="footer-item contact-info">
-          <p>&copy; Bản quyền © 2025</p>
-          <p>Thông tin liên hệ <a href="#"></a></p>
+      <p class="brand-slogan">Slogan hoặc giới thiệu ngắn gọn về công ty/dự án của bạn.</p>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
       </div>
     </div>
 
-    <div class="footer-right">
-      <div class="footer-item design-info">
-        <p>Thiết kế bởi <a routerLink="/about-us" class="btn-about-us"></a></p> 
-        <p>Lập trình bởi <a routerLink="/about-us" class="btn-about-us"></a></p>
-      </div>
+    <div class="footer-section footer-links">
+      <h3>Liên Kết Nhanh</h3>
+      <ul>
+        <li><a routerLink="/" class="footer-link">Trang Chủ</a></li>
+        <li><a routerLink="/services" class="footer-link">Dịch Vụ</a></li>
+        <li><a routerLink="/products" class="footer-link">Sản Phẩm</a></li>
+        <li><a routerLink="/blog" class="footer-link">Blog</a></li>
+        <li><a routerLink="/faq" class="footer-link">Hỏi & Đáp</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section footer-contact">
+      <h3>Liên Hệ</h3>
+      <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: 123 Đường ABC, Quận XYZ, TP. Hà Nội</p>
+      <p><i class="fas fa-phone"></i> Điện thoại: <a href="tel:+84123456789">0123 456 789</a></p>
+      <p><i class="fas fa-envelope"></i> Email: <a href="mailto:info&#64;yourcompany.com">info&#64;yourcompany.com</a></p>
+    </div>
+
+    <div class="footer-section footer-newsletter">
+      <h3>Đăng Ký Nhận Tin</h3>
+      <p>Nhận thông tin cập nhật mới nhất từ chúng tôi.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Nhập email của bạn" aria-label="Email for newsletter">
+        <button type="submit" class="subscribe-button">Đăng Ký</button>
+      </form>
     </div>
   </div>
+
+  <div class="footer-bottom">
+    <p>&copy; Bản quyền thuộc về Your Company Name {{ getCurrentYear() }}. Mọi quyền được bảo lưu.</p>
+    <p>Thiết kế & Phát triển bởi <a routerLink="/about-us">Đội ngũ của bạn</a></p>
+  </div>
+
+  <button class="scroll-to-top-btn" (click)="scrollToTop()" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 </footer>

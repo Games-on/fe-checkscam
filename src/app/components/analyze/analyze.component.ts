@@ -1,23 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'; // Thêm OnDestroy
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component'; // Đảm bảo đường dẫn này đúng
-import { FormsModule } from '@angular/forms'; // <-- Rất quan trọng: Thêm FormsModule để sử dụng [(ngModel)]
+import { FooterComponent } from '../footer/footer.component';
+import { FormsModule } from '@angular/forms';
 
-// import { AnalyzeService } from '../../services/analyze.service'; // Uncomment nếu bạn có AnalyzeService thực tế
+import { CheckScamService } from '../../services/check-scam.service';
+import { CheckScamRequestDTO } from '../../dtos/check-scam-request.dto';
 
 interface AnalysisResult {
   info: string;
-  type: number; // 0: phone, 1: url, 2: bank, 3: unknown (hoặc theo định nghĩa của API)
-  description: string; // Đây có thể là mô tả ngắn gọn
-  reportDescription: string; // Từ AI Analysis Summary
+  type: number;
+  description: string;
+  reportDescription: string;
   moneyScam: string;
   dateReport: string | null;
   verifiedCount: number;
   lastReportAt: string;
-  evidenceURLs: string[];
-  analysis: string; // Chuỗi lớn chứa Phân tích chi tiết, Khuyến nghị, v.v.
+  evidenceUrls?: string[]; // Optional cho frontend
+  evidenceURLs?: string[]; // Optional từ API response
+  analysis: string;
   categorization?: string;
   trustScore?: number;
   dataBreach?: string;
@@ -34,147 +36,190 @@ interface AnalysisResult {
     HeaderComponent,
     FooterComponent,
     RouterModule,
-    FormsModule // <-- Thêm FormsModule vào đây
+    FormsModule
   ],
   templateUrl: './analyze.component.html',
   styleUrls: ['./analyze.component.scss']
 })
-export class AnalyzeComponent implements OnInit, OnDestroy { // Thêm OnDestroy
+export class AnalyzeComponent implements OnInit, OnDestroy {
   analysisResult: AnalysisResult | null = null;
-  inputType: number | undefined; // Kiểu input của kết quả HIỆN TẠI đang hiển thị (từ URL hoặc state)
-  inputInfo: string | undefined; // Thông tin input của kết quả HIỆN TẠI đang hiển thị
+  inputType: number | undefined;
+  inputInfo: string | undefined;
+  selectedType: number = 1;
 
   // Biến cho ô tra cứu MỚI trên trang analyze
-  currentSearchType: number = 3; // Mặc định là URL (Link/Website) cho ô tra cứu mới
-  currentSearchInfo: string = ''; // Nội dung nhập vào ô tra cứu mới
-  isDropdownOpen: boolean = false; // Trạng thái của dropdown trong ô tra cứu
+  currentSearchType: number = 1;
+  currentSearchInfo: string = '';
+  isLoading: boolean = false;
+  errorMessage: string | null = null;
+  imageLoaded: boolean = false;
 
-  riskLevelDescription: string = 'Đang tải dữ liệu...'; // Mặc định khi chưa có dữ liệu
+  riskLevelDescription: string = 'Đang tải dữ liệu...';
   detailedAnalysis: string = 'Đang tải dữ liệu phân tích chi tiết...';
   recommendations: string = 'Đang tải khuyến nghị...';
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    // private analyzeService: AnalyzeService // Uncomment và inject service của bạn ở đây
+    private checkScamService: CheckScamService
   ) {
-    // Lắng nghe các thay đổi của queryParams
     this.route.queryParams.subscribe(params => {
-      this.inputInfo = params['info'] || 'Không xác định';
-      this.inputType = parseInt(params['type'], 10) || 3; // Mặc định là URL nếu không có
+      const info = params['info'];
+      const type = params['type'];
+      
+      if (info && type && info !== 'Không xác định' && info.trim() !== '') {
+        this.inputInfo = info;
+        this.inputType = parseInt(type, 10);
+        this.currentSearchInfo = this.inputInfo || '';
+        this.currentSearchType = this.inputType;
+        this.selectedType = this.inputType;
 
-      // Cập nhật giá trị ô tìm kiếm mới theo kết quả hiện tại
-      // Điều này giúp ô tìm kiếm hiển thị thông tin mà người dùng vừa tìm kiếm
-      this.currentSearchInfo = this.inputInfo ?? '';
-      this.currentSearchType = this.inputType;
+        this.analysisResult = null;
+        this.riskLevelDescription = 'Đang tải dữ liệu...';
+        this.detailedAnalysis = 'Đang tải dữ liệu phân tích chi tiết...';
+        this.recommendations = 'Đang tải khuyến nghị...';
 
-      // Xóa dữ liệu cũ trong khi chờ dữ liệu mới
-      this.analysisResult = null;
-      this.riskLevelDescription = 'Đang tải dữ liệu...';
-      this.detailedAnalysis = 'Đang tải dữ liệu phân tích chi tiết...';
-      this.recommendations = 'Đang tải khuyến nghị...';
-
-
-      // *** Đây là nơi bạn sẽ gọi API của mình khi refresh/truy cập trực tiếp hoặc khi URL thay đổi ***
-      // Ví dụ:
-      // if (this.inputInfo && this.inputType !== undefined && this.inputInfo !== 'Không xác định') {
-      //   this.analyzeService.analyze(this.inputInfo, this.inputType).subscribe({
-      //     next: (data: AnalysisResult) => {
-      //       this.analysisResult = data;
-      //       if (this.analysisResult.analysis) {
-      //         this.parseAnalysisString(this.analysisResult.analysis);
-      //       } else {
-      //         this.riskLevelDescription = 'Không có dữ liệu phân tích.';
-      //         this.detailedAnalysis = 'Không có thông tin phân tích chi tiết.';
-      //         this.recommendations = 'Không có khuyến nghị.';
-      //       }
-      //     },
-      //     error: (err) => {
-      //       console.error('Lỗi khi tải dữ liệu phân tích:', err);
-      //       this.riskLevelDescription = 'Lỗi tải dữ liệu.';
-      //       this.detailedAnalysis = 'Không thể tải thông tin phân tích chi tiết.';
-      //       this.recommendations = 'Không thể tải khuyến nghị.';
-      //     }
-      //   });
-      // } else {
-          // Nếu không có đủ thông tin để gọi API (ví dụ: queryParams trống rỗng)
-          this.riskLevelDescription = 'Vui lòng nhập thông tin để phân tích.';
-          this.detailedAnalysis = 'Chưa có thông tin để hiển thị phân tích chi tiết.';
-          this.recommendations = 'Chưa có khuyến nghị.';
-      // }
-
-      // Logic để ưu tiên state nếu có (ví dụ khi navigate từ Home)
-      // Nếu bạn muốn dữ liệu từ state được ưu tiên (không bị ghi đè bởi queryParams nếu giống nhau)
-      // thì bạn cần kiểm tra state trước khi subscribe queryParams.
-      // Tuy nhiên, việc lắng nghe queryParams là cách tốt nhất để đảm bảo trang luôn đồng bộ với URL.
-      // Nếu dữ liệu được truyền qua state, bạn có thể thiết lập this.analysisResult một lần duy nhất
-      // và sau đó không cần gọi lại API nếu queryParams không thay đổi.
-      // Để đơn giản và hiệu quả, tôi đã cấu hình `queryParams.subscribe` để luôn là nguồn dữ liệu chính.
-      // Nếu bạn có navigate.extras.state và muốn nó ưu tiên, bạn có thể thêm logic kiểm tra `navigation` ở đây.
-      const navigation = this.router.getCurrentNavigation();
-      if (navigation?.extras?.state && navigation.extras.state['result']) {
-        this.analysisResult = navigation.extras.state['result'];
-        // inputType và inputInfo đã được cập nhật từ queryParams
-        if (this.analysisResult && this.analysisResult.analysis) {
-          this.parseAnalysisString(this.analysisResult.analysis);
-        }
+        console.log('Calling API with:', { info: this.inputInfo, type: this.inputType });
+        const requestDto = new CheckScamRequestDTO({ info: this.inputInfo, type: this.inputType });
+        
+        this.checkScamService.checkScam(requestDto).subscribe({
+          next: (data) => {
+            console.log('API Response:', data);
+            console.log('All keys in response:', Object.keys(data));
+            
+            // Normalize evidenceUrls từ API response
+            const normalizedData: AnalysisResult = {
+              ...data,
+              evidenceUrls: data.evidenceURLs || data.evidenceUrls || []
+            };
+            
+            this.analysisResult = normalizedData;
+            if (this.analysisResult && this.analysisResult.analysis) {
+              this.parseAnalysisString(this.analysisResult.analysis);
+            } else {
+              this.riskLevelDescription = 'Không có dữ liệu phân tích.';
+              this.detailedAnalysis = 'Không có thông tin phân tích chi tiết.';
+              this.recommendations = 'Không có khuyến nghị.';
+            }
+          },
+          error: (err) => {
+            console.error('Lỗi khi tải dữ liệu phân tích:', err);
+            this.riskLevelDescription = 'Lỗi tải dữ liệu.';
+            this.detailedAnalysis = 'Không thể tải thông tin phân tích chi tiết.';
+            this.recommendations = 'Không thể tải khuyến nghị.';
+          }
+        });
+      } else {
+        this.clearData();
       }
     });
   }
 
   ngOnInit(): void {
-    // Đăng ký listener để đóng dropdown khi click ra ngoài
-    document.addEventListener('click', this.onDocumentClick.bind(this));
+    const stateData = history.state;
+    console.log('History state data:', stateData);
+    
+    if (stateData && stateData.result) {
+      console.log('Using state data from history.state');
+      this.analysisResult = stateData.result;
+      this.inputInfo = stateData.info;
+      this.inputType = stateData.type;
+      
+      this.currentSearchInfo = this.inputInfo || '';
+      this.currentSearchType = this.inputType || 1;
+      this.selectedType = this.inputType || 1;
+      
+      if (this.analysisResult && this.analysisResult.analysis) {
+        this.parseAnalysisString(this.analysisResult.analysis);
+      }
+    }
+
+    setTimeout(() => {
+      const currentParams = this.route.snapshot.queryParams;
+      const info = currentParams['info'];
+      const type = currentParams['type'];
+      
+      console.log('Current params:', { info, type });
+      
+      if ((info || type) && (info === 'Không xác định' || !info || info.trim() === '')) {
+        console.log('Clearing invalid params...');
+        this.clearAndNavigate();
+      }
+    }, 100);
   }
 
   ngOnDestroy(): void {
-    // Xóa listener để tránh memory leak
-    document.removeEventListener('click', this.onDocumentClick.bind(this));
+    // Cleanup if needed
   }
 
-  onDocumentClick(event: Event): void {
-    // Đóng dropdown nếu click ra ngoài khu vực dropdown
-    const target = event.target as HTMLElement;
-    // Kiểm tra xem click có phải từ bên trong dropdown-analyze hay không
-    if (!target.closest('.dropdown-analyze') && this.isDropdownOpen) {
-      this.isDropdownOpen = false;
-    }
+  clearAndNavigate(): void {
+    this.router.navigate(['/analyze'], { replaceUrl: true });
+    this.clearData();
   }
 
-  // Phương thức mới để xử lý dropdown của ô tra cứu
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  private clearData(): void {
+    this.inputInfo = undefined;
+    this.inputType = undefined;
+    this.analysisResult = null;
+    this.currentSearchInfo = '';
+    this.currentSearchType = 1;
+    this.selectedType = 1;
+    this.riskLevelDescription = 'Vui lòng nhập thông tin để phân tích.';
+    this.detailedAnalysis = 'Chưa có thông tin để hiển thị phân tích chi tiết.';
+    this.recommendations = 'Chưa có khuyến nghị.';
   }
 
-  selectSearchInputType(type: number): void {
-    this.currentSearchType = type;
-    this.isDropdownOpen = false; // Đóng dropdown sau khi chọn
+  onTypeChange(): void {
+    this.currentSearchInfo = '';
+    this.errorMessage = null;
   }
 
-  // Phương thức mới để xử lý tìm kiếm từ ô trên trang analyze
   analyzeNewInput(): void {
-    if (this.currentSearchInfo && this.currentSearchInfo.trim() !== '') {
-      // Điều hướng đến trang analyze với thông tin mới
-      this.router.navigate(['/analyze'], {
-        queryParams: { info: this.currentSearchInfo.trim(), type: this.currentSearchType }
-      });
-      // Logic subscribe queryParams trong constructor sẽ tự động tải lại dữ liệu
-    } else {
-      alert('Vui lòng nhập thông tin cần phân tích.');
+    const value = this.currentSearchInfo.trim();
+    if (!value) {
+      this.errorMessage = 'Vui lòng nhập thông tin cần tra cứu.';
+      return;
     }
+
+    this.errorMessage = null;
+    this.isLoading = true;
+
+    if (this.currentSearchType === 1 && !this.isPhoneNumber(value)) {
+      this.errorMessage = 'Số điện thoại phải bắt đầu bằng 0 và gồm 10 chữ số.';
+      this.isLoading = false;
+      return;
+    }
+    if (this.currentSearchType === 2 && !this.isBankNumber(value)) {
+      this.errorMessage = 'Số tài khoản chỉ được chứa ký tự số.';
+      this.isLoading = false;
+      return;
+    }
+    if (this.currentSearchType === 3 && !this.isUrl(value)) {
+      this.errorMessage = 'URL không hợp lệ (ví dụ hợp lệ: https://example.com hoặc example.vn).';
+      this.isLoading = false;
+      return;
+    }
+
+    this.router.navigate(['/analyze'], {
+      queryParams: { info: value, type: this.currentSearchType }
+    }).then(() => {
+      this.isLoading = false;
+    });
   }
 
-  // Hàm helper để lấy label cho loại input trong ô tìm kiếm mới
-  getSelectedInputTypeLabel(type: number | undefined): string {
-    switch (type) {
-      case 1: return 'Số điện thoại';
-      case 2: return 'Tài khoản ngân hàng';
-      case 3: return 'Link / Website';
-      default: return 'Link / Website'; // Mặc định nếu không xác định
-    }
+  private isPhoneNumber(value: string): boolean {
+    return /^0\d{9}$/.test(value.trim());
   }
 
-  // Hàm helper để lấy icon cho loại input trong ô tìm kiếm mới
+  private isBankNumber(value: string): boolean {
+    return /^\d+$/.test(value.trim());
+  }
+
+  private isUrl(value: string): boolean {
+    const urlRegex = /^(https?:\/\/)?([đa-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i;
+    return urlRegex.test(value.trim());
+  }
+
   getSearchInputTypeIcon(): string {
     switch (this.currentSearchType) {
       case 1: return 'fas fa-mobile-alt';
@@ -184,10 +229,7 @@ export class AnalyzeComponent implements OnInit, OnDestroy { // Thêm OnDestroy
     }
   }
 
-  // Các hàm parseAnalysisString, getSafetyStatus, getRiskColor, getInputTypeIcon (cũ) được giữ nguyên
-
   private parseAnalysisString(analysisText: string): void {
-    // Trích xuất "Mức độ nguy hiểm"
     const riskLevelRegex = /- \*\*Mức độ nguy hiểm:\*\*(.*?)\./i;
     const riskMatch = analysisText.match(riskLevelRegex);
     if (riskMatch && riskMatch[0]) {
@@ -196,7 +238,6 @@ export class AnalyzeComponent implements OnInit, OnDestroy { // Thêm OnDestroy
       this.riskLevelDescription = "**Mức độ nguy hiểm:** Không xác định.";
     }
 
-    // Trích xuất "2. Phân tích chi tiết"
     const detailedAnalysisRegex = /(2\. Phân tích chi tiết:[\s\S]*?)(?=3\. Loại hình lừa đảo:|$)/i;
     const detailedAnalysisMatch = analysisText.match(detailedAnalysisRegex);
     if (detailedAnalysisMatch && detailedAnalysisMatch[1]) {
@@ -205,7 +246,6 @@ export class AnalyzeComponent implements OnInit, OnDestroy { // Thêm OnDestroy
         this.detailedAnalysis = "2. Phân tích chi tiết: Không có thông tin phân tích chi tiết.";
     }
 
-    // Trích xuất "5. Khuyến nghị"
     const recommendationsRegex = /(5\. Khuyến nghị:[\s\S]*)/i;
     const recommendationsMatch = analysisText.match(recommendationsRegex);
     if (recommendationsMatch && recommendationsMatch[1]) {
@@ -228,7 +268,7 @@ export class AnalyzeComponent implements OnInit, OnDestroy { // Thêm OnDestroy
         return 'Nguy cơ cao';
       }
     }
-    return 'Đang phân tích...'; // Mặc định nếu không khớp hoặc riskLevelDescription rỗng
+    return 'Đang phân tích...';
   }
 
   getRiskColor(): string {
@@ -244,15 +284,172 @@ export class AnalyzeComponent implements OnInit, OnDestroy { // Thêm OnDestroy
         return 'red';
       }
     }
-    return 'gray'; // Mặc định nếu không khớp hoặc riskLevelDescription rỗng
+    return 'gray';
+  }
+
+  getFormattedDate(dateString: string | null | undefined): string {
+    if (!dateString || dateString === '0001-01-01T00:00:00') {
+      return 'N/A';
+    }
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('vi-VN');
+    } catch {
+      return 'N/A';
+    }
   }
 
   getInputTypeIcon(): string {
     switch (this.inputType) {
-      case 1: return 'fas fa-mobile-alt'; // Phone
-      case 2: return 'fas fa-university'; // Bank account
-      case 3: return 'fas fa-globe'; // URL
-      default: return 'fas fa-question-circle'; // Unknown or default
+      case 1: return 'fas fa-mobile-alt';
+      case 2: return 'fas fa-university';
+      case 3: return 'fas fa-globe';
+      default: return 'fas fa-question-circle';
     }
+  }
+
+  getCurrentDate(): string {
+    return new Date().toLocaleDateString('vi-VN');
+  }
+
+  getScamAdviserClass(score: number | undefined): string {
+    if (!score || score === 0) return 'not-found';
+    if (score >= 80) return 'safe';
+    if (score >= 60) return 'warning';
+    if (score >= 40) return 'danger';
+    return 'critical';
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    console.error('Image failed to load:', img.src);
+    console.error('Error event:', event);
+    
+    img.style.display = 'none';
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'image-error';
+    errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i><p>Không thể tải ảnh</p>';
+    img.parentNode?.appendChild(errorDiv);
+  }
+
+  onImageLoad(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    console.log('Image loaded successfully:', img.src);
+    this.imageLoaded = true;
+  }
+
+  getImageName(imageUrl: string): string {
+    const fileName = imageUrl.split('/').pop() || '';
+    console.log('Original URL:', imageUrl);
+    console.log('Extracted filename:', fileName);
+    console.log('Final URL:', `http://localhost:8080/api/v1/report/image/${fileName}`);
+    return fileName;
+  }
+
+  getFullImageUrl(imageUrl: string): string {
+    const fileName = this.getImageName(imageUrl);
+    return `http://localhost:8080/api/v1/report/image/${fileName}`;
+  }
+
+  getEvidenceImages(): string[] {
+    if (!this.analysisResult) return [];
+    
+    const images = this.analysisResult.evidenceUrls || this.analysisResult.evidenceURLs || [];
+    console.log('Evidence images found:', images);
+    return images;
+  }
+
+  hasValidAnalysisData(): boolean {
+    const hasData = (
+      (this.analysisResult !== null) ||
+      (
+        this.inputInfo !== undefined && 
+        this.inputType !== undefined &&
+        this.inputInfo.trim() !== ''
+      )
+    );
+    console.log('hasValidAnalysisData:', hasData);
+    console.log('analysisResult:', this.analysisResult);
+    console.log('evidenceUrls:', this.analysisResult?.evidenceUrls);
+    return hasData;
+  }
+
+  // Method xử lý click ảnh để xem to hơn
+  onImageClick(imageUrl: string): void {
+    const fullUrl = this.getFullImageUrl(imageUrl);
+    
+    // Tạo modal để hiển thị ảnh to
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      cursor: pointer;
+    `;
+    
+    const img = document.createElement('img');
+    img.src = fullUrl;
+    img.style.cssText = `
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    `;
+    
+    const closeButton = document.createElement('div');
+    closeButton.innerHTML = '×';
+    closeButton.style.cssText = `
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10001;
+    `;
+    
+    modal.appendChild(img);
+    modal.appendChild(closeButton);
+    document.body.appendChild(modal);
+    
+    // Đóng modal khi click
+    const closeModal = () => {
+      document.body.removeChild(modal);
+    };
+    
+    modal.addEventListener('click', closeModal);
+    closeButton.addEventListener('click', closeModal);
+    
+    // Thêm animation
+    modal.style.opacity = '0';
+    setTimeout(() => {
+      modal.style.transition = 'opacity 0.3s ease';
+      modal.style.opacity = '1';
+    }, 10);
+  }
+
+  // Method chuyển đổi markdown thành HTML
+  formatText(text: string): string {
+    if (!text) return '';
+    
+    // Chuyển **text** thành <strong>text</strong>
+    let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Chuyển *text* thành <em>text</em>
+    formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // Chuyển \n thành <br>
+    formatted = formatted.replace(/\n/g, '<br>');
+    
+    return formatted;
   }
 }

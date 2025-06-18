@@ -17,8 +17,15 @@ interface SearchApiResponse {
   dateReport: string | null;
   verifiedCount: number;
   lastReportAt: string;
-  evidenceURLs: string[]; // <-- Rất quan trọng: PHẢI LÀ 'evidenceURLs' với chữ hoa 'URLs'
+  evidenceURLs?: string[]; // <-- Rất quan trọng: PHẢI LÀ 'evidenceURLs' với chữ hoa 'URLs'
+  evidenceUrls?: string[]; // Optional for frontend compatibility
   analysis: string;
+  categorization?: string;
+  trustScore?: number;
+  dataBreach?: string;
+  phishingList?: string;
+  apwgCategory?: string;
+  screenshotCaption?: string;
 }
 
 @Injectable({

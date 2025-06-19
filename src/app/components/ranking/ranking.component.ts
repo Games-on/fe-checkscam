@@ -3,16 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
-
-interface ReporterRanking {
-  rank: number;
-  email: string;
-  approvedReports: number;
-  totalReports: number;
-  successRate: number;
-  firstReportDate: string;
-  lastReportDate: string;
-}
+import { RankingService, ReporterRanking, RankingStats } from '../../services/ranking.service';
 
 @Component({
   selector: 'app-ranking',
@@ -23,117 +14,169 @@ interface ReporterRanking {
 })
 export class RankingComponent implements OnInit {
   
-  // Top 100 email có nhiều báo cáo được duyệt nhất
+  // Dữ liệu từ API
   topReporters: ReporterRanking[] = [];
+  currentPageReporters: ReporterRanking[] = [];
   
-  // Pagination - bắt đầu từ rank 21 (vì top 3 hiển thị riêng, rank 4-20 ẩn)
-  currentPage: number = 1;
+  // Pagination
+  currentPage: number = 0; // API bắt đầu từ 0
   itemsPerPage: number = 10;
   totalPages: number = 0;
+  totalElements: number = 0;
+  
+  // Stats
+  stats: RankingStats = {
+    totalReporters: 0,
+    totalApprovedReports: 0,
+    averageSuccessRate: 0
+  };
+  
+  // Loading states
+  isLoading: boolean = false;
+  isLoadingStats: boolean = false;
+  error: string | null = null;
 
-  constructor(private router: Router) { 
-    this.generateMockData();
-  }
+  constructor(
+    private router: Router,
+    private rankingService: RankingService
+  ) { }
 
   ngOnInit(): void {
-    this.calculatePagination();
+    this.loadTop3Reporters();
+    this.loadCurrentPageData();
+    this.loadStats();
   }
 
-  // Tạo dữ liệu mẫu cho 100 email
-  generateMockData(): void {
-    const emailDomains = [
-      'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'email.com'
-    ];
-    
-    const usernames = [
-      'nguyenchicong035', 'sadboydev06', 'nhatp3067', 'thanhphat.199x', 
-      'tranminhhung170302', 'lph.an.1092', 'sonmtb', 'thaing84',
-      'hthai1426', 'ltrvinh288', 'nhangaming125', 'maim88487', 'asdsasd'
-    ];
-
-    // Tạo top performers với điểm cao
-    const topScores = [184, 146, 78]; // Giống như trong hình
-    
-    for (let i = 1; i <= 100; i++) {
-      let approvedReports: number;
-      let email: string;
-      
-      if (i <= 3) {
-        // Top 3 với điểm như trong hình
-        approvedReports = topScores[i - 1];
-        email = usernames[i - 1] + '@gmail.com';
-      } else if (i <= 13) {
-        // Sử dụng username có sẵn
-        email = usernames[i - 1] + '@' + emailDomains[Math.floor(Math.random() * emailDomains.length)];
-        approvedReports = Math.floor(Math.random() * 50) + 20; // 20-70 điểm
-      } else {
-        // Random cho những user còn lại
-        const randomUsername = 'user' + Math.floor(Math.random() * 10000);
-        email = randomUsername + '@' + emailDomains[Math.floor(Math.random() * emailDomains.length)];
-        approvedReports = Math.floor(Math.random() * 30) + 1; // 1-30 điểm
+  // Tải top 3 để hiển thị podium
+  loadTop3Reporters(): void {
+    this.rankingService.getTop3Reporters().subscribe({
+      next: (data) => {
+        this.topReporters = data;
+      },
+      error: (error) => {
+        console.error('Error loading top 3 reporters:', error);
+        this.error = 'Không thể tải danh sách top 3';
       }
-      
-      const totalReports = approvedReports + Math.floor(Math.random() * 20);
-      const successRate = Math.round((approvedReports / totalReports) * 100);
-
-      this.topReporters.push({
-        rank: i,
-        email: email,
-        approvedReports: approvedReports,
-        totalReports: totalReports,
-        successRate: successRate,
-        firstReportDate: this.getRandomDate(2023, 2024),
-        lastReportDate: this.getRandomDate(2024, 2025)
-      });
-    }
-
-    // Sắp xếp theo số báo cáo được duyệt giảm dần
-    this.topReporters.sort((a, b) => b.approvedReports - a.approvedReports);
-    
-    // Cập nhật lại rank sau khi sắp xếp
-    this.topReporters.forEach((reporter, index) => {
-      reporter.rank = index + 1;
     });
   }
 
-  getRandomDate(startYear: number, endYear: number): string {
-    const start = new Date(startYear, 0, 1);
-    const end = new Date(endYear, 11, 31);
-    const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-    return randomDate.toLocaleDateString('vi-VN');
+  // Tải dữ liệu cho trang hiện tại
+  loadCurrentPageData(): void {
+    this.isLoading = true;
+    this.rankingService.getReporterRanking(this.currentPage, this.itemsPerPage).subscribe({
+      next: (response) => {
+        this.currentPageReporters = response.reporters;
+        this.totalPages = response.totalPages;
+        this.totalElements = response.totalElements;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading ranking data:', error);
+        this.error = 'Không thể tải dữ liệu bảng xếp hạng';
+        this.isLoading = false;
+      }
+    });
   }
 
-  // Lấy dữ liệu cho trang hiện tại (bắt đầu từ rank 1)
+  // Tải thống kê tổng quan
+  loadStats(): void {
+    this.isLoadingStats = true;
+    this.rankingService.getRankingStats().subscribe({
+      next: (data) => {
+        this.stats = data;
+        this.isLoadingStats = false;
+      },
+      error: (error) => {
+        console.error('Error loading stats:', error);
+        this.isLoadingStats = false;
+      }
+    });
+  }
+
+  // Lấy dữ liệu cho trang hiện tại
   getCurrentPageData(): ReporterRanking[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    return this.topReporters.slice(startIndex, endIndex);
-  }
-
-  // Tính toán phân trang (tính tất cả)
-  calculatePagination(): void {
-    this.totalPages = Math.ceil(this.topReporters.length / this.itemsPerPage);
+    return this.currentPageReporters;
   }
 
   // Chuyển trang
   goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
+    if (page >= 0 && page < this.totalPages && page !== this.currentPage) {
       this.currentPage = page;
+      this.loadCurrentPageData();
     }
   }
 
   // Trang trước
   previousPage(): void {
-    if (this.currentPage > 1) {
+    if (this.currentPage > 0) {
       this.currentPage--;
+      this.loadCurrentPageData();
     }
   }
 
   // Trang sau
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
+    if (this.currentPage < this.totalPages - 1) {
       this.currentPage++;
+      this.loadCurrentPageData();
     }
+  }
+
+  // Lấy danh sách số trang để hiển thị
+  getPageNumbers(): number[] {
+    const pages: number[] = [];
+    const maxVisible = 5;
+    const half = Math.floor(maxVisible / 2);
+    
+    let start = Math.max(0, this.currentPage - half);
+    let end = Math.min(this.totalPages - 1, start + maxVisible - 1);
+    
+    // Điều chỉnh start nếu end đã đạt max
+    if (end - start + 1 < maxVisible) {
+      start = Math.max(0, end - maxVisible + 1);
+    }
+    
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    
+    return pages;
+  }
+
+  // Lấy class CSS cho rank  
+  getRankClass(rank: number): string {
+    if (rank <= 3) return 'top-three';
+    if (rank <= 10) return 'top-ten';
+    return '';
+  }
+
+  // Lấy icon medal cho top 3
+  getMedalIcon(rank: number): string {
+    switch (rank) {
+      case 1: return 'fas fa-trophy';
+      case 2: return 'fas fa-medal';
+      case 3: return 'fas fa-award';
+      default: return '';
+    }
+  }
+
+  // Lấy thống kê để hiển thị
+  getTotalReporters(): string {
+    return this.stats.totalReporters.toLocaleString('vi-VN');
+  }
+
+  getTotalApprovedReports(): string {
+    return this.stats.totalApprovedReports.toLocaleString('vi-VN');
+  }
+
+  getAverageSuccessRate(): string {
+    return this.stats.averageSuccessRate.toFixed(1) + '%';
+  }
+
+  // Lấy thời gian hiện tại
+  getCurrentTime(): string {
+    const now = new Date();
+    return now.toLocaleDateString('vi-VN') + ' ' + now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
   }
 
   // Ẩn một phần email để bảo vệ privacy
@@ -147,9 +190,23 @@ export class RankingComponent implements OnInit {
     return `${visibleStart}***${visibleEnd}@${domain}`;
   }
 
-  // Lấy avatar mặc định dựa trên email (không dùng trong design mới)
-  getAvatarUrl(email: string): string {
-    const name = email.split('@')[0];
-    return `https://ui-avatars.com/api/?name=${name}&background=ff6b35&color=fff&size=50`;
+  // Lấy thông tin phân trang
+  getPaginationInfo(): string {
+    const start = this.currentPage * this.itemsPerPage + 1;
+    const end = Math.min((this.currentPage + 1) * this.itemsPerPage, this.totalElements);
+    return `Hiển thị ${start}-${end} trong tổng số ${this.totalElements} người báo cáo`;
+  }
+
+  // Format ngày tháng
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('vi-VN');
+  }
+
+  // Reload dữ liệu
+  reloadData(): void {
+    this.loadTop3Reporters();
+    this.loadCurrentPageData();
+    this.loadStats();
   }
 }

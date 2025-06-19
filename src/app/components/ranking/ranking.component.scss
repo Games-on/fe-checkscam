@@ -399,10 +399,12 @@
 
 /* Stats Cards Responsive */
 .stats-cards {
+  margin-bottom: 40px !important; /* Giảm khoảng cách xuống podium */
+  
   @media (max-width: 1200px) {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 18px;
-    margin-bottom: 50px;
+    margin-bottom: 35px !important;
   }
   
   @media (max-width: 992px) {
@@ -509,7 +511,7 @@
   flex-wrap: wrap;
   position: relative;
   z-index: 1;
-  padding: 180px 20px 40px 20px;
+  padding: 100px 20px 40px 20px !important; /* Giảm padding-top từ 180px xuống 100px */
   perspective: 1000px;
   
   /* Background glow effect */
@@ -707,6 +709,7 @@
     /* Second place - SILVER */
     &.second {
       order: 1;
+      transform: scale(1.05) translateY(-45px) !important; /* Cao hơn top 3 nhiều hơn */
       background: linear-gradient(135deg, rgba(255, 152, 0, 0.30), rgba(255, 193, 7, 0.20));
       backdrop-filter: blur(25px);
       border: 2px solid rgba(255, 152, 0, 0.45);
@@ -727,6 +730,7 @@
     /* Third place - BRONZE */
     &.third {
       order: 3;
+      transform: scale(1.0) translateY(-10px) !important; /* Thấp hơn hạng 2 nhưng cao hơn mặt đất */
       background: linear-gradient(135deg, rgba(255, 152, 0, 0.28), rgba(255, 183, 77, 0.18));
       backdrop-filter: blur(25px);
       border: 2px solid rgba(255, 152, 0, 0.40);
@@ -749,13 +753,13 @@
   @media (max-width: 1200px) {
     gap: 25px;
     margin-bottom: 100px;
-    padding: 160px 20px 35px 20px;
+    padding: 80px 20px 35px 20px !important; /* Giảm padding responsive */
   }
   
   @media (max-width: 992px) {
     gap: 22px;
     margin-bottom: 80px;
-    padding: 140px 18px 30px 18px;
+    padding: 70px 18px 30px 18px !important; /* Giảm padding responsive */
   }
   
   @media (max-width: 768px) {
@@ -777,10 +781,12 @@
       
       &.second {
         order: 2;
+        transform: scale(1.02) translateY(-25px) !important; /* Cao hơn top 3 rõ ràng trên mobile */
       }
       
       &.third {
         order: 3;
+        transform: scale(1.0) translateY(-5px) !important; /* Thấp hơn hạng 2 nhưng vẫn cao hơn mặt đất */
       }
       
       .score {
@@ -809,6 +815,14 @@
         .score {
           font-size: 3.5em;
         }
+      }
+      
+      &.second {
+        transform: scale(1.01) translateY(-20px) !important; /* Cao hơn top 3 rõ ràng */
+      }
+      
+      &.third {
+        transform: scale(1.0) translateY(-5px) !important; /* Thấp hơn hạng 2 */
       }
       
       .score {
@@ -848,6 +862,14 @@
         }
       }
       
+      &.second {
+        transform: scale(1.01) translateY(-18px) !important; /* Cao hơn top 3 rõ ràng */
+      }
+      
+      &.third {
+        transform: scale(1.0) translateY(-5px) !important; /* Thấp hơn hạng 2 */
+      }
+      
       .score {
         font-size: 3em;
         margin: 30px 0 15px 0;
@@ -866,6 +888,459 @@
         }
       }
     }
+  }
+}
+
+/* PREMIUM REWARDS SECTION */
+.rewards-section {
+  margin: 80px 0;
+  position: relative;
+  z-index: 1;
+  
+  .rewards-container {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 193, 7, 0.15);
+    box-shadow: 
+      0 24px 48px rgba(255, 152, 0, 0.08),
+      0 12px 24px rgba(255, 193, 7, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #f59e0b, #eab308, #f59e0b);
+    }
+    
+    .rewards-header {
+      text-align: center;
+      padding: 60px 40px 40px;
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.08), rgba(254, 240, 138, 0.06));
+      color: #374151;
+      position: relative;
+      
+      i {
+        font-size: 3.5em;
+        margin-bottom: 20px;
+        display: block;
+        background: linear-gradient(135deg, #f59e0b, #eab308);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      h2 {
+        font-size: 2.8em;
+        font-weight: 700;
+        margin: 0 0 15px 0;
+        color: #1f2937;
+        letter-spacing: -0.02em;
+      }
+      
+      p {
+        font-size: 1.2em;
+        opacity: 0.8;
+        margin: 0;
+        font-weight: 500;
+        color: #6b7280;
+      }
+    }
+    
+    .rewards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      padding: 50px 40px;
+      
+      .reward-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-radius: 24px;
+        padding: 40px 30px;
+        text-align: center;
+        border: 1px solid rgba(251, 146, 60, 0.08);
+        box-shadow: 
+          0 12px 32px rgba(0, 0, 0, 0.04),
+          0 4px 16px rgba(251, 146, 60, 0.06),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
+          border-radius: 26px;
+          background: linear-gradient(135deg, rgba(251, 146, 60, 0.1), transparent, rgba(234, 179, 8, 0.1));
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        
+        &:hover {
+          transform: translateY(-12px) scale(1.02);
+          box-shadow: 
+            0 24px 48px rgba(0, 0, 0, 0.08),
+            0 8px 24px rgba(251, 146, 60, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 1);
+          border-color: rgba(251, 146, 60, 0.15);
+          
+          &::before {
+            opacity: 1;
+          }
+          
+          .reward-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(251, 146, 60, 0.3);
+          }
+        }
+        
+        .reward-icon {
+          width: 96px;
+          height: 96px;
+          border-radius: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 30px;
+          font-size: 2.8em;
+          color: white;
+          box-shadow: 0 8px 24px rgba(251, 146, 60, 0.2);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          
+          &::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            border-radius: 21px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            pointer-events: none;
+          }
+        }
+        
+        .reward-title {
+          font-size: 2em;
+          font-weight: 700;
+          margin-bottom: 30px;
+          color: #1f2937;
+          letter-spacing: -0.01em;
+        }
+        
+        .reward-prizes {
+          .prize-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(251, 146, 60, 0.04);
+            font-weight: 600;
+            color: #374151;
+            transition: all 0.2s ease;
+            
+            &:last-child {
+              border-bottom: none;
+            }
+            
+            &:hover {
+              color: #f59e0b;
+              transform: translateX(4px);
+            }
+            
+            i {
+              width: 32px;
+              height: 32px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 1.2em;
+              color: #f59e0b;
+              background: rgba(245, 158, 11, 0.1);
+              border-radius: 8px;
+              transition: all 0.2s ease;
+            }
+            
+            span {
+              font-size: 1.1em;
+              flex: 1;
+            }
+          }
+        }
+        
+        // First place styling
+        &.first-place {
+          border-color: rgba(255, 215, 0, 0.2);
+          
+          .reward-icon {
+            background: linear-gradient(135deg, #ffd700, #ffb300);
+            box-shadow: 
+              0 0 0 4px rgba(255, 215, 0, 0.1),
+              0 8px 24px rgba(255, 215, 0, 0.3);
+          }
+          
+          .reward-title {
+            background: linear-gradient(135deg, #f59e0b, #eab308);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          }
+        }
+        
+        // Second place styling
+        &.second-place {
+          border-color: rgba(229, 231, 235, 0.3);
+          
+          .reward-icon {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            color: #374151;
+          }
+        }
+        
+        // Third place styling
+        &.third-place {
+          border-color: rgba(217, 119, 6, 0.2);
+          
+          .reward-icon {
+            background: linear-gradient(135deg, #d97706, #b45309);
+          }
+        }
+      }
+    }
+  }
+  
+  /* Rewards Responsive */
+  @media (max-width: 1200px) {
+    margin: 70px 0;
+    
+    .rewards-container {
+      .rewards-header {
+        padding: 55px 35px 35px;
+        
+        i {
+          font-size: 3.2em;
+        }
+        
+        h2 {
+          font-size: 2.5em;
+        }
+        
+        p {
+          font-size: 1.15em;
+        }
+      }
+      
+      .rewards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 35px;
+        padding: 45px 35px;
+        
+        .reward-card {
+          padding: 35px 28px;
+          
+          .reward-icon {
+            width: 88px;
+            height: 88px;
+            font-size: 2.6em;
+          }
+          
+          .reward-title {
+            font-size: 1.9em;
+            margin-bottom: 28px;
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 992px) {
+    margin: 60px 0;
+    
+    .rewards-container {
+      .rewards-header {
+        padding: 50px 30px 30px;
+        
+        i {
+          font-size: 3em;
+        }
+        
+        h2 {
+          font-size: 2.2em;
+        }
+        
+        p {
+          font-size: 1.1em;
+        }
+      }
+      
+      .rewards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        padding: 40px 30px;
+        
+        .reward-card {
+          padding: 32px 25px;
+          
+          .reward-icon {
+            width: 80px;
+            height: 80px;
+            font-size: 2.4em;
+          }
+          
+          .reward-title {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    margin: 50px 0;
+    
+    .rewards-container {
+      .rewards-header {
+        padding: 45px 25px 28px;
+        
+        i {
+          font-size: 2.8em;
+        }
+        
+        h2 {
+          font-size: 2em;
+        }
+        
+        p {
+          font-size: 1.05em;
+        }
+      }
+      
+      .rewards-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 35px 25px;
+        
+        .reward-card {
+          padding: 30px 22px;
+          
+          .reward-icon {
+            width: 75px;
+            height: 75px;
+            font-size: 2.3em;
+          }
+          
+          .reward-title {
+            font-size: 1.7em;
+            margin-bottom: 22px;
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 576px) {
+    margin: 40px 0;
+    
+    .rewards-container {
+      .rewards-header {
+        padding: 35px 20px 25px;
+        
+        i {
+          font-size: 2.5em;
+        }
+        
+        h2 {
+          font-size: 1.8em;
+        }
+        
+        p {
+          font-size: 1em;
+        }
+      }
+      
+      .rewards-grid {
+        gap: 22px;
+        padding: 30px 20px;
+        
+        .reward-card {
+          padding: 25px 20px;
+          
+          .reward-icon {
+            width: 70px;
+            height: 70px;
+            font-size: 2.2em;
+          }
+          
+          .reward-title {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .rewards-container {
+      .rewards-header {
+        padding: 30px 15px 22px;
+        
+        i {
+          font-size: 2.2em;
+        }
+        
+        h2 {
+          font-size: 1.6em;
+        }
+        
+        p {
+          font-size: 0.95em;
+        }
+      }
+      
+      .rewards-grid {
+        gap: 20px;
+        padding: 25px 15px;
+        
+        .reward-card {
+          padding: 22px 18px;
+          
+          .reward-icon {
+            width: 65px;
+            height: 65px;
+            font-size: 2em;
+          }
+          
+          .reward-title {
+            font-size: 1.5em;
+            margin-bottom: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes rewardPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(255, 215, 0, 0.6);
   }
 }
 
@@ -1255,6 +1730,124 @@
 /* VISUAL ENHANCEMENTS */
 .ranking-container {
   animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* FORCE PODIUM HEIGHTS - HIGHEST SPECIFICITY */
+.ranking-container .podium-section {
+  gap: 50px !important;
+  justify-content: space-evenly !important;
+  align-items: flex-end !important;
+  display: flex !important; /* Đảm bảo flex layout */
+  width: 100% !important; /* Đảm bảo full width */
+  margin: 0 auto !important; /* Center container */
+  padding-left: 20px !important; /* Padding đều 2 bên */
+  padding-right: 20px !important;
+}
+
+.ranking-container .podium-section .podium-card.first {
+  transform: scale(1.2) !important;
+  position: relative !important;
+  top: 40px !important;
+  height: 330px !important;
+  max-height: 330px !important;
+  overflow: hidden !important;
+  padding: 30px 25px !important;
+  z-index: 100 !important;
+  margin: 0 10px !important; /* Giảm margin vì đã có space-evenly */
+}
+
+.ranking-container .podium-section .podium-card.second {
+  transform: scale(1.05) !important;
+  position: relative !important;
+  top: 60px !important;
+  height: 310px !important;
+  max-height: 310px !important;
+  overflow: hidden !important;
+  padding: 30px 25px !important;
+  z-index: 101 !important;
+  margin: 0 10px !important; /* Giảm margin vì đã có space-evenly */
+}
+
+.ranking-container .podium-section .podium-card.third {
+  transform: scale(1.0) !important;
+  position: relative !important;
+  top: 80px !important;
+  height: 290px !important;
+  max-height: 290px !important;
+  overflow: hidden !important;
+  padding: 25px 20px !important;
+  z-index: 50 !important;
+  margin: 0 10px !important; /* Giảm margin vì đã có space-evenly */
+}
+
+/* RESPONSIVE GAP ADJUSTMENT */
+@media (max-width: 1400px) {
+  .ranking-container .podium-section {
+    gap: 40px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  .ranking-container .podium-section .podium-card.first,
+  .ranking-container .podium-section .podium-card.second,
+  .ranking-container .podium-section .podium-card.third {
+    margin: 0 8px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .ranking-container .podium-section {
+    gap: 35px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .ranking-container .podium-section .podium-card.first,
+  .ranking-container .podium-section .podium-card.second,
+  .ranking-container .podium-section .podium-card.third {
+    margin: 0 6px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .ranking-container .podium-section {
+    gap: 30px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .ranking-container .podium-section .podium-card.first,
+  .ranking-container .podium-section .podium-card.second,
+  .ranking-container .podium-section .podium-card.third {
+    margin: 0 5px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .ranking-container .podium-section {
+    gap: 25px !important;
+    justify-content: center !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+  .ranking-container .podium-section .podium-card.first,
+  .ranking-container .podium-section .podium-card.second,
+  .ranking-container .podium-section .podium-card.third {
+    margin: 0 3px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .ranking-container .podium-section {
+    gap: 20px !important;
+    justify-content: center !important;
+    flex-direction: column !important; /* Stack thẳng đứng trên mobile nhỏ */
+    align-items: center !important;
+  }
+  .ranking-container .podium-section .podium-card.first,
+  .ranking-container .podium-section .podium-card.second,
+  .ranking-container .podium-section .podium-card.third {
+    margin: 10px 0 !important; /* Margin trên dưới thay vì trái phải */
+    max-width: 280px !important;
+    width: 100% !important;
+  }
 }
 
 .stats-cards .stat-card {

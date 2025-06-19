@@ -1,12 +1,23 @@
+/* footer.component.scss */
+
 .app-footer {
-  background-color: #2c2c2c; /* Nền xanh đen đậm */
-  color: #f0f0f0; /* Màu chữ trắng nhạt */
+  background-image: linear-gradient(
+    135deg,
+    #FDFDAA 0%,
+    #E6E6FA 30%,
+    #CCE8CC 70%,
+    #FDFDAA 100%
+  );
+  background-size: 200% 200%;
+  animation: gradientAnimation 15s ease infinite;
+
+  color: #333333;
   padding: 60px 0 30px;
   font-family: 'Roboto', sans-serif;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.6); /* Bóng đổ đậm hơn */
-  border-top: 5px solid #ff7a00; /* Đường viền cam rực rỡ */
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.2);
+  border-top: 5px solid #ff7a00;
 
   .container {
     max-width: 1200px;
@@ -15,7 +26,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 40px;
-    
+
     @media (max-width: 992px) {
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 30px;
@@ -35,7 +46,7 @@
     }
 
     h3 {
-      color: #ff9900; /* Màu cam vàng nổi bật */
+      color: #ff7a00;
       font-size: 1.6em;
       margin-bottom: 20px;
       position: relative;
@@ -50,7 +61,7 @@
         bottom: 0;
         width: 60px;
         height: 4px;
-        background: linear-gradient(to right, #ff9900, #ff7a00); /* Gradient cam */
+        background: linear-gradient(to right, #ff9900, #ff7a00);
         border-radius: 2px;
         transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         @media (max-width: 768px) {
@@ -67,26 +78,26 @@
     p {
       margin-bottom: 12px;
       line-height: 1.8;
-      color: #b0b0b0; /* Màu chữ nhạt hơn */
+      color: #555555;
       font-size: 0.95em;
 
       i {
         margin-right: 12px;
-        color: #ff9900; /* Icon màu cam vàng */
+        color: #ff7a00;
         transition: transform 0.3s ease;
       }
-      
+
       &:hover i {
         transform: scale(1.1) rotate(5deg);
       }
 
       a {
-        color: #f0f0f0;
+        color: #333333;
         text-decoration: none;
         transition: color 0.3s ease, text-decoration 0.3s ease;
 
         &:hover {
-          color: #ff9900; /* Highlight cam vàng khi hover */
+          color: #ff7a00;
           text-decoration: underline;
         }
       }
@@ -97,30 +108,49 @@
       padding: 0;
       margin: 0;
 
+      @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-left: 0;
+      }
+
       li {
         margin-bottom: 12px;
 
+        @media (max-width: 768px) {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+        }
+
         a.footer-link {
-          color: #b0b0b0;
+          color: #555555;
           text-decoration: none;
           display: flex;
           align-items: center;
           transition: color 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-          
+
           i {
             margin-right: 10px;
-            color: #ff7a00; /* Icon màu cam rực */
+            color: #ff7a00;
             font-size: 0.9em;
             transition: transform 0.3s ease;
           }
 
           &:hover {
-            color: #ff9900; /* Highlight cam vàng */
+            color: #ff7a00;
             transform: translateX(8px);
-            
+
             i {
               transform: rotate(15deg);
               color: #ff9900;
+            }
+          }
+          @media (max-width: 768px) {
+            transform: translateX(0);
+            &:hover {
+                transform: translateX(0);
             }
           }
         }
@@ -133,7 +163,7 @@
       max-width: 180px;
       height: auto;
       margin-bottom: 20px;
-      filter: drop-shadow(0 0 10px rgba(255, 153, 0, 0.5)); /* Bóng đổ sáng màu cam */
+      filter: drop-shadow(0 0 10px rgba(255, 153, 0, 0.3));
       transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
       &:hover {
@@ -144,7 +174,7 @@
     .brand-slogan {
       font-style: italic;
       margin-bottom: 25px;
-      color: #909090; /* Màu chữ nhạt hơn nữa */
+      color: #777777;
       font-size: 1em;
     }
 
@@ -158,23 +188,23 @@
       }
 
       a {
-        color: #f0f0f0;
+        color: #333333;
         font-size: 1.6em;
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.15);
+        background-color: rgba(255, 255, 255, 0.5);
         display: flex;
         justify-content: center;
         align-items: center;
         transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
         &:hover {
-          background-color: #ff7a00; /* Đổi màu nền cam rực khi hover */
-          color: #2c2c2c; /* Chữ đậm khi hover */
+          background-color: #ff7a00;
+          color: #FFFFFF;
           transform: translateY(-8px) rotate(15deg) scale(1.1);
-          box-shadow: 0 8px 20px rgba(255, 122, 0, 0.6); /* Bóng đổ sáng màu cam */
+          box-shadow: 0 8px 20px rgba(255, 122, 0, 0.4);
         }
       }
     }
@@ -192,29 +222,29 @@
       input[type="email"] {
         flex-grow: 1;
         padding: 14px;
-        border: 1px solid #ff7a00; /* Viền cam rực */
+        border: 1px solid #ff7a00;
         border-radius: 8px 0 0 8px;
-        background-color: #3a3a3a; /* Nền input tối */
-        color: #f0f0f0;
+        background-color: #f0f0f0;
+        color: #333333;
         outline: none;
         font-size: 1em;
         transition: all 0.3s ease;
 
         &::placeholder {
-          color: #a0a0a0;
+          color: #999999;
         }
 
         &:focus {
-          border-color: #ff9900; /* Sáng viền cam vàng khi focus */
-          box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.4); /* Bóng đổ sáng màu cam */
-          background-color: #4a4a4a; /* Hơi sáng hơn khi focus */
+          border-color: #ff9900;
+          box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.4);
+          background-color: #ffffff;
         }
       }
 
       .subscribe-button {
         padding: 14px 25px;
-        background-color: #ff7a00; /* Nút màu cam rực */
-        color: #2c2c2c; /* Chữ đậm */
+        background-color: #ff7a00;
+        color: #FFFFFF;
         border: none;
         border-radius: 0 8px 8px 0;
         cursor: pointer;
@@ -225,13 +255,13 @@
         transition: background-color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 
         &:hover {
-          background-color: #ff9900; /* Đổi màu cam vàng khi hover */
+          background-color: #ff9900;
           transform: translateY(-3px);
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         &:active {
-          background-color: #e66c00; /* Đậm hơn khi click */
+          background-color: #e66c00;
           transform: translateY(0);
           box-shadow: none;
         }
@@ -240,25 +270,25 @@
   }
 
   .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     padding-top: 25px;
     margin-top: 50px;
     text-align: center;
     font-size: 0.88em;
-    color: #909090;
+    color: #666666;
 
     p {
       margin: 8px 0;
     }
 
     a {
-      color: #ff9900; /* Liên kết màu cam vàng */
+      color: #ff7a00;
       text-decoration: none;
       transition: color 0.3s ease, transform 0.2s ease;
       display: inline-block;
 
       &:hover {
-        color: #ff7a00; /* Đổi màu cam rực khi hover */
+        color: #ff9900;
         text-decoration: underline;
         transform: scale(1.05);
       }
@@ -269,8 +299,8 @@
     position: fixed;
     bottom: 40px;
     right: 40px;
-    background: linear-gradient(45deg, #ff9900, #ff7a00); /* Gradient màu cam */
-    color: #2c2c2c; /* Chữ đậm */
+    background: linear-gradient(45deg, #ff9900, #ff7a00);
+    color: #FFFFFF;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -280,7 +310,7 @@
     font-size: 2em;
     border: none;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     transition: background 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, box-shadow 0.4s ease;
     z-index: 1000;
     opacity: 0;
@@ -293,16 +323,28 @@
     }
 
     &:hover {
-      background: linear-gradient(45deg, #ff7a00, #ff9900); /* Đổi gradient khi hover */
+      background: linear-gradient(45deg, #ff7a00, #ff9900);
       transform: translateY(-10px) scale(1.1);
-      box-shadow: 0 12px 25px rgba(255, 122, 0, 0.6); /* Bóng đổ sáng màu cam */
+      box-shadow: 0 12px 25px rgba(255, 122, 0, 0.5);
     }
 
     &:active {
       transform: translateY(0) scale(0.95);
-      background: #e66c00; /* Màu đơn sắc khi nhấn */
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      background: #e66c00;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
+  }
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 

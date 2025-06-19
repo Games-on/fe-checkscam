@@ -46,7 +46,7 @@
         next: (response) => {
           this.accounts = response.map((user: any) => ({
             ...user,
-            password: user.password || '' // Đảm bảo có trường password
+            password: user.password || '' 
           }));
         },
         error: (error) => {
@@ -87,7 +87,7 @@
           id: user.id,
           name: user.name,
           email: user.email,
-          password: user.password || '' // Truyền password vào dialog
+          password: user.password || '' 
         }
       });
 
@@ -100,7 +100,6 @@
 
 
     unlockAccount(userId: number) {
-      // Implement unlock account functionality
       console.log('Unlock account:', userId);
     }
   }

@@ -32,8 +32,8 @@
       if (userData) {
         const user = JSON.parse(userData);
         this.userRole = user.role || [];
-        this.isAdmin = this.userRole.includes('ROLE_ADMIN');
-        this.isCollaborator = this.userRole.includes('ROLE_COLLAB');
+        this.isAdmin = this.userRole.includes('ADMIN');
+        this.isCollaborator = this.userRole.includes('COLLAB');
         
         const token = localStorage.getItem('jwt_token');
         if (token) {

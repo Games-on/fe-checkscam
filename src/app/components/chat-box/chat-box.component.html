@@ -1,20 +1,42 @@
 <div class="chat-box-wrapper">
   <div class="chat-header">
-    <span>Tư vấn AI</span>
-    <button class="close-button" (click)="close.emit()"><i class="fa-solid fa-xmark"></i></button>
+    <img src="assets/img/logo.png" alt="AI Logo" class="header-ai-logo"> <span>CheckScam - AI Tư vấn</span>
+    <button class="close-button" (click)="close.emit()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
   </div>
-  <div class="chat-body">
+  <div class="chat-body" #chatBody>
     <div *ngFor="let message of messages"
         class="message-wrapper"
-        [class.user-message]="message.isUser"
-        [class.bot-message]="!message.isUser">
-      <div class="message-content">
+        [ngClass]="{'user-message-wrapper': message.isUser, 'bot-message-wrapper': !message.isUser}">
+      <img *ngIf="!message.isUser" src="assets/img/logo.png" alt="AI Logo" class="message-ai-logo"> <div class="message-content">
         <div class="message-text" [innerHTML]="formatMessageContent(message.text)"></div>
       </div>
     </div>
+
+    <div *ngIf="isLoading" class="message-wrapper bot-message-wrapper typing-indicator">
+      <img src="assets/img/logo.png" alt="AI Logo" class="message-ai-logo"> <div class="message-content">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    </div>
   </div>
+
+  <div class="chat-suggestions" *ngIf="!isLoading && messages.length <= 1">
+    <button class="suggestion-button" (click)="selectSuggestion('Cách vào mạng an toàn?')">
+      Cách vào mạng an toàn?
+    </button>
+    <button class="suggestion-button" (click)="selectSuggestion('Làm thế nào để báo cáo lừa đảo?')">
+      Làm thế nào để báo cáo lừa đảo?
+    </button>
+    <button class="suggestion-button" (click)="selectSuggestion('Các loại lừa đảo phổ biến là gì?')">
+      Các loại lừa đảo phổ biến là gì?
+    </button>
+  </div>
+
   <div class="chat-input">
-    <input type="text" placeholder="Nhập tin nhắn..." [(ngModel)]="messageText" (keydown.enter)="sendMessage()">
-    <button (click)="sendMessage()">Gửi</button>
+    <input type="text" placeholder="Nhập tin nhắn..." [(ngModel)]="messageText" (keydown.enter)="sendMessage()" [disabled]="isLoading">
+    <button (click)="sendMessage()" [disabled]="isLoading">Gửi</button>
   </div>
 </div>

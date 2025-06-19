@@ -121,6 +121,14 @@ section {
   display: block;
 }
 
+/* GLOBAL FULL HD FIXES */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 body {
   margin: 0;
   font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -130,6 +138,8 @@ body {
   color: #858796;
   text-align: left;
   background-color: #fff;
+  width: 100vw; /* Full viewport width */
+  min-height: 100vh; /* Full viewport height */
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {

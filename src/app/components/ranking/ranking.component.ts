@@ -179,15 +179,11 @@ export class RankingComponent implements OnInit {
     return now.toLocaleDateString('vi-VN') + ' ' + now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
   }
 
-  // Ẩn một phần email để bảo vệ privacy
+  // Hiển thị đầy đủ tên người dùng (bỏ phần domain)
   getMaskedEmail(email: string): string {
-    const [local, domain] = email.split('@');
-    if (local.length <= 3) {
-      return `${local[0]}***@${domain}`;
-    }
-    const visibleStart = local.substring(0, 2);
-    const visibleEnd = local.substring(local.length - 1);
-    return `${visibleStart}***${visibleEnd}@${domain}`;
+    // Cắt bỏ @gmail.com và các domain khác, hiển thị đầy đủ tên
+    const [local] = email.split('@');
+    return local; // Trả về đầy đủ phần username
   }
 
   // Lấy thông tin phân trang

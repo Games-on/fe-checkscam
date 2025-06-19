@@ -1,14 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'; // << Bổ sung ElementRef, ViewChild
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'; 
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReportService } from '../../../services/report.service';
-
-// Import Interface ReportDTO (Bạn cần đảm bảo file này có trường pageToReport)
 import { ReportDTO } from '../../../dtos/report.dto';
-
 import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from "../../footer/footer.component";
 import { ChatBoxComponent } from "../../chat-box/chat-box.component";
@@ -22,7 +19,6 @@ import { ChatBoxComponent } from "../../chat-box/chat-box.component";
 })
 export class CreateReportComponent implements OnInit {
 
-  // >> Bổ sung: Tham chiếu đến input file ẩn trong template
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
 
@@ -35,10 +31,8 @@ export class CreateReportComponent implements OnInit {
   bankName = '';
   showChatbox: boolean = false;
 
-  // >> Bổ sung: Thêm thuộc tính pageToReport
   pageToReport: string = '';
 
-  // >> Bổ sung: Thêm thuộc tính agreeTerms cho checkbox
   agreeTerms: boolean = false;
 
 
@@ -48,31 +42,26 @@ export class CreateReportComponent implements OnInit {
   constructor(private reportService: ReportService, private router: Router) { }
 
   ngOnInit(): void {
-    // Bạn có thể cần fetch dữ liệu ban đầu hoặc setup gì đó ở đây nếu cần
   }
 
-  // Phương thức xử lý khi người dùng chọn file bằng cách click vào input
   onFileSelect(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.selectedFiles = Array.from(input.files);
       console.log('Files selected by click:', this.selectedFiles);
     }
-    // Đảm bảo reset giá trị của input file để cho phép chọn lại cùng một file nếu cần
     input.value = '';
   }
 
-  // Xử lý sự kiện kéo file vào vùng (dragover)
   onDragOver(event: DragEvent): void {
-    event.preventDefault(); // Ngăn chặn hành vi mặc định của trình duyệt
+    event.preventDefault(); 
     event.stopPropagation();
-    const target = event.currentTarget as HTMLElement; // Sử dụng currentTarget thay vì target để đảm bảo đúng phần tử .drop-zone
+    const target = event.currentTarget as HTMLElement; 
     if (target && target.classList.contains('drop-zone')) {
       target.classList.add('drag-over');
     }
   }
 
-  // Xử lý sự kiện kéo file rời khỏi vùng (dragleave)
   onDragLeave(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
@@ -82,28 +71,21 @@ export class CreateReportComponent implements OnInit {
     }
   }
 
-  // Xử lý sự kiện thả file vào vùng (drop)
   onDrop(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
     const target = event.currentTarget as HTMLElement;
     if (target && target.classList.contains('drop-zone')) {
-      target.classList.remove('drag-over'); // Xóa class 'drag-over'
+      target.classList.remove('drag-over'); 
     }
 
     if (event.dataTransfer && event.dataTransfer.files) {
       const files = Array.from(event.dataTransfer.files);
-      // Lọc chỉ giữ lại ảnh nếu bạn chỉ muốn chấp nhận ảnh
       const imageFiles = files.filter(file => file.type.startsWith('image/'));
 
       if (imageFiles.length > 0) {
         this.selectedFiles = imageFiles;
         console.log('Files dropped:', this.selectedFiles);
-        // Nếu bạn muốn hiển thị file đã chọn trong input file (không cần thiết lắm với Angular)
-        // if (this.fileInput && this.fileInput.nativeElement) {
-        //   // Cách đặt file vào input type="file" phức tạp hơn và thường không làm vậy
-        //   // Thay vào đó, bạn đã lưu vào selectedFiles
-        // }
       } else {
         alert("Chỉ chấp nhận các tệp hình ảnh (PNG, JPG, GIF).");
       }
@@ -116,7 +98,6 @@ export class CreateReportComponent implements OnInit {
   }
 
   createReport(): void {
-    // >> Cập nhật: Kiểm tra thêm các trường mới và checkbox đồng ý
     if (this.isFormInvalid()) {
       alert('Vui lòng điền đầy đủ các trường bắt buộc và đồng ý với điều khoản.');
       return;
@@ -125,7 +106,6 @@ export class CreateReportComponent implements OnInit {
     const info2 = this.type === 2 ? this.accountHolderName : undefined;
     const info3 = this.type === 2 ? this.bankName : undefined;
 
-    // >> Cập nhật: Thêm pageToReport vào reportDTO
     const reportDTO: ReportDTO = {
       info: this.info,
       pageToReport: this.pageToReport, // << Thêm trường này
@@ -136,8 +116,6 @@ export class CreateReportComponent implements OnInit {
       captchaToken: this.captchaToken,
       info2,
       info3
-      // Bạn có thể không cần gửi agreeTerms lên backend, tùy yêu cầu
-      // agreeTerms: this.agreeTerms
     };
 
     this.reportService.createReport(reportDTO).subscribe({
@@ -151,15 +129,12 @@ export class CreateReportComponent implements OnInit {
         if (this.selectedFiles.length) {
           this.uploadFiles(reportId);
         } else {
-          // >> Cập nhật: Có thể chuyển hướng về trang khác thay vì chatbot nếu muốn
-          this.router.navigate(['/bao-cao-thanh-cong']); // Ví dụ trang báo cáo thành công
+          this.router.navigate(['/bao-cao-thanh-cong']);
         }
       },
       error: (err: HttpErrorResponse) => {
         console.error('Lỗi khi tạo báo cáo:', err);
         alert(`Lỗi: ${err.error?.message || err.message}`);
-        // >> Cập nhật: Có thể chuyển hướng về trang khác khi lỗi
-        // this.router.navigate(['/bao-cao-loi']); // Ví dụ trang báo cáo lỗi
       }
     });
   }
@@ -171,28 +146,24 @@ export class CreateReportComponent implements OnInit {
     this.reportService.uploadFiles(reportId, formData).subscribe({
       next: () => {
         alert('Tải lên tệp thành công!');
-        // >> Cập nhật: Chuyển hướng sau khi upload file
-        this.router.navigate(['/bao-cao-thanh-cong']); // Ví dụ trang báo cáo thành công
+        this.router.navigate(['/bao-cao-thanh-cong']); 
       },
       error: (err: HttpErrorResponse) => {
         console.error('Lỗi khi tải lên tệp:', err);
         alert(`Lỗi: ${err.error?.message || err.message}`);
-        // >> Cập nhật: Chuyển hướng khi lỗi upload
-        this.router.navigate(['/bao-cao-loi']); // Ví dụ trang báo cáo lỗi
+        this.router.navigate(['/bao-cao-loi']); 
       }
     });
   }
 
   private isFormInvalid(): boolean {
-    // >> Cập nhật: Thêm kiểm tra cho pageToReport và agreeTerms
     const basicInvalid = !this.info || !this.reason || !this.pageToReport || !this.emailAuthorReport || !this.infoDescription;
     const extraInvalidForType2 = this.type === 2 && (!this.accountHolderName || !this.bankName);
     const captchaInvalid = !this.captchaToken;
-    const termsNotAgreed = !this.agreeTerms; // Kiểm tra checkbox đồng ý
+    const termsNotAgreed = !this.agreeTerms; 
 
     return basicInvalid || extraInvalidForType2 || captchaInvalid || termsNotAgreed;
   }
-  // >> Bổ sung: Phương thức reset form sau khi gửi thành công/thất bại (tùy logic)
   resetForm(): void {
     this.info = '';
     this.type = 1;
@@ -201,11 +172,10 @@ export class CreateReportComponent implements OnInit {
     this.infoDescription = '';
     this.accountHolderName = '';
     this.bankName = '';
-    this.pageToReport = ''; // Reset trường mới
-    this.agreeTerms = false; // Reset checkbox
+    this.pageToReport = ''; 
+    this.agreeTerms = false; 
     this.selectedFiles = [];
-    this.captchaToken = ''; // Reset captcha token
-    // Nếu dùng re-captcha, cần reset lại widget captcha nếu có API hỗ trợ
+    this.captchaToken = ''; 
   }
 
   onAiTuVanClicked() {

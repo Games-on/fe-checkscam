@@ -126,10 +126,9 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }
 
-/* Khi nút bị vô hiệu hóa */
 .report-form .submit-button[disabled] {
   background-color: #cccccc;
-  cursor: not-allowed; /* Con trỏ "không cho phép" */
+  cursor: not-allowed; 
   opacity: 0.7; 
   transform: none; 
   box-shadow: none; 
@@ -232,7 +231,6 @@
   color: #555;
 }
 
-// Bắt đầu các style mới cho vùng kéo thả
 .drop-zone {
   border: 2px dashed #ccc;
   border-radius: 8px;
@@ -240,7 +238,7 @@
   text-align: center;
   cursor: pointer;
   transition: border-color 0.3s ease, background-color 0.3s ease;
-  min-height: 150px; // Để có đủ không gian cho nội dung
+  min-height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -264,18 +262,18 @@
 
 .file-icons {
   display: flex;
-  gap: 10px; // Khoảng cách giữa các icon
+  gap: 10px;
   margin-bottom: 10px;
   justify-content: center;
 }
 
 .file-icon {
-  width: 40px; // Kích thước của icon
+  width: 40px;
   height: 40px;
 }
 
 .drop-zone-content p {
-  margin: 0; // Bỏ margin mặc định của p
+  margin: 0; 
   font-weight: bold;
 }
 
@@ -287,16 +285,16 @@
 }
 .uploaded-bill-note .fas.fa-upload {
   margin-right: 5px;
-  color: #6c757d; // Màu icon
+  color: #6c757d; 
 }
 
 .info-section-bottom {
   margin-top: 20px;
   padding: 15px;
-  background-color: #fff3cd; // Màu nền nhẹ nhàng cho thông báo
+  background-color: #fff3cd; 
   border: 1px solid #ffeeba;
   border-radius: 5px;
-  color: #856404; // Màu chữ cho thông báo
+  color: #856404; 
   font-size: 0.9em;
 }
 .info-section-bottom p {
@@ -307,6 +305,6 @@
   margin-bottom: 0;
 }
 .info-section-bottom .highlight-text {
-  color: #d9534f; // Màu đỏ cho dòng lưu ý quan trọng
+  color: #d9534f;
   font-weight: bold;
 }

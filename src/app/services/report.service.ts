@@ -1,3 +1,4 @@
+// report.service.ts
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilService } from './http.util.service';
@@ -9,7 +10,10 @@ import { ReportDTO } from '../dtos/report.dto';
   providedIn: 'root'
 })
 export class ReportService {
-  private apiCreateReport = `${environment.apiBaseUrl}/report`;
+  private apiBaseUrl = environment.apiBaseUrl;
+  private apiCreateReport = `${this.apiBaseUrl}/report`;
+  private apiCreateGroupReports = `${this.apiBaseUrl}/report/batch`; // API mới cho báo cáo gộp
+
   constructor(
     private http: HttpClient,
     private httpUtilService: HttpUtilService
@@ -21,20 +25,27 @@ export class ReportService {
     };
   }
 
+  // API cho báo cáo đơn (giữ nguyên)
   createReport(reportDTO: ReportDTO): Observable<any> {
     return this.http.post(this.apiCreateReport, reportDTO, this.getApiConfig());
   }
 
+  // API MỚI cho báo cáo gộp
+  // Backend cần một controller nhận List<ReportDTO>
+  createGroupReports(reportDTOs: ReportDTO[]): Observable<any> { // <--- THAY ĐỔI Ở ĐÂY
+    return this.http.post(this.apiCreateGroupReports, reportDTOs, this.getApiConfig());
+  }
+
   getListReports(): Observable<any> {
-    return this.http.get(`${environment.apiBaseUrl}/report/all`);
+    return this.http.get(`${this.apiBaseUrl}/report/all`);
   }
 
   getReportById(id: number): Observable<any> {
-    return this.http.get(`${environment.apiBaseUrl}/report/${id}`);
+    return this.http.get(`${this.apiBaseUrl}/report/${id}`);
   }
 
   uploadFiles(reportId: number | string, formData: FormData): Observable<any> {
-    return this.http.post<any>(`${environment.apiBaseUrl}/report/uploads/${reportId}`, formData);
+    return this.http.post<any>(`${this.apiBaseUrl}/report/uploads/${reportId}`, formData);
   }
 
   handleReport(body: {
@@ -42,17 +53,17 @@ export class ReportService {
     status: 2 | 3;
     idScamTypeAfterHandle: number | null;
   }): Observable<any> {
-    return this.http.post(`${environment.apiBaseUrl}/report/handle`, body);
+    return this.http.post(`${this.apiBaseUrl}/report/handle`, body);
   }
 
   getMonthlyStats(year: number): Observable<any[]> {
     const params = new HttpParams().set('year', year.toString());
-    return this.http.get<any[]>(`${environment.apiBaseUrl}/report/monthly`, { params });
+    return this.http.get<any[]>(`${this.apiBaseUrl}/report/monthly`, { params });
   }
 
   getYearlyStats(): Observable<{ year: number; count: number }[]> {
   return this.http.get<{ year: number; count: number }[]>(
-    `${environment.apiBaseUrl}/report/yearly`
+    `${this.apiBaseUrl}/report/yearly`
   );
 }
 }

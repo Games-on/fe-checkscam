@@ -1,13 +1,12 @@
+// report.dto.ts (sửa đổi, làm cho reason tùy chọn)
 export interface ReportDTO {
-    info: string;
-    emailAuthorReport: string;
-    type: number;
-    reason: string;
-    infoDescription: string;
-    captchaToken: string;
-    info2?: string; 
-    info3?: string; 
-
-    // >> Bổ sung: Thêm thuộc tính pageToReport vào đây
-    pageToReport: string; // Hoặc pageToReport?: string; nếu trường này không bắt buộc gửi lên backend
+  info: string;
+  pageToReport?: string;
+  emailAuthorReport: string;
+  type: 1 | 2 | 3;
+  reason?: string; // Đã là tùy chọn
+  infoDescription: string;
+  captchaToken: string;
+  info2?: string;
+  info3?: string;
 }

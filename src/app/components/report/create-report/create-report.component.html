@@ -7,106 +7,227 @@
       <form class="report-form" #reportForm="ngForm" (ngSubmit)="createReport()" novalidate>
         <h3 class="info-box-title">BÁO CÁO LỪA ĐẢO</h3>
 
-        <div class="form-group">
-          <label for="info">Thông tin liên quan:</label>
-          <input
-            id="info"
-            type="text"
-            name="info"
-            placeholder="Nhập số thông tin nghi ngờ"
-            required
-            [(ngModel)]="info"
-            #infoCtrl="ngModel"
-          />
+        <div class="form-group report-type-selection">
+          <label>Chọn loại báo cáo:</label>
+          <div class="radio-group">
+            <input type="radio" id="singleReport" name="reportType" [value]="'single'" [(ngModel)]="reportType" required>
+            <label for="singleReport">Báo cáo đơn</label>
+
+            <input type="radio" id="groupReport" name="reportType" [value]="'group'" [(ngModel)]="reportType" required>
+            <label for="groupReport">Báo cáo gộp</label>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="type">Loại thông tin:</label>
-          <select id="type" name="type" required [(ngModel)]="type">
-            <option [ngValue]="1">Số điện thoại</option>
-            <option [ngValue]="2">Số tài khoản</option>
-            <option [ngValue]="3">URL</option>
-          </select>
-        </div>
-
-        <div class="form-group" *ngIf="type === 2">
-          <label for="accountHolderName">Tên chủ tài khoản:</label>
-          <input id="accountHolderName" name="accountHolderName" type="text" [(ngModel)]="accountHolderName" />
-
-          <label for="bankName">Ngân hàng:</label>
-          <input id="bankName" name="bankName" type="text" [(ngModel)]="bankName" />
-        </div>
-
-        <!-- Email -->
-        <div class="form-group">
-          <label for="email">Email người báo cáo</label>
-          <input
-            id="email"
-            type="email"
-            name="emailAuthorReport"
-            placeholder="Nhập email"
-            required
-            [(ngModel)]="emailAuthorReport"
-          />
-        </div>
-
-        <!-- Mô tả -->
-        <div class="form-group">
-          <label for="description">Mô tả chi tiết:</label>
-          <textarea
-            id="description"
-            name="infoDescription"
-            rows="5"
-            required
-            placeholder="Mô tả chi tiết về vụ việc"
-            [(ngModel)]="infoDescription"
-          ></textarea>
-        </div>
-
-        <!-- File upload -->
+        <ng-container *ngIf="reportType === 'single'">
           <div class="form-group">
-          <label for="files">Tài liệu đính kèm (PNG, JPG, GIF):</label>
+            <label for="single_type">Tố cáo về:</label>
+            <select id="single_type" name="single_type" required [(ngModel)]="singleReportItem.type" (change)="resetSingleInfoFields()">
+              <option [ngValue]="1">Số điện thoại</option>
+              <option [ngValue]="2">Số tài khoản</option>
+              <option [ngValue]="3">URL</option>
+            </select>
+          </div>
 
-          <div class="drop-zone"
-              (click)="fileInput.click()"
-              (dragover)="onDragOver($event)"
-              (dragleave)="onDragLeave($event)"
-              (drop)="onDrop($event)">
-            <div class="drop-zone-content">
-              <div class="file-icons">
-                <i class="fas fa-file-image text-danger file-icon-fa"></i>
-                <i class="fas fa-file-image text-primary file-icon-fa"></i>
-                <i class="far fa-file-image text-success file-icon-fa"></i>
+          <div class="form-group">
+            <label for="single_info">
+              <ng-container *ngIf="singleReportItem.type === 1">Số điện thoại muốn tố cáo:</ng-container>
+              <ng-container *ngIf="singleReportItem.type === 2">Số tài khoản muốn tố cáo:</ng-container>
+              <ng-container *ngIf="singleReportItem.type === 3">URL muốn tố cáo:</ng-container>
+            </label>
+            <input
+              id="single_info"
+              type="text"
+              name="single_info"
+              placeholder="Nhập thông tin nghi ngờ"
+              required
+              [(ngModel)]="singleReportItem.info"
+              #singleInfoCtrl="ngModel"
+            />
+          </div>
+
+          <div class="form-group" *ngIf="singleReportItem.type === 2">
+            <label for="single_accountHolderName">Tên chủ tài khoản:</label>
+            <input id="single_accountHolderName" name="single_accountHolderName" type="text" [(ngModel)]="singleReportItem.info2" />
+
+            <label for="single_bankName">Ngân hàng:</label>
+            <input id="single_bankName" name="single_bankName" type="text" [(ngModel)]="singleReportItem.info3" />
+          </div>
+
+          <div class="form-group">
+            <label for="single_email">Email người báo cáo</label>
+            <input
+              id="single_email"
+              type="email"
+              name="single_emailAuthorReport"
+              placeholder="Nhập email"
+              required
+              [(ngModel)]="singleReportItem.emailAuthorReport"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="single_description">Mô tả chi tiết:</label>
+            <textarea
+              id="single_description"
+              name="single_infoDescription"
+              rows="5"
+              required
+              placeholder="Mô tả chi tiết về vụ việc"
+              [(ngModel)]="singleReportItem.infoDescription"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="single_files">Tài liệu đính kèm (PNG, JPG, GIF):</label>
+            <div class="drop-zone"
+                (click)="fileInputSingle?.click()"
+                (dragover)="onDragOverSingle($event)"
+                (dragleave)="onDragLeaveSingle($event)"
+                (drop)="onDropSingle($event)">
+              <div class="drop-zone-content">
+                <div class="file-icons">
+                  <i class="fas fa-file-image text-danger file-icon-fa"></i>
+                  <i class="fas fa-file-image text-primary file-icon-fa"></i>
+                  <i class="far fa-file-image text-success file-icon-fa"></i>
+                </div>
+                <p>Kéo hoặc click vào đây để upload</p>
+                <input #fileInputSingle id="single_files" type="file" accept="image/*" multiple (change)="onFileSelectSingle($event)" style="display: none;" />
               </div>
-              <p>Kéo hoặc click vào đây để upload</p>
-              <input #fileInput id="files" type="file" accept="image/*" multiple (change)="onFileSelect($event)" style="display: none;" />
+            </div>
+            <div class="uploaded-bill-note">
+              <i class="fas fa-upload"></i> Upload bằng chứng & ảnh đoạn tin nhắn lừa đảo.
             </div>
           </div>
 
-          <div class="uploaded-bill-note">
-            <i class="fas fa-upload"></i> Upload bằng chứng & ảnh đoạn tin nhắn lừa đảo.
+          <div class="form-group" *ngIf="singleReportItem.selectedFiles.length">
+            <label>Các tệp đã chọn:</label>
+            <ul>
+              <li *ngFor="let f of singleReportItem.selectedFiles">{{ f.name }} ({{ f.size | number }} bytes) <i class="fas fa-times-circle remove-file-icon" (click)="removeFile(f, 'single')"></i></li>
+            </ul>
           </div>
-        </div>
+        </ng-container>
 
-        <div class="form-group" *ngIf="selectedFiles.length">
-          <label>Các tệp đã chọn:</label>
-          <ul>
-            <li *ngFor="let f of selectedFiles">{{ f.name }} ({{ f.size | number }} bytes)</li>
-          </ul>
-        </div>
+        <ng-container *ngIf="reportType === 'group'">
+            <div class="form-group">
+                <label for="group_email">Email người báo cáo</label>
+                <input
+                  id="group_email"
+                  type="email"
+                  name="group_emailAuthorReport"
+                  placeholder="Nhập email"
+                  required
+                  [(ngModel)]="emailAuthorReportGroup"
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="group_scamAmount">Số tiền lừa đảo (VND):</label>
+                <input id="group_scamAmount" type="number" name="group_scamAmount" placeholder="Ví dụ: 1000000" [(ngModel)]="scamAmountGroup">
+            </div>
+
+            <div class="form-group">
+                <label for="group_description">Mô tả chi tiết:</label>
+                <textarea
+                  id="group_description"
+                  name="group_infoDescription"
+                  rows="5"
+                  required
+                  placeholder="Mô tả chi tiết về vụ việc"
+                  [(ngModel)]="infoDescriptionGroup"
+                ></textarea>
+            </div>
+
+          <div *ngFor="let item of groupReportItems; let i = index" class="group-report-item">
+            <div class="item-header">
+              <h4>Thông tin tố cáo #{{ i + 1 }}</h4>
+              <button *ngIf="groupReportItems.length > 1" type="button" class="btn btn-sm btn-danger remove-item-btn" (click)="removeGroupReportItem(i)">
+                Xóa
+              </button>
+            </div>
+
+            <div class="form-group">
+              <label [for]="'group_type_' + i">Tố cáo về:</label>
+              <select [id]="'group_type_' + i" [name]="'group_type_' + i" required [(ngModel)]="item.type" (change)="resetGroupInfoFields(i)">
+                <option [ngValue]="1">Số điện thoại</option>
+                <option [ngValue]="2">Số tài khoản</option>
+                <option [ngValue]="3">URL</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label [for]="'group_info_' + i">
+                <ng-container *ngIf="item.type === 1">Số điện thoại muốn tố cáo:</ng-container>
+                <ng-container *ngIf="item.type === 2">Số tài khoản muốn tố cáo:</ng-container>
+                <ng-container *ngIf="item.type === 3">URL muốn tố cáo:</ng-container>
+              </label>
+              <input
+                [id]="'group_info_' + i"
+                type="text"
+                [name]="'group_info_' + i"
+                placeholder="Nhập thông tin nghi ngờ"
+                required
+                [(ngModel)]="item.info"
+              />
+            </div>
+
+            <div class="form-group" *ngIf="item.type === 2">
+              <label [for]="'group_accountHolderName_' + i">Tên chủ tài khoản:</label>
+              <input [id]="'group_accountHolderName_' + i" [name]="'group_accountHolderName_' + i" type="text" [(ngModel)]="item.info2" />
+
+              <label [for]="'group_bankName_' + i">Ngân hàng:</label>
+              <input [id]="'group_bankName_' + i" [name]="'group_bankName_' + i" type="text" [(ngModel)]="item.info3" />
+            </div>
+
+            <div class="form-group">
+              <label [for]="'group_files_' + i">Tài liệu đính kèm (PNG, JPG, GIF):</label>
+              <div class="drop-zone"
+                  (click)="fileInputGroup.get(i)?.nativeElement?.click?.()"
+                  (dragover)="onDragOverGroup($event)"
+                  (dragleave)="onDragLeaveGroup($event)"
+                  (drop)="onDropGroup($event, i)">
+                <div class="drop-zone-content">
+                  <div class="file-icons">
+                    <i class="fas fa-file-image text-danger file-icon-fa"></i>
+                    <i class="fas fa-file-image text-primary file-icon-fa"></i>
+                    <i class="far fa-file-image text-success file-icon-fa"></i>
+                  </div>
+                  <p>Kéo hoặc click vào đây để upload</p>
+                  <input #groupFileInput type="file" [id]="'group_files_' + i" accept="image/*" multiple (change)="onFileSelectGroup($event, i)" style="display: none;" />
+                </div>
+              </div>
+              <div class="uploaded-bill-note">
+                <i class="fas fa-upload"></i> Upload bằng chứng & ảnh đoạn tin nhắn lừa đảo.
+              </div>
+            </div>
+
+            <div class="form-group" *ngIf="item.selectedFiles.length">
+              <label>Các tệp đã chọn:</label>
+              <ul>
+                <li *ngFor="let f of item.selectedFiles">{{ f.name }} ({{ f.size | number }} bytes) <i class="fas fa-times-circle remove-file-icon" (click)="removeFile(f, 'group', i)"></i></li>
+              </ul>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary add-item-btn" (click)="addGroupReportItem()">
+            <i class="fas fa-plus"></i> Thêm thông tin tố cáo khác
+          </button>
+        </ng-container>
 
         <div class="info-section-bottom">
           <p class="highlight-text">
             CHÚ Ý: Điều 156 Bộ luật Hình sự 2015: Tội vu khống là bịa đặt hoặc lan truyền thông tin sai sự thật xúc phạm danh dự, hoặc tố cáo sai người khác phạm tội. Hình phạt gồm phạt tiền từ 10-50 triệu đồng và/hoặc phạt tù từ 3 tháng đến 7 năm, tùy mức độ vi phạm.
           </p>
-  </div>
+        </div>
 
-        <!-- Captcha -->
         <div class="form-group">
           <re-captcha siteKey="6LfG6TArAAAAAD3M_YLwgUHuC6QPL7I7ATnWE4Xl" (resolved)="handleCaptchaResponse($event)"></re-captcha>
         </div>
 
-        <button class="submit-button" type="submit" [disabled]="reportForm.invalid || !captchaToken">
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="agreeTerms" name="agreeTerms" [(ngModel)]="agreeTerms" required>
+          <label for="agreeTerms">Tôi đồng ý với các <a href="#" (click)="openTermsAndConditions($event)">điều khoản và điều kiện</a></label>
+        </div>
+
+        <button class="submit-button" type="submit" [disabled]="reportForm.invalid || !captchaToken || !agreeTerms">
           Gửi Báo Cáo
         </button>
       </form>

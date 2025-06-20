@@ -30,9 +30,9 @@
                 </div>
 
                 <div class="news-content" [innerHTML]="post.content">
-                    </div>
+                </div>
 
-                <div class="attachments-section mt-4" *ngF="attachmentDto?.length && attachmentDto.length > 1">
+                <div class="attachments-section mt-4" *ngIf="attachmentDto?.length && attachmentDto.length > 1">
                     <h3>Hình ảnh khác</h3>
                     <div class="other-attachments-grid">
                         <div *ngFor="let attachment of attachmentDto.slice(1); trackBy: trackById" 

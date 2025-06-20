@@ -26,6 +26,8 @@ interface AnalysisResult {
   phishingList?: string;
   apwgCategory?: string;
   screenshotCaption?: string;
+  screenshot?: string; // Thêm field screenshot cho URL (chữ s thường)
+  screenShot?: string; // Thêm field screenShot cho URL (chữ S hoa)
 }
 
 @Component({
@@ -85,25 +87,31 @@ export class AnalyzeComponent implements OnInit, OnDestroy {
         const requestDto = new CheckScamRequestDTO({ info: this.inputInfo, type: this.inputType });
         
         this.checkScamService.checkScam(requestDto).subscribe({
-          next: (data) => {
-            console.log('API Response:', data);
-            console.log('All keys in response:', Object.keys(data));
-            
-            // Normalize evidenceUrls từ API response
-            const normalizedData: AnalysisResult = {
-              ...data,
-              evidenceUrls: data.evidenceURLs || data.evidenceUrls || []
-            };
-            
-            this.analysisResult = normalizedData;
-            if (this.analysisResult && this.analysisResult.analysis) {
-              this.parseAnalysisString(this.analysisResult.analysis);
-            } else {
-              this.riskLevelDescription = 'Không có dữ liệu phân tích.';
+          next: (data: any) => { // Thêm type any để tránh lỗi
+          console.log('API Response:', data);
+          console.log('All keys in response:', Object.keys(data));
+          console.log('Screenshot field value:', data.screenshot);
+          console.log('ScreenShot field value:', data.screenShot);
+          console.log('EvidenceUrls field value:', data.evidenceUrls);
+          console.log('EvidenceURLs field value:', data.evidenceURLs);
+          console.log('Full API Response JSON:', JSON.stringify(data, null, 2));
+          
+          // Normalize evidenceUrls từ API response
+          const normalizedData: AnalysisResult = {
+            ...data,
+            evidenceUrls: data.evidenceURLs || data.evidenceUrls || [],
+            screenshot: data.screenshot || data.screenShot // Support cả 2 field
+          };
+          
+          this.analysisResult = normalizedData;
+          if (this.analysisResult && this.analysisResult.analysis) {
+          this.parseAnalysisString(this.analysisResult.analysis);
+          } else {
+            this.riskLevelDescription = 'Không có dữ liệu phân tích.';
               this.detailedAnalysis = 'Không có thông tin phân tích chi tiết.';
-              this.recommendations = 'Không có khuyến nghị.';
-            }
-          },
+            this.recommendations = 'Không có khuyến nghị.';
+          }
+        },
           error: (err) => {
             console.error('Lỗi khi tải dữ liệu phân tích:', err);
             this.riskLevelDescription = 'Lỗi tải dữ liệu.';
@@ -327,6 +335,22 @@ export class AnalyzeComponent implements OnInit, OnDestroy {
     console.error('Image failed to load:', img.src);
     console.error('Error event:', event);
     
+    // Test URL trực tiếp
+    console.log('Testing image URL directly...');
+    fetch(img.src)
+      .then(response => {
+        console.log('Image URL response status:', response.status);
+        console.log('Image URL response headers:', response.headers);
+        return response.blob();
+      })
+      .then(blob => {
+        console.log('Image blob size:', blob.size);
+        console.log('Image blob type:', blob.type);
+      })
+      .catch(error => {
+        console.error('Fetch image error:', error);
+      });
+    
     img.style.display = 'none';
     const errorDiv = document.createElement('div');
     errorDiv.className = 'image-error';
@@ -355,15 +379,87 @@ export class AnalyzeComponent implements OnInit, OnDestroy {
   }
 
   getFullImageUrl(imageUrl: string): string {
-    const fileName = this.getImageName(imageUrl);
-    return `http://localhost:8080/api/v1/report/image/${fileName}`;
+    console.log(`Creating URL for type ${this.analysisResult?.type}, imageUrl:`, imageUrl);
+    
+    // Kiểm tra theo type của request
+    if (this.analysisResult?.type === 3) {
+      // Type 3 (URL): screenshot luôn bắt đầu bằng /cache/
+      const fullUrl = `http://localhost:8080/api/v1/check-scam${imageUrl}`;
+      console.log('Type 3 - Full URL:', fullUrl);
+      return fullUrl;
+    } else {
+      // Type 1,2 (Số điện thoại, Tài khoản): evidenceUrls cần lấy filename
+      const fileName = this.getImageName(imageUrl);
+      const fullUrl = `http://localhost:8080/api/v1/report/image/${fileName}`;
+      console.log(`Type ${this.analysisResult?.type} - Full URL:`, fullUrl);
+      return fullUrl;
+    }
   }
 
   getEvidenceImages(): string[] {
     if (!this.analysisResult) return [];
     
-    const images = this.analysisResult.evidenceUrls || this.analysisResult.evidenceURLs || [];
-    console.log('Evidence images found:', images);
+    let images: string[] = [];
+    
+    // Kiểm tra theo type của request
+    if (this.analysisResult.type === 1 || this.analysisResult.type === 2) {
+      // Type 1 (Số điện thoại) và Type 2 (Số tài khoản): lấy từ evidenceUrls
+      images = this.analysisResult.evidenceUrls || this.analysisResult.evidenceURLs || [];
+      console.log(`Type ${this.analysisResult.type} - Evidence images from evidenceUrls:`, images);
+    } else if (this.analysisResult.type === 3) {
+      // Type 3 (URL): lấy từ screenshot
+      console.log('=== DEBUG URL SCREENSHOT ===');
+      console.log('Current URL being analyzed:', this.analysisResult.info);
+      console.log('Screenshot field exists:', 'screenshot' in this.analysisResult);
+      console.log('Screenshot field value:', this.analysisResult.screenshot);
+      console.log('Screenshot field type:', typeof this.analysisResult.screenshot);
+      console.log('ScreenShot field exists:', 'screenShot' in this.analysisResult);
+      console.log('ScreenShot field value:', this.analysisResult.screenShot);
+      console.log('ScreenShot field type:', typeof this.analysisResult.screenShot);
+      
+      // Kiểm tra cả 2 field
+      const screenshotValue = this.analysisResult.screenshot || this.analysisResult.screenShot;
+      console.log('Combined screenshot value:', screenshotValue);
+      console.log('Combined screenshot type:', typeof screenshotValue);
+      
+      if (screenshotValue && 
+          screenshotValue.trim() !== '' &&
+          screenshotValue !== 'null') {
+        
+        // Nếu là "default", tạo một placeholder image
+        if (screenshotValue === 'default') {
+          console.log('Backend returned "default" - using placeholder');
+          images = []; // Không hiển thị ảnh, chỉ hiển thị placeholder text
+        } else {
+          images = [screenshotValue];
+          console.log('Screenshot found and valid, adding to images');
+        }
+        console.log(`Type ${this.analysisResult.type} - Screenshot processing result:`, images);
+      } else {
+        console.log(`Type ${this.analysisResult.type} - No valid screenshot found`);
+        console.log('Rejection reason:');
+        console.log('- Is null/undefined:', !screenshotValue);
+        console.log('- Is "default":', screenshotValue === 'default');
+        console.log('- Is empty string:', screenshotValue?.trim() === '');
+        console.log('- Is "null" string:', screenshotValue === 'null');
+        
+        // Hiển thị tất cả fields có chứa "shot", "image", "capture"
+        const allFields = Object.keys(this.analysisResult);
+        const imageRelatedFields = allFields.filter(key => 
+          key.toLowerCase().includes('shot') || 
+          key.toLowerCase().includes('image') || 
+          key.toLowerCase().includes('capture') ||
+          key.toLowerCase().includes('screen')
+        );
+        console.log('Image-related fields found:', imageRelatedFields);
+        imageRelatedFields.forEach(field => {
+          console.log(`${field}:`, this.analysisResult?.[field as keyof AnalysisResult]);
+        });
+      }
+      console.log('=== END DEBUG ===');
+    }
+    
+    console.log('Final evidence images:', images);
     return images;
   }
 

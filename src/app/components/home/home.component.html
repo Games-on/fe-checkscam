@@ -105,117 +105,129 @@
     </div>
     <button class="clear-result-button" (click)="searchResult = null; errorMessage = null;">Xóa kết quả</button>
   </div>
-  <div class="stats-section">
-    <div class="stats-decoration">
-      <svg width="100%" height="100%" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" class="stats-bg">
-        <defs>
-          <linearGradient id="statsBg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:0.05" />
-            <stop offset="100%" style="stop-color:#FFD23F;stop-opacity:0.05" />
-          </linearGradient>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#statsBg)"/>
-        
-        <!-- Floating Icons -->
-        <g opacity="0.3">
-          <circle cx="100" cy="80" r="6" fill="#FF6B35">
-            <animate attributeName="cy" values="80;60;80" dur="4s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="900" cy="320" r="8" fill="#FFD23F">
-            <animate attributeName="cy" values="320;300;320" dur="5s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="200" cy="350" r="5" fill="#FF5722">
-            <animate attributeName="cy" values="350;330;350" dur="3s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="800" cy="50" r="7" fill="#FF9800">
-            <animate attributeName="cy" values="50;30;50" dur="6s" repeatCount="indefinite"/>
-          </circle>
-        </g>
-      </svg>
+  <!-- Top 10 Most Searched Section - BẢNG MỚI -->
+  <div class="top-searched-section-new">
+    <div class="section-header">
+      <h2 class="section-title">🔍 TOP 10 ĐỐI TƯỢNG BỊ TRA CỨU NHIỀU NHẤT</h2>
+      <p class="section-subtitle">Những đối tượng được cộng đồng kiểm tra thường xuyên nhất</p>
     </div>
-    
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="counter-number">{{ scamReports }}</div>
-        <div class="stat-label">Báo cáo lừa đảo</div>
-      </div>
-      <div class="stat-item">
-        <div class="counter-number">{{ usersProtected }}</div>
-        <div class="stat-label">Người dùng được bảo vệ</div>
-      </div>
-      <div class="stat-item">
-        <div class="counter-number">{{ checkedItems }}</div>
-        <div class="stat-label">Mục đã kiểm tra</div>
-      </div>
-      <div class="stat-item">
-        <div class="counter-number">{{ accuracy }}</div>
-        <div class="stat-label">Độ chính xác</div>
-      </div>
-    </div>
-  </div>
 
-  <div class="community-section-new">
-    <div class="community-decoration">
-      <svg width="100%" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" class="community-bg">
-        <defs>
-          <linearGradient id="communityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#FFD23F;stop-opacity:0.1" />
-            <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:0.1" />
-          </linearGradient>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#communityGrad)"/>
-        
-        <!-- Social Network Connections -->
-        <g stroke="#FFD23F" stroke-width="1" opacity="0.4">
-          <line x1="100" y1="50" x2="200" y2="80">
-            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" repeatCount="indefinite"/>
-          </line>
-          <line x1="200" y1="80" x2="300" y2="60">
-            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" begin="1s" repeatCount="indefinite"/>
-          </line>
-          <line x1="500" y1="120" x2="600" y2="90">
-            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" begin="2s" repeatCount="indefinite"/>
-          </line>
-          <line x1="600" y1="90" x2="700" y2="130">
-            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" begin="0.5s" repeatCount="indefinite"/>
-          </line>
-        </g>
-        
-        <!-- Community Icons -->
-        <g fill="#FF6B35" opacity="0.3">
-          <circle cx="100" cy="50" r="4">
-            <animate attributeName="r" values="4;6;4" dur="4s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="200" cy="80" r="3">
-            <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="300" cy="60" r="5">
-            <animate attributeName="r" values="5;7;5" dur="5s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="500" cy="120" r="4">
-            <animate attributeName="r" values="4;6;4" dur="3.5s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="600" cy="90" r="3">
-            <animate attributeName="r" values="3;5;3" dur="4.5s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="700" cy="130" r="4">
-            <animate attributeName="r" values="4;6;4" dur="2.5s" repeatCount="indefinite"/>
-          </circle>
-        </g>
-      </svg>
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <button class="tab-button" [class.active]="activeTab === 'phone'" (click)="setActiveTab('phone')">
+        <i class="fas fa-mobile-alt"></i>
+        Số điện thoại
+      </button>
+      <button class="tab-button" [class.active]="activeTab === 'bank'" (click)="setActiveTab('bank')">
+        <i class="fas fa-university"></i>
+        Tài khoản ngân hàng
+      </button>
+      <button class="tab-button" [class.active]="activeTab === 'url'" (click)="setActiveTab('url')">
+        <i class="fas fa-globe"></i>
+        Website
+      </button>
     </div>
-    
-    <h3 class="community-title">Tham gia cộng đồng Checkscam</h3>
-    <p class="community-desc">Kết nối với cộng đồng để cập nhật thông tin bảo mật mới nhất</p>
-    <div class="social-links">
-      <a href="#" class="social-button facebook">
-        <img src="../../../assets/img/facebook.png" alt="Facebook"> Facebook
-      </a>
-      <a href="#" class="social-button telegram">
-        <img src="../../../assets/img/telegram.png" alt="Telegram"> Telegram
-      </a>
-      <a href="#" class="social-button zalo">
-        <img src="../../../assets/img/zalo.png" alt="Zalo"> Zalo
+
+    <!-- Content for each tab -->
+    <div class="tab-content-container">
+      
+      <!-- Phone Numbers Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'phone'">
+        <h3 class="tab-title"><i class="fas fa-mobile-alt"></i> Top 10 Số điện thoại</h3>
+        <div class="ranking-list">
+          <div class="ranking-item" *ngFor="let item of getPhoneNumbers(); let i = index" 
+               [class.danger]="item.status === 'danger'"
+               [class.warning]="item.status === 'warning'"
+               [class.safe]="item.status === 'safe'">
+            <div class="rank-number">
+              <span class="rank">{{ i + 1 }}</span>
+              <div class="medal" *ngIf="i < 3">{{ i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉' }}</div>
+            </div>
+            <div class="item-info">
+              <div class="item-value">{{ item.phone }}</div>
+              <div class="item-description">{{ item.description }}</div>
+            </div>
+            <div class="search-stats">
+              <div class="search-count">{{ item.count | number }}</div>
+              <div class="search-label">lượt tra cứu</div>
+            </div>
+            <div class="status-indicator">
+              <span class="status-badge" [class]="'status-' + item.status">
+                <i [class]="getStatusIcon(item.status)"></i>
+                {{ getStatusText(item.status) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bank Accounts Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'bank'">
+        <h3 class="tab-title"><i class="fas fa-university"></i> Top 10 Tài khoản ngân hàng</h3>
+        <div class="ranking-list">
+          <div class="ranking-item" *ngFor="let item of getBankAccounts(); let i = index" 
+               [class.danger]="item.status === 'danger'"
+               [class.warning]="item.status === 'warning'"
+               [class.safe]="item.status === 'safe'">
+            <div class="rank-number">
+              <span class="rank">{{ i + 1 }}</span>
+              <div class="medal" *ngIf="i < 3">{{ i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉' }}</div>
+            </div>
+            <div class="item-info">
+              <div class="item-value">{{ item.account }}</div>
+              <div class="item-description">{{ item.description }}</div>
+            </div>
+            <div class="search-stats">
+              <div class="search-count">{{ item.count | number }}</div>
+              <div class="search-label">lượt tra cứu</div>
+            </div>
+            <div class="status-indicator">
+              <span class="status-badge" [class]="'status-' + item.status">
+                <i [class]="getStatusIcon(item.status)"></i>
+                {{ getStatusText(item.status) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- URLs Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'url'">
+        <h3 class="tab-title"><i class="fas fa-globe"></i> Top 10 Website</h3>
+        <div class="ranking-list">
+          <div class="ranking-item" *ngFor="let item of getWebsites(); let i = index" 
+               [class.danger]="item.status === 'danger'"
+               [class.warning]="item.status === 'warning'"
+               [class.safe]="item.status === 'safe'">
+            <div class="rank-number">
+              <span class="rank">{{ i + 1 }}</span>
+              <div class="medal" *ngIf="i < 3">{{ i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉' }}</div>
+            </div>
+            <div class="item-info">
+              <div class="item-value">{{ item.website }}</div>
+              <div class="item-description">{{ item.description }}</div>
+            </div>
+            <div class="search-stats">
+              <div class="search-count">{{ item.count | number }}</div>
+              <div class="search-label">lượt tra cứu</div>
+            </div>
+            <div class="status-indicator">
+              <span class="status-badge" [class]="'status-' + item.status">
+                <i [class]="getStatusIcon(item.status)"></i>
+                {{ getStatusText(item.status) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-footer">
+      <p class="update-note">📊 Dữ liệu được cập nhật mỗi 24 giờ | ⚠️ Thông tin chỉ mang tính chất tham khảo</p>
+      <a routerLink="/ranking" class="view-ranking-btn">
+        <i class="fas fa-chart-line"></i>
+        Xem bảng xếp hạng đầy đủ
+        <span class="arrow">→</span>
       </a>
     </div>
   </div>

@@ -1,11 +1,11 @@
 /* src/app/components/chat-box/chat-box.component.scss */
 
 // Color Palette (Adjusted for requirements)
-$primary-green: #003b03;
+$primary-green: #A8E6CF;
 $primary-green-dark: darken($primary-green, 8%);
 
 // Màu header mới: Vàng nhạt
-$header-bg-color: #6db960; // Lemon Chiffon
+$header-bg-color: #A8E6CF; // Lemon Chiffon
 // Màu chữ header mới: Đen/Xám đậm (để tương phản tốt với nền vàng)
 $header-text-color: #333333;
 
@@ -14,7 +14,7 @@ $text-light: #FFFFFF;
 $text-muted: #6C757D;
 
 $bg-chat: #F8F9FA;
-$bg-bot-message: #81c874;
+$bg-bot-message: #A8E6CF;
 $bg-user-message: #E0E0E0;
 
 $border-light: #E0E6ED;

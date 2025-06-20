@@ -1,6 +1,6 @@
 <div class="chat-box-wrapper">
   <div class="chat-header">
-    <img src="assets/img/logo.png" alt="AI Logo" class="header-ai-logo"> <span>CheckScam - AI Tư vấn</span>
+    <img src="assets/img/aituvan.png" alt="AI Logo" class="header-ai-logo"> <span>CheckScam - AI Tư vấn</span>
     <button class="close-button" (click)="close.emit()">
       <i class="fa-solid fa-xmark"></i>
     </button>
@@ -9,13 +9,13 @@
     <div *ngFor="let message of messages"
         class="message-wrapper"
         [ngClass]="{'user-message-wrapper': message.isUser, 'bot-message-wrapper': !message.isUser}">
-      <img *ngIf="!message.isUser" src="assets/img/logo.png" alt="AI Logo" class="message-ai-logo"> <div class="message-content">
+      <img *ngIf="!message.isUser" src="assets/img/aituvan.png" alt="AI Logo" class="message-ai-logo"> <div class="message-content">
         <div class="message-text" [innerHTML]="formatMessageContent(message.text)"></div>
       </div>
     </div>
 
     <div *ngIf="isLoading" class="message-wrapper bot-message-wrapper typing-indicator">
-      <img src="assets/img/logo.png" alt="AI Logo" class="message-ai-logo"> <div class="message-content">
+      <img src="assets/img/aituvan.png" alt="AI Logo" class="message-ai-logo"> <div class="message-content">
         <div class="typing-dot"></div>
         <div class="typing-dot"></div>
         <div class="typing-dot"></div>

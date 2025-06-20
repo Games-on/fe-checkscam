@@ -1,10 +1,11 @@
-// report.service.ts
+// src/app/services/report.service.ts
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilService } from './http.util.service';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { ReportDTO } from '../dtos/report.dto';
+import { GroupReportRequestDTO } from '../dtos/group-report-request.dto'; // Import DTO mới
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { ReportDTO } from '../dtos/report.dto';
 export class ReportService {
   private apiBaseUrl = environment.apiBaseUrl;
   private apiCreateReport = `${this.apiBaseUrl}/report`;
-  private apiCreateGroupReports = `${this.apiBaseUrl}/report/batch`; // API mới cho báo cáo gộp
+  private apiCreateGroupReports = `${this.apiBaseUrl}/report/batch`; // API cho báo cáo gộp
 
   constructor(
     private http: HttpClient,
@@ -25,15 +26,14 @@ export class ReportService {
     };
   }
 
-  // API cho báo cáo đơn (giữ nguyên)
+  // API cho báo cáo đơn
   createReport(reportDTO: ReportDTO): Observable<any> {
     return this.http.post(this.apiCreateReport, reportDTO, this.getApiConfig());
   }
 
-  // API MỚI cho báo cáo gộp
-  // Backend cần một controller nhận List<ReportDTO>
-  createGroupReports(reportDTOs: ReportDTO[]): Observable<any> { // <--- THAY ĐỔI Ở ĐÂY
-    return this.http.post(this.apiCreateGroupReports, reportDTOs, this.getApiConfig());
+  // API cho báo cáo gộp: chấp nhận GroupReportRequestDTO
+  createGroupReports(groupReportPayload: GroupReportRequestDTO): Observable<any> {
+    return this.http.post(this.apiCreateGroupReports, groupReportPayload, this.getApiConfig());
   }
 
   getListReports(): Observable<any> {

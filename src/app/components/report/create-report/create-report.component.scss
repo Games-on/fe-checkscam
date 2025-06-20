@@ -98,11 +98,41 @@
     }
   }
 
+  // Cụ thể cho input type number để loại bỏ mũi tên spinbox mặc định của trình duyệt
+  input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+
   textarea {
     resize: vertical;
     min-height: 120px;
   }
 }
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input[type="number"] {
+    padding-right: 50px; /* Tạo khoảng trống cho đơn vị tiền tệ */
+  }
+
+  .currency-unit {
+    position: absolute;
+    right: 15px;
+    color: #888;
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+}
+
 
 .report-type-selection {
   margin-bottom: 25px;

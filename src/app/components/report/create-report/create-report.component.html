@@ -18,6 +18,31 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="categoryId">Danh mục báo cáo:</label>
+          <select id="categoryId" name="categoryId" [(ngModel)]="selectedCategoryId" required class="form-control">
+            <option [ngValue]="null" disabled selected>-- Chọn danh mục --</option>
+            <option [ngValue]="1">Đầu tư</option>
+            <option [ngValue]="2">Bán hàng Online</option>
+            <option [ngValue]="3">Đồ thể thao</option>
+            <option [ngValue]="4">Giao dịch trung gian</option>
+            <option [ngValue]="5">Kiếm tiền online</option>
+            <option [ngValue]="6">Lừa đảo, cờ bạc</option>
+            <option [ngValue]="7">Marketing Online</option>
+            <option [ngValue]="8">Nick game</option>
+            <option [ngValue]="9">Nội dung số</option>
+            <option [ngValue]="10">Phần mềm</option>
+            <option [ngValue]="11">Sim số đẹp</option>
+            <option [ngValue]="12">Tài khoản MXH</option>
+            <option [ngValue]="13">Thẻ cào, game</option>
+            <option [ngValue]="14">Tiền ảo</option>
+            <option [ngValue]="15">Dịch vụ khác</option>
+          </select>
+          <div *ngIf="reportForm.controls['categoryId']?.invalid && reportForm.controls['categoryId']?.touched" class="text-danger">
+            Vui lòng chọn danh mục báo cáo.
+          </div>
+        </div>
+
         <ng-container *ngIf="reportType === 'single'">
           <div class="form-group">
             <label for="single_type">Tố cáo về:</label>
@@ -69,18 +94,16 @@
             <label for="single_description">Mô tả chi tiết:</label>
             <textarea
               id="single_description"
-              name="single_infoDescription"
-              rows="5"
+              name="single_description" rows="5"
               required
               placeholder="Mô tả chi tiết về vụ việc"
-              [(ngModel)]="singleReportItem.infoDescription"
-            ></textarea>
+              [(ngModel)]="singleReportItem.description" ></textarea>
           </div>
 
           <div class="form-group">
             <label for="single_files">Tài liệu đính kèm (PNG, JPG, GIF):</label>
             <div class="drop-zone"
-                (click)="fileInputSingle?.click()"
+                (click)="fileInputSingle.click()"
                 (dragover)="onDragOverSingle($event)"
                 (dragleave)="onDragLeaveSingle($event)"
                 (drop)="onDropSingle($event)">
@@ -108,35 +131,6 @@
         </ng-container>
 
         <ng-container *ngIf="reportType === 'group'">
-            <div class="form-group">
-                <label for="group_email">Email người báo cáo</label>
-                <input
-                  id="group_email"
-                  type="email"
-                  name="group_emailAuthorReport"
-                  placeholder="Nhập email"
-                  required
-                  [(ngModel)]="emailAuthorReportGroup"
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="group_scamAmount">Số tiền lừa đảo (VND):</label>
-                <input id="group_scamAmount" type="number" name="group_scamAmount" placeholder="Ví dụ: 1000000" [(ngModel)]="scamAmountGroup">
-            </div>
-
-            <div class="form-group">
-                <label for="group_description">Mô tả chi tiết:</label>
-                <textarea
-                  id="group_description"
-                  name="group_infoDescription"
-                  rows="5"
-                  required
-                  placeholder="Mô tả chi tiết về vụ việc"
-                  [(ngModel)]="infoDescriptionGroup"
-                ></textarea>
-            </div>
-
           <div *ngFor="let item of groupReportItems; let i = index" class="group-report-item">
             <div class="item-header">
               <h4>Thông tin tố cáo #{{ i + 1 }}</h4>
@@ -172,19 +166,69 @@
 
             <div class="form-group" *ngIf="item.type === 2">
               <label [for]="'group_accountHolderName_' + i">Tên chủ tài khoản:</label>
-              <input [id]="'group_accountHolderName_' + i" [name]="'group_accountHolderName_' + i" type="text" [(ngModel)]="item.info2" />
+              <input [id]="'group_accountHolderName_' + i" [name]="'group_accountHolderName_' + i" type="text" [(ngModel)]="item.info2"
+              placeholder="Nhập tên chủ tài khoản"
+              />
 
               <label [for]="'group_bankName_' + i">Ngân hàng:</label>
-              <input [id]="'group_bankName_' + i" [name]="'group_bankName_' + i" type="text" [(ngModel)]="item.info3" />
+              <input [id]="'group_bankName_' + i" [name]="'group_bankName_' + i" type="text" [(ngModel)]="item.info3"
+              placeholder="Nhập tên ngân hàng"
+              />
             </div>
 
             <div class="form-group">
-              <label [for]="'group_files_' + i">Tài liệu đính kèm (PNG, JPG, GIF):</label>
+              <label [for]="'group_item_description_' + i">Mô tả chi tiết cho mục này:</label>
+              <textarea
+                [id]="'group_item_description_' + i"
+                [name]="'group_item_description_' + i" rows="3"
+                required
+                placeholder="Mô tả chi tiết về mục tố cáo này"
+                [(ngModel)]="item.description"
+              ></textarea>
+            </div>
+
+          </div>
+          <button type="button" class="btn btn-primary add-item-btn" (click)="addGroupReportItem()">
+            <i class="fas fa-plus"></i> Thêm thông tin tố cáo khác
+          </button>
+
+            <div class="form-group">
+                <label for="group_scamAmount">Số tiền lừa đảo (VND):</label>
+                <div class="input-with-icon">
+                  <input id="group_scamAmount" type="number" name="group_scamAmount" placeholder="Ví dụ: 1000000" [(ngModel)]="scamAmountGroup">
+                  <span class="currency-unit">VND</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="group_description">Mô tả chi tiết:</label>
+                <textarea
+                  id="group_description"
+                  name="group_description" rows="5"
+                  required
+                  placeholder="Mô tả chi tiết về vụ việc"
+                  [(ngModel)]="descriptionGroup" ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="group_email">Email người báo cáo</label>
+                <input
+                  id="group_email"
+                  type="email"
+                  name="group_emailAuthorReport"
+                  placeholder="Nhập email"
+                  required
+                  [(ngModel)]="emailAuthorReportGroup"
+                />
+            </div>
+
+            <div class="form-group">
+              <label for="group_common_files">Tài liệu đính kèm (PNG, JPG, GIF):</label>
               <div class="drop-zone"
-                  (click)="fileInputGroup.get(i)?.nativeElement?.click?.()"
-                  (dragover)="onDragOverGroup($event)"
-                  (dragleave)="onDragLeaveGroup($event)"
-                  (drop)="onDropGroup($event, i)">
+                  (click)="commonGroupFileInput.click()"
+                  (dragover)="onDragOverCommonGroup($event)"
+                  (dragleave)="onDragLeaveCommonGroup($event)"
+                  (drop)="onDropCommonGroup($event)">
                 <div class="drop-zone-content">
                   <div class="file-icons">
                     <i class="fas fa-file-image text-danger file-icon-fa"></i>
@@ -192,7 +236,7 @@
                     <i class="far fa-file-image text-success file-icon-fa"></i>
                   </div>
                   <p>Kéo hoặc click vào đây để upload</p>
-                  <input #groupFileInput type="file" [id]="'group_files_' + i" accept="image/*" multiple (change)="onFileSelectGroup($event, i)" style="display: none;" />
+                  <input #commonGroupFileInput type="file" id="group_common_files" accept="image/*" multiple (change)="onFileSelectCommonGroup($event)" style="display: none;" />
                 </div>
               </div>
               <div class="uploaded-bill-note">
@@ -200,16 +244,13 @@
               </div>
             </div>
 
-            <div class="form-group" *ngIf="item.selectedFiles.length">
+            <div class="form-group" *ngIf="selectedFilesGroup.length">
               <label>Các tệp đã chọn:</label>
               <ul>
-                <li *ngFor="let f of item.selectedFiles">{{ f.name }} ({{ f.size | number }} bytes) <i class="fas fa-times-circle remove-file-icon" (click)="removeFile(f, 'group', i)"></i></li>
+                <li *ngFor="let f of selectedFilesGroup">{{ f.name }} ({{ f.size | number }} bytes) <i class="fas fa-times-circle remove-file-icon" (click)="removeFile(f, 'group')"></i></li>
               </ul>
             </div>
-          </div>
-          <button type="button" class="btn btn-primary add-item-btn" (click)="addGroupReportItem()">
-            <i class="fas fa-plus"></i> Thêm thông tin tố cáo khác
-          </button>
+
         </ng-container>
 
         <div class="info-section-bottom">
